@@ -1,0 +1,476 @@
+[[glossar]]
+== Glossar, Abkürzungen
+
+=== Fachbegriffe und ihre englische Übersetzung
+
+[width="100%",cols="1,2,1",options="header"]
+|===
+|Fachbegriff (deutsch) |Erläuterung |Fachbegriff (englisch)
+
+|[[glossar_advstandard]]*AdV-Standard* |Die AdV schafft Regelwerke zur Entwicklung von _Verfahren_ und _Programmsystemen_ und zur Herstellung von _Produkten_. AdV-Regelwerke, die der Festlegung von bundeseinheitlichen Grunddatenbeständen, Datenaustauschschnittstellen und Standardprodukten dienen, werden durch Verpflichtung der Mitgliedsverwaltungen zu ihrer Einhaltung zu AdV-Standards erhoben. |AdV-standard
+
+|[[glossar_aaa_anwendungsschema]]*AFIS-ALKIS-ATKIS-Anwendungsschema* |Das Basisschema und das anwendungsspezifische Subschema von AFIS, ALKIS und ATKIS (AAA-Fachschema) bilden zusammen das gemeinsame AFIS-ALKIS-ATKIS-Anwendungsschema. a|
+AFIS-ALKIS-ATKIS
+
+application schema
+
+|[[glossar_aaa_basisschema]]*AFIS-ALKIS-ATKIS-Basisschema* |🡪 siehe <<glossar_basisschema,Basisschema>> a|
+AFIS-ALKIS-ATKIS
+
+basic schema
+
+|[[glossar_aaa_referenzmodell]]*AFIS-ALKIS-ATKIS-Referenzmodell* a|
+Das AFIS-ALKIS-ATKIS-Referenzmodell ist ein gemeinsames Rahmenmodell, in dem die Strukturen und Inhalte der Produkte von AFIS, ALKIS und ATKIS, die Datenerfassungsquellen, Bestandsdaten sowie deren digitale und analoge Auszüge aus AFIS, ALKIS und ATKIS sowie die Abgabe der Daten an den Nutzer als Komponenten mit ihren gegenseitigen Beziehungen definiert sind.
+
+a|
+AFIS-ALKIS-ATKIS
+
+reference model
+
+|[[glossar_anlass]]*Anlass* |Der Anlass gibt den Grund einer Veränderung eines Objektes wieder. Er wird als Attribut bei AA_Objekt neben dem Objektidentifikator und dem Lebenszeitintervall geführt. |cause (for a change)
+
+|[[glossar_anwendungsschema]]*Anwendungsschema* a|
+Ein Anwendungsschema ist ein konzeptuelles Schema für Daten, die von einer oder mehreren Anwendungen benötigt werden.
+
+conceptual schema for data required by one or more applications
+
+|application schema
+
+|[[glossar_attribut]]*Attribut* |Attribute sind selbstbezogene Eigenschaften eines Objekts. Deren individueller Aufbau wird bei jeder Objektart als Attributart in den Objektartenkatalogen beschrieben. |attribute
+
+|[[glossar_ausgabekatalog]]*Ausgabekatalog* |Im Ausgabekatalog ist die Art und Weise der Aufbereitung und Ausgabe der Daten und Auszüge aus AFIS, ALKIS und ATKIS an den Nutzer spezifiziert. |output catalogue
+
+|[[glossar_auszuege]]*Auszüge* |Auszüge sind nach Inhalt, Gebiet und/oder Zeitraum (wie z. B. Fortführungsdatenbestände) selektierte Datenbestände, die an den Nutzer als objekt- oder bildstrukturierte Daten, aufbereitete Informationen oder analoge Auszüge abgegeben werden. |extracts
+
+|[[glossar_basisschema]]*Basisschema* |Das Basisschema ist ein Schema, das die grundlegenden Eigenschaften für eine oder mehrere Anwendungen beschreibt. Es enthält den einheitlichen und objektorientierten Modellansatz, auf dem die Subschemata von AFIS, ALKIS und ATKIS aufbauen. |basic schema
+
+|[[glossar_bestandsdaten]]*Bestandsdaten* |Bei Bestandsdaten handelt es sich um Geoinformationen des amtlichen Vermessungswesens in AFIS, ALKIS und ATKIS. Sie enthalten die vollständige Beschreibung von Fachobjekten einschließlich der Daten zu ihrer kartographischen oder textlichen Darstellung in einem oder mehreren Zielmaßstäben. |(geographic) data in primary database
+
+|[[glossar_bestandsdatenaktualisierung]]*Bestandsdatenaktualisierung* |Die Bestandsdatenaktualisierung ist ein Verfahren zur Fortführung von Sekundärdatenbeständen bei Nutzern mit Hilfe der Normbasierten Austauschschnittstelle (NAS). Das Verfahren wird mit "NBA-Verfahren" abgekürzt. |update of primary database
+
+|[[glossar_bestandsobjekte]]*Bestandsobjekte* |Bestandsobjekte sind Fachobjekte des Liegenschaftskatasters, die nach dem AFIS-ALKIS-ATKIS-Datenmodell modelliert wurden. |features in primary database
+
+|[[glossar_datenmodell]]*Datenmodell* |Ein Datenmodell beschreibt die grundlegenden Eigenschaften, die für alle Erscheinungen einer bestimmten (fachbezogenen) Sicht auf die Wirklichkeit eine einheitliche Abbildung erleichtern. Es bestimmt die grundsätzlichen Strukturen, die prinzipiell möglichen Beziehungen und die Eigenschaften, die zugeordnet werden können. +
+-> siehe auch <<glossar_modell,Modell>> |data model
+
+|[[glossar_datenmodellierungssprache]]*Datenmodellierungssprache* |-> siehe <<glossar_modellierungssprache,Modellierungssprache>> |data modeling language
+
+|[[glossar_detailierungsgrad]]*Detailierungsgrad* |Der _Level of detail_ definiert die geometrische und thematische Auflösung von 3D-Objekten. Die Differenzierung zwischen den Detailierungsgraden wird in ALKIS^®^ in Abhängigkeit von der Geometrie und/ oder der Texturierung vorgenommen werden. |Level of detail
+
+|[[glossar_differenzdaten]]*Differenzdaten* |Differenzdaten sind stichtagsbezogene Änderungsdaten, die nötig sind, um den Ausgangszustand der Bestandsdaten beim Nutzer auf den gewünschten Endzustand (Stichtag) zu bringen. Sie umfassen alle neu entstandenen Objekte, die jeweils aktuellen Versionen fortgeführter Objekte sowie Angaben zu historisch gewordenen Objekten. Die Differenzdaten stellen eine Untermenge der Änderungsdaten dar. a|
+Change-only data,
+
+differential update
+
+|[[glossar_digitales_bildmodell]]*Digitales Bildmodell* |Ein Digitales Bildmodell ist ein Modell zur Speicherung von Bilddaten, z.B. digitalen Orthophotos. |Digital image model
+
+|[[glossar_digitales_gelaendemodell]]*Digitales Geländemodell* |Ein Digitales Geländemodell ist ein Digitales Höhenmodell mit zusätzlichen topographischen Informationen wie Bruchkanten etc. |digital terrain model
+
+|[[glossar_digitales_hoehenmodell]]*Digitales Höhenmodell* |Ein Digitales Höhenmodell speichert Informationen über die Höhe von diskreten Punkten, die i.d.R. in einem regelmäßigen Gitter angeordnet sind. Diese Höheninformationen werden genutzt, um Höhen für alle anderen Positionen zu berechnen bzw. zu interpolieren. |Digital elevation model
+
+|[[glossar_elementarobjekt]]*Elementarobjekt* a|
+Elementarobjekte stellen die kleinsten, fachlich eigenständigen Einheiten dar. Sie setzen sich nicht aus anderen eigenständigen Einheiten zusammen. Es gibt in der Modellierung für AFIS, ALKIS und ATKIS folgende Arten von Elementarobjekten:
+
+* Raumbezogenes Elementarobjekt (REO)
++
+Raumbezogene Elementarobjekte sind zu bilden, wenn zusätzlich zu fachlichen Eigenschaften auch geometrische oder topologische Eigenschaften nachgewiesen werden sollen.
+
+* Nicht raumbezogenes Elementarobjekt (NREO)
++
+Nicht raumbezogene Elementarobjekte sind zu bilden, wenn neben den fachlichen Eigenschaften keine geometrischen oder topologischen Eigenschaften nachgewiesen werden können.
+
+-> siehe auch <<glossar_zuso,Zusammengesetztes Objekt (ZUSO)>>
+
+* Dreidimensionales raumbezogenes Elementarobjekt (REO_3D)
++
+Dreidimensionale raumbezogene Elementarobjekte sind zu bilden, wenn zusätzlich zu fachlichen Eigenschaften auch topologische oder geometrische Eigenschaften, inklusive der 3. Dimension, nachgewiesen werden sollen.
+
+|Elementary objects
+
+|[[glossar_erhebungsdaten]]*Erhebungsdaten* |Die Erhebungsdaten stellen die Grundlage zur Fortführung der amtlichen Geoinformationen dar. Sie werden durch Erhebungsprozesse aus Quelldaten, die mit den bekannten geodätischen Mess- und Erkundungsmethoden in der realen Welt erhoben oder aus kartographischen Darstellungen und anderen Unterlagen erfasst werden, gebildet. |Collected data
+
+|[[glossar_erhebungsprozess]]*Erhebungsprozess* |Der Erhebungsprozess erzeugt zur Qualifizierung und Fortführung der amtlichen Geoinformationen aus Quelldaten Erhebungsdaten. Der Erhebungsprozess ist nicht Bestandteil des Anwendungsschemas ALKIS und wird länderspezifisch modelliert. |Data collection process
+
+|[[glossar_fachdaten]]*Fachdaten* |Fachdaten sind anwendungsspezifische Daten eines Fachanwenders, z.B. Leitungsdaten oder Kundendaten eines Versorgungsunternehmens. Diese können mit einem Raumbezug versehen werden. |Technical data
+
+|[[glossar_fachdatenobjekt]]*Fachdatenobjekt* |Fachdatenobjekte sind Objekte in Fachinformationssystemen anderer Fachbereiche. |Technical data object
+
+|[[glossar_fachdatenverbindung]]*Fachdatenverbindung* |Die Fachdatenverbindung beinhaltet die Integrations- und Verknüpfungsmöglichkeiten zwischen den Daten der Vermessungsverwaltung (Basisdaten) und den Fachdaten in Form von Referenzen. Diese Verknüpfung kann entweder in den raumbezogenen Basisinformationssystemen der Vermessungsverwaltung, im Fachinformationssystem (einseitige Verknüpfung) oder gegenseitig in beiden Informationssystemen (gegenseitige Verknüpfung) erfolgen. |Association to technical data
+
+|[[glossar_fachinformationssystem]]*Fachinformationssystem* |System, das Informationen fachlicher Art enthält und Geobasisinformationen der Vermessungs- und Katasterverwaltung als Grundlage nutzt. |Technical information system
+
+|[[glossar_fachobjekt]]*Fachobjekt* a|
+Ein Fachobjekt entsteht durch Abstraktion einen Gegenstandes oder Sachverhaltes der realen Welt. Im Anwendungsbereich von AFIS, ALKIS und ATKIS ist dies eingeschränkt auf die Gegenstände und Sachverhalte, die den fachlichen Gehalt von AFIS, ALKIS und ATKIS ausmachen.
+
+-> <<glossar_objekt,Objekt>>
+
+abstraction of real world phenomena
+
+NOTE 1 A feature may occur as a type or an instance. Feature type or feature instance should be used when only one is meant.
+
+NOTE 2 UML uses feature for another concept than the use of feature within this standard. In UML, a property, such as operation or attribute, is encapsulated as part of a list within a classifier, such as an interface, a class or a data type. |Feature
+
+|[[glossar_festpunkt]]*Festpunkt* |Geodätischer Referenzpunkt |geodetic control station
+
+|[[glossar_fortfuehrung]]*Fortführung* |Fortführung ist die Aktualisierung von Bestandsdaten. Die Fortführungsdaten (Daten und Metadaten) werden dabei durch Anwendung geeigneter Methoden in den Bestand überführt. |Update, revision
+
+|[[glossar_fortfuehrungsauftrag]]*Fortführungsauftrag* |Der Fortführungsauftrag ist eine Objektart, die ein oder mehrere Fortführungsfälle zu einer Einheit zusammenfasst. Sie steuert das Verfahren der Datenaktualisierung für sämtliche Bestandsobjekte. |Revision case or instance
+
+|[[glossar_fuehrungsprozess]]*Führungsprozess* |Beim Führungsprozess handelt es sich um die Ersteinrichtung bzw. Fortführung der Bestandsdaten (Geobasisdaten und Metadaten). |Process of updating
+
+|[[glossar_geobasisdaten]]*Geobasisdaten* a|
+Geobasisdaten sind grundlegende amtliche Geodaten, welche die Landschaft (Topographie), die Flurstücke und die Gebäude im einheitlichen geodätischen Raumbezug anwendungsneutral beschreiben.
+
+Geobasisdaten werden durch die Vermessungsverwaltungen der Länder erhoben, geführt und bereitgestellt. Sie erfüllen die Funktion der Basisdaten für Geofachdaten.
+
+|(geographic) reference data
+
+|[[glossar_geodaten]]*Geodaten* |Geodaten sind Daten, die sich auf räumliche Objekte in Relation zum Erdkörper beziehen. |Geographic data
+
+|[[glossar_geodatenbestand]]*Geodatenbestand* |Geodatenbestand umfasst die Gesamtheit der geographischen Daten, die in einer Datenbank vorgehalten werden. |Geographic database
+
+|[[glossar_geoinformation]]*Geoinformationen* |Geoinformationen sind Geodaten, die für eine bestimmte Anwendung ausgewählt, bearbeitet und aggregiert wurden. |Geoinformation
+
+|[[glossar_geoinformationssystem]]*Geoinformationssystem* |Ein Geoinformationssystem ist ein System zur Erfassung, Speicherung, Prüfung, Veränderung, Integration, Analyse und Darstellung von Geoinformationen. |Geographic information system
+
+|[[glossar_geokodierung]]*Geokodierung* |Unter Geokodierung versteht man die Zuordnung von Objekten (Daten, Informationen) zur Erdoberfläche mit Hilfe eines (räumlichen) Referenzsystems. |Geocoding
+
+|[[glossar_grunddatenbestand]]*Grunddatenbestand* |Als Grunddatenbestand wird der von allen Vermessungsverwaltungen der Länder der Bundesrepublik Deutschland bundeseinheitlich zu führende und dem Nutzer länderübergreifend zur Verfügung stehende Datenbestand (in AFIS, ALKIS und ATKIS) bezeichnet. a|
+(geographic)
+
+core data inventory
+
+|[[glossar_historisierung]]*Historisierung* |Als Historisierung bezeichnet man das Entstehen der letzten Version (Untergang) eines Fachobjektes. |Historization
+
+|[[glossar_identifikator]]*Identifikator* a|
+Der Identifikator kennzeichnet ein Objekt eineindeutig (unique). Er ist eine besondere selbstbezogene Eigenschaft des Objekts und steht stellvertretend für das Objekt, das er repräsentiert. Er bleibt so lange unverändert, wie das entsprechende Objekt existiert.
+
+Die für den AFIS-ALKIS-ATKIS-Datenaustausch definierte Austauschschnittstelle beruht auf der Anwendung der Norm ISO 19118 Encoding. Die daher Normbasierte Austauschschnittstelle wird mit "NAS" abgekürzt.
+
+|Identifier
+
+|[[glossar_kardinalitaet]]*Kardinalität* a|
+Die Kardinalität ist die Mächtigkeit einer Menge bzw. die Anzahl der Elemente einer endlichen Menge. In der Modellierung wird dies durch den Bereich möglicher Kardinalitäten ausgedrückt. Gebräuchliche Bereichsangaben in den Objektartenkatalogen sind z.B.:
+
+* 1..1 Kommt genau einmal vor.
+* 1..* Kommt einmal oder beliebig oft vor.
+* 0..1 Kommt keinmal oder einmal vor.
+* 0..* Kommt keinmal oder beliebig oft vor.
+
+|cardinality
+
+|[[glossar_kartengeometrieobjekt]]*Kartengeometrieobjekt* |Kartengeometrieobjekte sind Fachobjekte, die bei der Ableitung für einen bestimmten Kartenmaßstab aus Gründen der kartographischen Generalisierung ihre geometrische Form und/oder Lage verändert haben. |map geometry object
+
+|[[glossar_klasse]]*Klasse* a|
+Eine Klasse ist ein Begriff aus der objektorientierten Modellierung und beschreibt eine Menge von Objekten, die sich durch die gleichen Attribute, Methoden, Relationen und das gleiche (dynamische) Verhalten auszeichnen.
+
+descriptor of a set of objects that share the same attributes, operations, methods, relationships, and behaviour
+
+NOTE A class represent a concept within the system being modelled. Depending on the kind of model, the concept may be real-world (for an analysis model), or it may also contain algorithmic and computer implementation concepts (for a design model). A classifier is a generalization of class that includes other class-like elements, such as data type, actor and component.
+
+NOTE A class may use a set of interfaces to specify collections of operations it provides to its environment.
+
+|class
+
+|[[glossar_kodierung]]*Kodierung* |Die Kodierung ist die Abbildung von Informationen (Daten, Objekte) in ein (maschinenlesbares) Schlüsselsystem (Verschlüsseln); die inverse Abbildung ist die Dekodierung. |encoding
+
+|[[glossar_konzeptuelles_modell]]*konzeptuelles Modell* a|
+Ein konzeptuelles Modell ist als Abbild der realen Welt bezüglich konkreter Fachthemen zu verstehen.
+
+model that defines the concepts of a universe of discourse
+
+|conceptual model
+
+|[[glossar_konzeptuelles_schema]]*konzeptuelles Schema* a|
+Das konzeptuelle Schema beschreibt das konzeptuelle Modell mit Hilfe einer formellen Sprache.
+
+schema of a conceptual model
+
+A conceptual schema classifies objects into types and classes, identifying types of objects according to their properties and associations between types of objects.
+
+|conceptual schema
+
+|[[glossar_metadaten]]*Metadaten* a|
+Metadaten sind Daten über Daten. Sie dienen der Beschreibung der Geodaten hinsichtlich nutzerrelevanter Aspekte zur Bewertung der Eignung der Daten und des Zugriffs auf dieselben. ISO unterscheidet etwa 400 optionale, obligatorische und bedingt obligatorische Metadatenelemente.
+
+data describing and documenting data
+
+|metadata
+
+|[[glossar_metadatenkatalog]]*Metadatenkatalog* |Ein Metadatenkatalog ist ein Katalog mit beschreibenden Daten (Metadaten). Er enthält für jeden Datenbestand insbesondere Angaben über den Inhalt, die Darstellung, die Ausdehnung (sowohl geometrisch als auch zeitlich), den Raumbezug, die Qualität und die verantwortliche Institution, aufgrund derer ein Nutzer die Verfügbarkeit und Eignung der Geodatensätze für seine Zwecke bewerten kann. |metadata catalogue
+
+|[[glossar_metaobjektklasse]]*Metaobjektklasse* |Metaobjektklassen bzw. Metaklassen werden definiert, um auf deren Basis Fachobjekte zu instanziieren. Bei der Modellierung der Basisklassen wurde eine raumbezogene Metaobjektklasse (GF_FeatureType aus ISO 19109) verwendet. |metaclass
+
+|[[glossar_methode]]*Methode* |Eine Methode ist eine an ein Objekt gebundene Funktion. Sie hat nur Auswirkungen auf dieses Objekt selbst bzw. auf dessen Eigenschaften (Attribute, Geometrie und Relationen). |method
+
+|[[glossar_modell]]*Modell* a|
+Ein Modell ist eine vereinfachende bildliche oder mathematische Darstellung von Strukturen und des Verhaltens komplexer Sachverhalte der realen Welt. Es dient der Lösung bestimmter Aufgaben, deren Bewältigung am Original unmöglich oder unzweckmäßig ist.
+
+model
+
+abstraction of some aspects of reality
+
+|model
+
+|[[glossar_modellierungssprache]]*Modellierungssprache* a|
+Eine Modellierungssprache bietet darstellende und/oder lexikalische (textliche) Elemente zur Beschreibung eines Modells. Für die Modellierung im Fachbereich AFIS-ALKIS-ATKIS wird gemäß ISO 19103 die Unified Modeling Language (UML) verwendet.
+
+formal language based on a conceptual formalism for the purpose of representing conceptual schemas
+
+EXAMPLE UML, EXPRESS, IDEFIX
+
+NOTE A conceptual schema language may be lexical or graphical.
+
+|conceptual schema language
+
+|[[glossar_normen]]*Normen* |Normen dienen der Standardisierung verschiedenster Bereiche menschlichen Wirkens. Eine Art von Normen sind ISO-Normen: Dokumente, die von Mitgliedern der International Organization for Standardization (ISO) in sogenannten Technical Committees (TC) im Rahmen eines mehrstufigen Entwicklungsprozesses erstellt werden. Für Geoinformation ist das TC 211 "Geographic information/Geomatics" zuständig (siehe http://www.isotc211.org/[http://www.isotc211.org/]). Dabei durchlaufen diese Dokumente mehrere Reifestadien. Endstadium ist das des "International Standard".. |de-jure standards
+
+|[[glossar_nba]]*Nutzer-spezifische Bestandsdaten-aktualisierung* |Operation zur Fortführung von sekundären Datenbeständen mit Hilfe von Differenzdaten bzw. Änderungsdaten. |user-specific updating of secondary databases
+
+|[[glossar_objekt]]*Objekt* a|
+Ein Objekt (Instanz einer Klasse) ist ein materieller oder immaterieller Gegenstand der fachlichen Realität, der eindeutig identifizierbar und durch Abstraktion auf seine relevanten Eigenschaften beschränkt ist. Dies schließt seinen Zustand und sein Verhalten ein.
+
+-> <<glossar_fachobjekt,Fachobjekt>>
+
+a discrete entity with a well-defined boundary and identity that encapsulates state and behaviour; an instance of a class
+
+|object
+
+|[[glossar_objektart]]*Objektart* a|
+Objekte werden nach verschiedenen Objektarten klassifiziert. Für jede Objektart werden im Objektartenkatalog alle erlaubten Eigenschaften festgelegt (Typenebene). Diese Festlegungen gelten dann für alle Ausprägungen (Instanzenebene), das sind die einzelnen Objekte dieser Art, uneingeschränkt. Jedes <<glossar_objekt,Objekt>> gehört zu genau einer Objektart.
+
+class of real world phenomena with common properties
+
+EXAMPLE The phenomenon 'Eiffel Tower' may be classified with other similar phenomena into a feature type 'tower'.
+
+NOTE In a feature catalogue, the basic level of classification is the feature type.
+
+|feature type
+
+|[[glossar_objektartenkatalog]]*Objektartenkatalog* a|
+Der Objektartenkatalog führt für alle Objektarten abschließend die auf der Grundlage des AFIS-ALKIS-ATKIS-Anwendungsschemas modellierten Datenelemente mit ihren Festlegungen auf.
+
+catalogue containing definitions and descriptions of the feature types, feature attributes, and feature relationships occurring in one or more sets of geographic data, together with any feature operations that may be applied
+
+|feature catalogue
+
+|[[glossar_objektbehaelter]]*Objektbehälter* |Der Objektbehälter bildet eine datentechnische Klammer um die verschiedenen Versionen eines Objekts, die dieses im Verlauf seines Lebens durchläuft. Durch "Klammerung" der Versionen innerhalb eines Objektbehälters bleibt die fachliche Objektsicht stets erhalten. |container for feature versions
+
+|[[glossar_objektidentifier]]*Objektidentifikator* |🡪 <<glossar_identifikator,Identifikator>> |object identifier
+
+|[[glossar_objektorientierung]]*Objektorientierung* |Grundlage der Objektorientierung, die sowohl bei der objektorientierten Modellierung von Systemen und Prozessen, bei der objektorientierten Programmierung als auch bei objektorientierten Datenbankmanagementsystemen eingesetzt wird, ist die Abstraktion der Realität in Objekte, Klassen und Beziehungen. Die Objektorientierung ist damit eine Methode (Konzept, Sprache) zur Modellierung von Sachverhalten, bei der sämtliche erforderlichen Informationen (Daten und Methoden) als gekapselte Objekte, die miteinander kommunizieren können, aufgefasst werden. |object orientation
+
+|[[glossar_objektstrukturierung]]*Objektstrukturierung* |Objektstrukturierung besagt, dass die in einem Anwendungsschema modellierten Sachverhalte in der Struktur von Objekten vorliegen und nach Objekten geordnet sind. Im Gegensatz zur Objektorientierung wird bei der objektstrukturierten Modellierung das Verhalten eines Objekts, das durch seine Methoden repräsentiert wird, nicht beschrieben. |object structuring
+
+|[[glossar_praesentationsobjekt]]*Präsentationsobjekt* |Präsentationsobjekte sind raumbezogene Elementarobjekte, welche die Fachobjekte um Angaben zur Darstellung von Schrift und Signaturen ergänzen. Dabei werden all jene Texte und Signaturen definiert, die nicht vollautomatisch für einen bestimmten Zielmaßstab einer Karte erzeugt und platziert werden können. Präsentationsobjekte sind in dem Objektartenkatalog zu definieren, auf dem sie aufbauen (z.B. ATKIS-Basis-OK). |presentation object
+
+|[[glossar_primaernachweis]]*Primärnachweis* |Der Primärnachweis ist der originäre, von der entsprechend fachlich zuständigen Stelle (Datenherr) geführte Datenbestand. |primary database
+
+|[[glossar_protokollobjekt]]*Protokollobjekt* |Ein Protokollobjekt dient der Übermittlung von Protokollinformationen. |protocol object
+
+|[[glossar_prozess]]*Prozess* a|
+Ein Prozess überführt einen Quelldatenbestand in einen Zieldatenbestand. Zur Beschreibung von Prozessen (Vorgänge, Methoden) werden die Sprachmittel textliche, formularmäßige Beschreibung und Pseudocode verwendet.
+
+Die "Prozesse in ALKIS" enthalten die Definitionen und Beschreibungen der Methoden und Vorgänge sowie die Prozessobjektarten zur Steuerung der Prozesse.
+
+|process
+
+|[[glossar_pseudocode]]*Pseudocode* |Der Pseudocode ist ein Sprachmittel zur Beschreibung eines Prozesses. In ihm erfolgt die Beschreibung der Bearbeitungsschritte eines Vorgangs mit der folgenden Notation: "objektart.methode (parameter)". |pseudocode
+
+|[[glossar_punktlinienthema]]*PunktLinienThema* |Ein PunktLinienThema im Sinne der Modellierung beinhaltet die Möglichkeit, Fachobjekte so zu gruppieren, dass sie Geometrien gemeinsam nutzen. Dies führt dazu, dass exakt übereinanderliegende Linien und Punkte sich gegenseitig zerschlagen und zu redundanzfreien Geometrien vereinigen. Sich kreuzende Linien führen nicht zur gegenseitigen Zerschlagung. Überlappende Flächen zerschlagen sich nicht zu den jeweils kleinstmöglichen Teilflächen. |point and line theme
+
+|[[glossar_qualifizierungsprozess]]*Qualifizierungsprozess* |Der Qualifizierungsprozess überführt die Erhebungsdaten (Ausgangsdaten) in die Fortführungsdaten (Zieldaten). Er dient der Qualitätssicherung und stellt sicher, dass die Fortführungsdaten den Qualitätsanforderungen entsprechen. |qualifying process
+
+|[[glossar_raumbezug]]*Raumbezug* |Der Raumbezug ist die geometrische (Lage und Form des Objekts) und/oder die topologische (Lagebeziehungen zwischen Objekten) Beschreibung eines Objekts und stellt somit den Bezug des Objekts zu einem räumlichen Ausschnitt der Erde her. |spatial reference
+
+|[[glossar_raumbezugsgrundform]]*Raumbezugsgrundform* |Raumbezugsgrundformen sind von der ISO-Norm 19107 _Spatial schema_ für die Verwendung in Anwendungsschemata zur Verfügung gestellte, vordefinierte "Geometrische Objekte" (GM_Objekt) und "Topologische Objekte" (TP_Objekt), die als UML-Klassen beschrieben sind. Die Raumbezugsgrundformen werden in der Regel als Attributwerte der Objekte geführt. |geometrical and topological primitives
+
+|[[glossar_relation]]*Relation* |Unter dem Begriff "_Relation"_ wird ganz allgemein eine semantische Verbindung zwischen Modellelementen verstanden. _Relation_ ist der Oberbegriff, unter dem die Begriffe _Assoziation, Generalisierung/Spezialisierung, Abhängigkeit_ und _Realisierung/Verfeinerung_ subsummiert werden. |relation
+
+|[[glossar_schema]]*Schema* |Ein Schema ist eine anschauliche (bildliche) Darstellung des Wesentlichen eines Sachverhalts. Es ist das Ergebnis der darstellenden und/oder lexikalischen (textlichen) Beschreibung eines Modells mit Hilfe einer (normierten) Modellierungssprache. |schema
+
+|[[glossar_sekundaernachweis]]*Sekundärnachweis* |Der Sekundärnachweis beinhaltet eine Kopie des gesamten Primärnachweises oder von Teilen desselben, die laufend aktualisiert wird. Die Fortführung des Sekundärnachweises erfolgt über die Nutzerbezogene Bestandsdatenaktualisierung (NBA). |secondary database
+
+|[[glossar_signaturenkatalog]]*Signaturenkatalog* |Ein Signaturenkatalog enthält Regeln, nach denen die im Ausgabekatalog definierten Ausgaben von Geodaten in Abhängigkeit von ihrem Objekttyp, von bestimmten Attributen/Attributwerten, von bestimmten Referenzbedingungen und/oder von zu berechnenden Werten signaturiert werden, und die Beschreibung aller vorkommenden Signaturen. Er ist an den jeweiligen Zielmaßstab angepasst. |portrayal catalogue
+
+|[[glossar_standard]]*Standard* a|
+Ein Standard ist ein breit akzeptiertes und angewandtes Regelwerk. Er wird meist nur von _einer_ Institution erzeugt, d.h. es existiert dafür kein internationales Gremium. Die Verbindlichkeit eines Standards geht oft nicht über eine einzelne Organisation hinaus. Ein Standard wird nicht offiziell international herausgegeben, wie dies bei Normen der Fall ist. Einen regulären Ablauf der Entstehung (wie bei Normen z.B. von DIN, ISO oder CEN) gibt es nicht.
+
+-> <<glossar_advstandard,AdV-Standard>>
+
+|de-facto standard
+|[[glossar_standardausgaben]]*Standardausgaben* |Mit Standardausgaben werden Regelfälle der Benutzung (auch im Sinne einheitlicher Produkte der AdV) abgedeckt. Es sind Ausgabeprodukte der AFIS-ALKIS-ATKIS-Daten, die normalen bzw. "normierten" Ansprüchen an die entsprechenden Datenbestände Genüge tun. Sie werden über die Definition einheitlicher Selektions- und Filterkriterien festgelegt. Beispiele von Standardausgaben für ALKIS sind die Liegenschaftskarte, der Flurstücks- und Eigentümernachweis und die Liegenschaftskarte mit Flurstücks- und Eigentümerangaben. |standard output
+
+|[[glossar_subschema]]*Subschema* |-> <<glossar_basisschema,Basisschema>> |subschema
+
+|[[glossar_transferprozess]]*Transferprozess* |Siehe xref:basisschema_prozesse_aaa_transfer[] |transfer process
+
+|[[glossar_uri]]*URI* a|
+Uniform Resource Identifier
+
+Zeichenkette, die eindeutig auf eine Ressource (Name, Datei etc.) verweist. Der Ort der Ressource ist nicht eingeschränkt (www, LAN, ...). URLs (Uniform Resource Locator) und URNs (Uniform Resource Name) sind Teilmengen von URIs.
+
+a|
+URI
+
+(Uniform Resource Identifier)
+
+generic set of all names/addresses that are short strings that refer to resources
+
+|[[glossar_versionierung]]*Versionierung* a|
+Versionierung ist die zeitlich geordnete Veränderung von Fachobjekten durch die Fortführung. Kernpunkt des Versionskonzeptes ist die Überlegung, dass jedes Fachobjekt neben anderen Informationen ein Lebenszeitintervall (bestehend aus Entstehungs- und Untergangsdatum/-zeit) führt.
+
+-> <<glossar_versionierungsschema,Versionierungsschema>>
+
+|versioning
+|[[glossar_versionierungsschema]]*Versionierungsschema* a|
+Das Versionierungsschema ist Teil des konzeptuellen Basisschemas und beschreibt Aspekte der zeitlichen Veränderung der Fachobjekte durch Fortführungen.
+
+-> <<glossar_objektbehaelter,Objektbehälter>>
+
+-> <<glossar_versionierung,Versionierung>>
+
+|versioning schema
+
+|[[glossar_vorgang]]*Vorgang* |Siehe xref:basisschema_prozesse_vorgang[] |operation
+
+|[[glossar_xmlschema]]*XML-Schema* |Das XML-Schema ist die lexikalische Beschreibung eines Anwendungsschemas auf der Basis von XML (Extensible Markup Language). Auf der Grundlage der im XML-Schema festgelegten Strukturen können XML-Dokumente zum Austausch von Daten geschaffen werden. Vgl. http://www.w3.org/TR/xmlschema-0/[http://www.w3.org/TR/xmlschema-0/]. |XML schema
+
+|[[glossar_zeitstempel]]*Zeitstempel* |Der Zeitstempel besteht aus Entstehungsdatum/-zeit, welche aus dem Attribut "Lebenszeitintervall" übernommen werden. Er ist als Ergänzung zum Objektidentifikator gedacht und soll bei der Fortführung das gezielte Identifizieren von Objektversionen ermöglichen. |time stamp
+
+|[[glossar_zuso]]*zusammengesetztes Objekt (ZUSO)* a|
+Zusammengesetzte Objekte werden gebildet, um den Zusammenhang zwischen einer beliebigen Zahl und Mischung semantisch zusammengehörender raumbezogener Elementarobjekte, nicht raumbezogener Elementarobjekte oder zusammengesetzter Objekte herzustellen. Ein zusammengesetztes Objekt muss aber mindestens ein Elementarobjekt als Bestandteil besitzen.
+
+xref:basisschema_prozesse_vorgang[] 
+
+siehe auch <<glossar_elementarobjekt,Elementarobjekt>>
+
+|composed object or complex object
+|===
+
+=== Abkürzungsverzeichnis
+
+[width="100%",cols="22%,78%",]
+|===
+|Abkürzung |Langtext
+
+|AdV |Arbeitsgemeinschaft der Vermessungsverwaltungen der Länder der Bundesrepublik Deutschland
+
+|AFIS |Amtliches Festpunktinformationssystem
+
+|ALB |Automatisiertes Liegenschaftsbuch
+
+|ALK |Automatisierte Liegenschaftskarte
+
+|ALKIS |Amtliches Liegenschaftskataster Informationssystem
+
+|ATKIS |Amtliches Topographisch-Kartographisches Informationssystem
+
+|ATS |Abstract Test Suite
+
+|BKG |Bundesamt für Kartographie und Geodäsie
+
+|CD |Commitee Draft
+
+|CER |Code-Listen- und Enumerations-Registry
+
+|CityGML |City Geography Markup Language
+
+|CRS |Coordinate Reference System
+
+|CSL |Conceptual Schema Language
+
+|DaBaG |DatenbankGrundbuch
+
+|DB |Datenbank
+
+|DBM |Digitales Bildmodell
+
+|DGM |Digitales Geländemodell
+
+|DHM |DigitalesHoehenModell
+
+|DLKM |LiegenschaftskatasterModell
+
+|DLM |Digitales Landschaftsmodell
+
+|DOP |Digitales Orthophoto
+
+|DTD |Document Type Definition
+
+|DTK |Digitale Topographische Karte
+
+|DXF |Data Exchange Format
+
+|FIS |Fachinformationssystem
+
+|GBO |Grundbuchordnung
+
+|GBV |Verordnung zur Durchführung der Grundbuchordnung
+
+|GeoBasis-DE |Modellart für LandbedeckungLandnutzung
+
+|GeoInfoDok |Dokumentation zur Modellierung der Geoinformationen des amtlichen Vermessungswesens
+
+|GIS |Geoinformationssystem
+
+|GML |Geography Markup Language
+
+|GV |Geometrische Verbesserungen
+
+|GVM |GeometrischesVerbesserungsModell
+
+|ID |Identifikator / Identifier
+
+|IFC |Industry Foundation Classes (Standard zur digitalen Beschreibung von Gebäudemodellen)
+
+|INSPIRE |Infrastructur for Spatial Information in Europe
+
+|ISO |International Organization for Standardization
+
+|LB |Landbedeckung
+
+|LN |Landnutzung
+
+|LoD |Level of detail (Detailstufen)
+
+|NAS |Normbasierte Austauschschnittstelle
+
+|NBA |Nutzerbezogene Bestandsdatenaktualisierung
+
+|NREO |Nicht raumbezogenes Elementarobjekt
+
+|OGC |Open Geospatial Consortium
+
+|OK |Objektartenkatalog
+
+|REO |Raumbezogenes Elementarobjekt
+
+|SK |Signaturenkatalog
+
+|TC |Technical Commitee
+
+|TK |Topographische Karte
+
+|UML |Unified Modeling Language
+
+|URI |Uniform Resource Identifier
+
+|URL |Uniform Resource Locator
+
+|URN |Uniform Resource Name
+
+|UUID |Universally Unique Identifier
+
+|XML |Extensible Markup Language
+
+|ZUSO |Zusammengesetztes Objekt
+|===
+
+=== Abbildungsverzeichnis
+
+list-of::image[]
+
+=== Tabellenverzeichnis
+
+list-of::table[]

@@ -1,0 +1,1308 @@
+[[nasops]]
+== NAS-Operationen
+
+Die NAS ist vom Grundsatz her zunächst für die Kommunikation nach "außen", d.h. für die Nutzer der AAA-Daten konzipiert. Darüber hinaus kann sie, je nach Implementierungskonzept, auch für die interne Kommunikation zwischen Erfassungs- bzw. Qualifizierungssystemen und Führungssystemen verwendet werden. In den folgenden Kapiteln sind die letztgenannten Funktionalitäten mit berücksichtigt. Eine Implementierung, die die interne Kommunikation mit systemspezifischen Funktionen ermöglicht, muss aus der Palette der beschriebenen Operationen der NAS nur diejenigen bereitstellen, die für die Abgabe von Daten an Dritte relevant sind. Dazu gehören insbesondere die Abgabe von Benutzungsdaten und die Führung von Sekundärnachweisen. Im Zuge der Realisierung einer netzbasierten Geodateninfrastruktur kann es darüber hinaus notwendig werden, weitere Funktionen als NAS-Operationen zur Verfügung zu stellen.
+
+Eine einheitliche und standardisierte Festlegung zur Datenübermittlung zwischen den Systemen verschiedener AAA-Softwareanbieter ist länderspezifisch zu realisieren. Aufgrund der unterschiedlichen Länderlösungen ist eine einheitliche Regelung in der GeoInfoDok zur automatisierten Kommunikation zwischen Primär- und Sekundärdatenhaltung nicht möglich.
+
+Für die Verwendung in Fachinformationssystemen sind drei allgemeine Operationen zur Fortführung von Bestandsdaten, zur Abfrage von Auszügen aus den Bestandsdaten und zur generellen Auskunft über die Eigenschaften der Bestandsdatenhaltung spezifiziert.
+
+[[nasops_funktionsumfang]]
+=== Funktionsumfang
+
+Die NAS soll verschiedene Operationen unterstützen. Folgender Bedarf wird z.Zt. gesehen:
+
+* Einrichten und Fortführen von Primärnachweisen
+* Anfordern von Ausgaben
+** Ausgabe von Benutzungsdaten (Auszüge)
+** Führen von Sekundärnachweisen (Erstausstattung und Fortführung)
+* Sperren und Entsperren von Objekten
+* Reservieren (von Punktnummer u.a.)
+* Übermittlung von Protokollinformationen (z.B. Verarbeitungsprotokolle, Fehlerprotokolle)
+* Ermitteln der Eigenschaften einer Bestandsdatenhaltung
+
+Zu jeder NAS-Operation gehören zwei XML-Schema-Definitionen, eine für den Aufruf der Operation (_Request_) und eine für das Ergebnis (_Response_):
+
+. Aufruf (_Request_) +
+z.B. Fortführungsauftrag, Benutzungsauftrag
+
+. Ergebnis (_Response_) +
+z.B. Fortführungsprotokoll, Benutzungsergebnis
+
+Hierbei ist durchaus die Mehrfachverwendung einer XML-Schema-Definition für mehrere Operationen möglich. Soweit standardisierte XML-Schemata für die genannten Zwecke vorliegen, werden diese verwendet, im anderen Fall werden die Definitionen selbst erstellt. Die XML-Schema-Definitionen für NAS-Operationen werden, wie alle anderen Inhalte der NAS, automatisch aus UML-Modellen abgeleitet werden. Für die Anwendungsbereiche AFIS und ALKIS wurden die UML-Modelle dazu bereits erstellt. Sollte es sich herausstellen, dass die dort vorgenommenen Definitionen auch für andere Anwendungen verwendet werden sollen, so sind jene an dieser Stelle aufzunehmen.
+
+Alle XML-Schemata für die NAS-Operationen sind in der Datei NAS-Operationen.xsd zusammengefasst. Die allgemein verwendbaren Basisoperationen sind in der Datei AAA-Bassisschema.xsd enthalten.
+
+Den Operationen liegt die OGC Web Services Common Specification 1.1 zugrunde, die einzuhalten ist. Insbesondere sollte jede NAS-Implementierung die GetCapabilities-Operation zu unterstützen.
+
+[#img_55,reftext='{figure-caption} {counter:figure-num}']
+.Das UML-Paket "NAS-Operationen" im Kontext der Bestandteile des Anwendungsschemas
+image::media/image55.png[media/image55,width=585,height=215]
+
+[[nasops_funktionsumfang_primaernachweise]]
+==== Einrichten und Fortführen von Primärnachweisen
+
+Da GML selbst keine Elemente für Fortführungsoperationen anbietet, werden zu diesem Zweck die Festlegungen des _Web Feature Service_ (WFS) von OGC verwendet. In der WFS-Spezifikation sind neben dem Transaktionsmechanismus 4 Änderungsfunktionen definiert: <Insert> (neues Objekt einfügen), <Update> (Objekt ändern), <Replace> (Objekt überschreiben) und <Delete> (Objekt löschen). In der NAS wird bei der Fortführung von Primärnachweisen <Update> nicht verwendet. Welche Änderungen zu <Replace> oder zu <Delete> mit anschließendem <Insert> führen, ist in den Objektartenkatalogen fachlich festzulegen. Dies gilt sowohl für Änderungen in den Attributwerten und Relationen als auch für geometrische Änderungen. Bei letzteren muss ggf. der Bearbeiter im Erhebungsprozess entscheiden, welche Fortführungsart zu verwenden ist.
+
+Beispiel:
+
+[source,xml,linenumbers]
+----
+<wfs:Transaction>
+  <wfs:Insert>
+    <AX_Flurstueck gml:id="DEBY0000F0000001">
+      <!-- ... -->
+    </AX_Flurstueck>
+    <AX_Gebaeude gml:id="DEBY0000G0000001">
+      <!-- ... -->
+    </AX_Gebaeude>
+  </wfs:Insert>
+  <wfs:Replace>
+    <AX_Flurstueck gml:id="DEBY0000F0000002">
+      <!-- ... -->
+    </AX_Flurstueck>
+    <fes:Filter>
+      <fes:ResourceId rid="DEBY0000F000000220010101T000000Z"/>
+    </fes:Filter>
+  </wfs:Replace>
+  <wfs:Delete typeName=AX_Buchungsstelle">
+    <fes:Filter>
+      <fes:ResourceId rid="DEBY0000B000000320010101T000000Z"/>
+      <fes:ResourceId rid="DEBY0000B000000420010101T000000Z"/>
+    </fes:Filter>
+  </wfs:Delete>
+</wfs:Transaction>
+
+----
+
+Folgendes ist zu beachten:
+
+* Die Filter-Ausdrücke bei <Delete>- und <Replace>-Operationen dürfen nur ResourceId-Elemente beinhalten. Komplexere Filterkriterien sind nicht erlaubt.
+* Bei ResourceId-Bedingungen in "<Replace>"- und "<Delete>"-Operationen wird der Identifikator zusätzlich um Entstehungsdatum/-zeit ergänzt, damit eine Prüfung auf Aktualität erfolgen kann. Datum und Uhrzeit werden ohne Trennzeichen kodiert, damit sie den Bedingungen einer XML ID genügen, also in der folgenden Form: CCYYMMDDThhmmssZ. Bezüglich der Ergänzung um Entstehungsdatum/-zeit gilt folgende Ausnahme: Innerhalb von Fortführungsaufträgen mit mehreren Fortführungsfällen kann bei <Replace> bzw. <Delete>-Anweisungen von mehrfach fortzuführenden Objekten ab dem 2. Fortführungsfall die Angabe von Entstehungsdatum/-zeit innerhalb der OID entfallen. Nur in diesem speziellen Fall erfolgt keine Prüfung der Aktualität und es wird die - soeben erzeugte - aktuelle Version genutzt.
+* In <Delete>-Operationen dürfen nur mehrere AAA-Objekte behandelt werden, wenn sie dieselbe Objektart haben; innerhalb von <Insert>-Operationen können unterschiedliche Objektarten vorkommen. <Replace>-Operationen behandeln immer nur ein Objekt.
+* Bei <Replace>-Operationen sind stets alle Eigenschaften des AAA-Objekts als "Properties" zu übergeben, also auch die unveränderten. Dies stellt eine Verschärfung der WFS-Spezifikation von OGC für die <Update>-Operation dar, in der gefordert wird, dass mindestens alle geänderten Eigenschaften übermittelt werden. Grund für diese Verschärfung war die Forderung, dass Datenhaltungskomponenten sich nicht merken müssen, welche Eigenschaften eines Objekts geändert wurden, sondern lediglich die Tatsache, dass ein Objekt geändert wurde.
+* In Analogie zu den ResourceId-Bedingungen müssen die OID bei Vorkommen mehrerer Versionen eines Objekts beim Objekt eindeutig sein. Dies wird durch Ergänzung der OID beim Objekt um Entstehungsdatum/-zeit ohne Trennzeichen erreicht.
+* Alle durchgeführten Änderungen innerhalb eines Fortführungsfalls werden zeitgleich gültig. In das Attribut "lebenszeitintervall" der Objekte wird die Systemzeit (umgerechnet in UTC) zum Beginn der Transaktion eingetragen. Dabei ist fallweise der Beginn- oder Endezeitpunkt zu belegen. Die angelieferten Angaben bei den einzelnen Fachobjekten sind unerheblich und werden überschrieben. Letzeres gilt nicht für die Ersteinrichtung eines Datenbestandes durch Übernahme von Objekten aus einem Vorgängerdatenbestand (Einrichtungsauftrag). Um hierbei ein Eintragen von historischen Informationen zu ermöglichen, wird dort die angelieferte Zeit übernommen. Wird als Datum/Zeit "9999-01-01T00:00:00Z" (Dummy-Datum/Zeit) angeliefert, so wird dies wie bei Fortführungsaufträgen mit der Systemzeit überschrieben. Zeitangaben werden immer in UTC-Zeit (Universal Time Coordinated, Greenwich Mean Time) gemacht. Die Zeiteinheit für die Einträge ins Lebenszeitintervall (Datentyp: DateTime) ist die volle Sekunde einschließlich der obligatorischen Kennung "Z" für UTC (CCYY-MM-DDTHH:MM:SSZ). Das Führungssystem stellt bei der Übernahme sicher, dass nicht 2 Versionen desselben Objekts mit identischem Lebenszeitintervall entstehen. Dies kann dann auftreten, wenn ein Objekt innerhalb eines Fortführungsauftrags in mehreren Fortführungsfällen verändert wird und diese aufgrund der Systemgeschwindigkeit in der gleichen Sekunde abgearbeitet werden.
+* Auf Objektarten, die den Stereotyp und den Tagged Value "retired" tragen, dürfen lediglich <Insert>- und <Delete>-Operationen angewendet werden, da im Rahmen der Einführung von neuen Referenzversionen der GeoInfoDok deren Migration und insgesamt auch deren Löschung vorgesehen sind. Fortführungen dieser Objekte in Primärnachweisen sind nicht erlaubt.
+* Attribute, Relationen und Wertearten mit dem Stereotyp und den Tagged Value "retired" dürfen keine Modifikationen erfahren. <Replace>-Operationen, welche die vorgenannten Dinge verändernd betreffen, sind daher unzulässig.
+
+Die XML-Schemata für einen Fortführungsauftrag und sein Ergebnis sind wie alle anderen NAS-Operationen in der Datei NAS-Operationen.xsd enthalten. Einrichtungsaufträge und deren Ergebnisse sind Unterklassen von Fortführungsaufträgen.
+
+Die Funktionen zur Fortführung werden in Systemen mit vollständigem Nachweis der Historie und in Systemen ohne vollständige Historie unterschiedlich ausgeführt:
+
+*Systeme ohne vollständigen Historiennachweis*
+
+_<Insert>_: +
+Die übermittelten Fachobjekte werden als neue Informationen eingetragen.
+
+_<Replace>_: +
+Die übermittelten Fachobjekte ersetzen die Fachobjekte, die denselben Identifikator haben. Zur eindeutigen Bezeichnung der zu überschreibenden bzw. zu versionierenden Version wird der Identifikator (XML-Attribut _rid_) des neuen Fachobjekts im Filterausdruck um die Angabe des Entstehungsdatums/-zeit der zu überschreibenden Objektversion ergänzt. Damit sollen Fehler aufgedeckt werden, die durch Fortführungsaufträge entstehen könnten, die nicht zum gespeicherten Datenbestand passen. Im aufnehmenden System wird das Fachobjekt wieder mit dem originalen (nicht um Entstehungsdatum/-zeit ergänzten) Identifikator gespeichert. Es ist nicht zulässig, die Operation _<Replace>_ durch _<Delete>_ und nachfolgendes _<Insert>_ mit demselben Identifikator zu ersetzen.
+
+_<Delete>_: +
+Das Attribut _rid_ des Filterausdrucks im WFS-<Delete>-Element bezeichnet das zu löschende Fachobjekt. Zur eindeutigen Bezeichnung der zu löschenden Version wird der Identifikator in der Austauschdatei um die Angabe des Entstehungsdatums/-zeit der zu löschenden Version ergänzt. Damit sollen Fehler aufgedeckt werden, die durch Fortführungsaufträge entstehen könnten, die nicht zum gespeicherten Datenbestand passen. Das so bezeichnete Objekt wird im aufnehmenden System mit allen selbstbezogenen Eigenschaften und referenzierten Raumbezugsgrundformen gelöscht. Raumbezugsgrundformen werden nur dann gelöscht, wenn sie von keinem weiteren Objekt referenziert werden.
+
+Diese Funktionalität wird vor allem von Datenhaltungssystemen genutzt, die Sekundärdatenbestände halten.
+
+*Systeme mit vollständigem Historiennachweis*
+
+Ist das aufnehmende System zur Führung eines vollständigen Historiennachweises konfiguriert, reagiert es auf
+
+_<Insert>_ +
+mit der Erzeugung einer neuen Instanz eines Objektbehälters und fügt in den Behälter eine erste Version des übermittelten Fachobjekts ein.
+
+_<Replace>_ +
+Die übermittelten Fachobjekte werden als neue Version in den durch den Identifikator bezeichneten Objektbehälter eingetragen. Zur eindeutigen Bezeichnung der Vorgängerversion wird der Identifikator im Filterausdruck (XML-Attribut _rid_) des neuen Fachobjekts in der Austauschdatei um die Angabe des Entstehungsdatums/-zeit der zu überschreibenden Objektversion ergänzt. Damit sollen Fehler aufgedeckt werden, die durch Fortführungsaufträge entstehen könnten, die nicht zum gespeicherten Datenbestand passen. Im aufnehmenden System bleibt das überschriebene Fachobjekt als historische Version bestehen.
+
+_<Delete>_ +
+Die im Filterausdruck durch den um Entstehungsdatum/-zeit erweiterten Identifikator (XML-Attribut _rid_) bezeichnete Version des Fachobjekts wird mit dem aktuellen Untergangsdatum/-zeit (aus der Systemzeit abgeleitet) versehen und dadurch historisiert. Das System stellt sicher, dass keine weiteren Versionen angelegt werden können.
+
+Diese Funktionalität wird auch von den Datenhaltungssystemen genutzt, die die Versionierung nur befristet zur Bereitstellung von Fortführungsinformationen für Dritte im Rahmen des NBA-Verfahrens (s.u.) verwenden.
+
+Das konzeptuelle Fachmodell für die Fortführung von ALKIS sowie die Abläufe bei dessen Fortführungsverarbeitung sind im Abschnitt "Erläuterungen zu ALKIS" #*TBD:* Genaue Referenz?# beschrieben.
+
+Hinweis: Das Fortführungsergebnis liefert derzeit nur minimale Informationen zurück. Grundsätzlich sinnvoll wären eine Gegenüberstellung von temporären und endgültigen Identifikatoren sowie eine Rückgabe von Entstehungsdatum/-zeit pro Fortführungsfall. Da dies in der aktuellen Version nicht erfolgt, müssen diese Informationen bei Bedarf, z.B. zur Codierung von Folgefortführungen, über einen nachfolgenden Bestandsdatenauszug aus der DHK erfragt werden.
+
+[[nasops_funktionsumfang_ausgabeanforderung]]
+==== Anfordern von Ausgaben
+
+Die aus einem Datenhaltungssystem auszugebenden Daten (Benutzungsdaten oder Daten zur Führung von Sekundärnachweisen) werden hinsichtlich des auszugebenden Informationsumfangs durch Kriterien zur Selektion und Filterung bestimmt. Ein Datenhaltungssystem muss deshalb in der Lage sein, komplexe Selektions- und Filterausdrücke auszuwerten und die sich damit qualifizierenden Daten auszugeben. Die *Selektion* erfolgt durch räumliche, fachliche (Objektart, Attribut, Relation) und zeitliche Kriterien. Diese Kriterien können auch geschachtelt und miteinander verbunden werden, so dass ganze Selektionsketten entstehen. Damit kann auch formuliert werden, welche Elemente weitere Elemente über Referenzen zur Ausgabe nachziehen. In der NAS wird stets nur die im Anwendungsschema als navigierbare Richtung gekennzeichnete Rolle der Assoziation angegeben. Gegenrelationen sind in der NAS nicht zulässig. Gleichwohl ist es zur Vereinfachung von Filterausdrücken möglich, Objekte anzufordern, die per Gegenrelation mit einem Objekt verbunden sind. Hierbei ist - soweit vorhanden - der explizit im Modell benannte Rollenname der Gegenrelation zu verwenden, in Ermangelung eines solchen der um "inversZu_" ergänzte Rollenname der als navigierbare Richtung gekennzeichneten Rolle.
+
+Kriterien der *Filterung* bestimmen, welche Elemente der Selektionskette ausgegeben werden sollen und welche Attribute und Verweise mit diesen Elementen ausgegeben werden.
+
+Die Selektions- und Filterungskriterien werden als Bestandteil der Benutzungsanforderung an das datenführende System übermittelt oder dort in Benutzerprofilen hinterlegt. Für die Definition einheitlicher Produkte der AdV werden einheitliche Selektions- und Filterkriterien definiert. Als formale Sprache zur Definition der Selektionsketten wird die _Filter Encoding Specification_ von OGC verwendet.
+
+Das XML-Schema für einen Benutzungsauftrag ist in der Datei NAS-Operationen.xsd enthalten. Es nutzt das Schema filter.xsd von OGC.
+
+*Grundsätze für die Selektion von Objekten (Filter Encoding)*
+
+Zum Codieren einer Selektion wird das <wfs:Query>-Element aus der "Web Feature Service"-Spezifikation (WFS) des Open Geospatial Consortiums in der Version 2.0 verwendet. In einer Selektion können mehrere Queries vorkommen, wobei sich jede Query auf eine instanziierbare Objektart bezieht. Die unterschiedlichen Queries wirken ergänzend.
+
+Die aktuelle Filter-Encoding-Spezifikation unterstützt bei Ad-Hoc-Queries und den geforderten Konformitätsklassen nur die Angabe der konkreten, instanziierten Objektarten, d.h. die im AAA-Anwendungsschema modellierte Vererbungshierarchie wird nicht unterstützt. Es ist also z.B. nicht möglich, eine einzige Query für "AX_TatsaechlicheNutzung" abzusetzen, um alle TN-Objekte zu erfragen, sondern es muss ein <wfs:Query>-Element pro Objektart angegeben werden. Hierfür wäre eine Unterstützung der Konformitätsklasse "Schema Element Function" erforderlich. Queries auf Modellelemente mit Stereotype und Tagged Value "retired" sind ohne Einschränkungen möglich.
+
+In eine <wfs:Query> eingebettet ist u.a. ein <fes:Filter>-Element zur Filterung der Objekte aus dem Gesamtumfang der Objektart. Ein <fes:Filter>-Ausdruck besteht aus einem Prädikat, das für jedes Objekt der Objektart in der Datenbasis, auf der die Suche ausgeführt werden soll, angewendet wird. Erfüllt das Objekt das Prädikat, ist es Teil der Selektion, ansonsten nicht. Die Prädikate sind entsprechend so zu verstehen, dass sie grundsätzlich auf den XML-Instanzen wirken, die diese Objekte repräsentieren.
+
+Entsprechend besteht das Prädikat aus einem booleschen Ausdruck, der aus beliebig vielen atomaren Operatoren besteht, die über
+
+* die logischen Operatoren
++
+<fes:And>
++
+<fes:Or>
++
+<fes:Not>
++
+verbunden werden.
+
+Bei den atomaren Operatoren werden
+
+* räumliche Operatoren
++
+<fes:Equals>
++
+<fes:Disjoint>
++
+<fes:Touches>
++
+<fes:Within>
++
+<fes:Overlaps>
++
+<fes:Crosses>
++
+<fes:Intersects>
++
+<fes:Contains>
++
+<fes:DWithin>
++
+<fes:Beyond>
++
+<fes:BBOX>
+
+und
+
+* Vergleichsoperatoren
++
+<fes:PropertyIsEqualTo> (=)
++
+<fes:PropertyIsNotEqualTo> (<>)
++
+<fes:PropertyIsLessThan> (<)
++
+<fes:PropertyIsGreaterThan> (>)
++
+<fes:PropertyIsLessThanOrEqualTo> (=<)
++
+<fes:PropertyIsGreaterThanOrEqualTo> (>=)
++
+<fes:PropertyIsLike> (Textvergleich mit Wildcards für ein oder mehrere
+Zeichen)
++
+<fes:PropertyIsNull> (Prüfung auf fehlenden Wert)
++
+<fes:PropertyIsBetween> (Kombination von >= und \<=)
+
+unterstützt. Die Bedeutung der logischen Operatoren und der Vergleichsoperatoren ergibt sich aus der in SQL verwendeten bzw. der direkt mit dem Namen ausgedrückten Bedeutung.
+
+Die Bedeutung der räumlichen Operatoren ist i.d.R. in der OpenGIS Simple Features Spezifikation definiert und in das Filter Encoding übernommen worden. Vermutlich ist <fes:Intersects> der wichtigste Operator, der "true" ergibt, wenn zwei Geometrien nicht überschneidungsfrei sind. <fes:BBOX> ist eine vereinfachte Form, die als Testgeometrie nur eine Bounding Box erlaubt. <fes:Disjoint> ist die Umkehrung zu <fes:Intersects>. <fes:Contains> oder <fes:Within> sind zu verwenden, wenn es nicht um Überlappung geht, sondern um echtes Enthaltensein. Für weitergehende Fragen, siehe die OpenGIS Spezifikationen Filter Encoding und Simple Features for SQL.
+
+Bei räumlichen Operatoren und den Vergleichsoperatoren wird i.d.R. eine Eigenschaft des Objekts angegeben, für die der Vergleich durchgeführt werden soll.
+
+Dies geschieht unter Verwendung von Xpath, dabei beschränkt man sich auf die Kurzschreibweise. Dies bedeutet:
+
+* Ein Attribut att der Query-Objektart wird wie folgt referenziert:
++
+[source,xml]
+----
+<fes:ValueReference>att</fes:ValueReference>
+----
++
+Oder mit einem konkreten Beispiel aus dem AAA-Anwendungsschema:
++
+[source,xml]
+----
+<fes:ValueReference>flurstueckskennzeichen</fes:ValueReference>
+----
+
+* Sofern att ein Attribut der Query-Objektart ist und der Wert des
+Attributs vom Datentyp AX_DT ist und darin das Attribut att2
+referenziert werden soll, dann geschieht dies wie folgt:
++
+[source,xml]
+----
+<fes:ValueReference>att/AX_DT/att2</fes:ValueReference>
+----
++
+Oder mit einem konkreten Beispiel aus dem AAA-Anwendungsschema:
++
+[source,xml]
+----
+<fes:ValueReference>lebenszeitintervall/AA_Lebenszeitintervall/endet</fes:ValueReference>
+----
+
+* Eine Relation (genauer gesagt die Rolle in der Definitionsrichtung einer
+Relation) rel der Query-Objektart wird wie folgt referenziert:
++
+[source,xml]
+----
+<fes:ValueReference>rel</fes:ValueReference>
+----
++
+Handelt es sich dabei um die Objektart AX_OA als Relationspartner und
+besitzt dieses ein Attribut att3, dann wird dieses wie folgt
+referenziert:
++
+[source,xml]
+----
+<fes:ValueReference>rel/AX_OA/att3</fes:ValueReference>
+----
++
+Oder mit einem konkreten Beispiel aus dem AAA-Anwendungsschema (über
+zwei Relationen):
++
+[source,xml]
+----
+<fes:ValueReference>istGebucht/AX_Buchungsstelle/zu/AX_Buchungsstelle/laufendeNummer</fes:ValueReference>
+----
++
+In Fällen wo ein Relationspartner im Schema eine abstrakte Objektart ist
+(z.B. AA_ZUSO), muss in dem Xpath-Ausdruck eine instanziierbare
+Objektart genannt werden, wie in dem folgenden Beispiel:
++ 
+[source,xml]
+----
+<fes:ValueReference>istTeilVon/AX_Schwerefestpunkt/bestehtAus/AX_Schwere/schweresystem</fes:ValueReference>
+----
++
+In diesem Fall werden alle Eigenschaftspfade, die nicht dem Xpath-Ausdruck genügen, nicht beachtet. Ist das in der Selektion zu prüfende Objekt gleichzeitig Teil von einem Schwerefestpunkt und einem anderen ZUSO werden keine Eigenschaften des anderen ZUSO in der Selektion berücksichtigt; ebenso werden keine anderen Objekte, aus denen der Schwerefestpunkt neben AX_Schwere-Objekten besteht, berücksichtigt.
+
+* Für den Fall, dass ein XML-Attribut konkret referenziert und ausgewertet
+werden muss (z.B. "uom" oder "srsName"), so geschieht dies wie folgt:
++
+[source,xml]
+----
+<fes:ValueReference>att/@xmlatt</fes:ValueReference>
+----
++
+Oder mit zwei konkreten Beispielen aus dem AAA-Anwendungsschema:
++
+[source,xml]
+----
+<fes:ValueReference>amtlicheFlaeche/@uom</fes:ValueReference>
+----
++
+[source,xml]
+----
+<fes:ValueReference>bestehtAus/AX_PunktortAU/@srsName</fes:ValueReference>
+----
+
+Hierbei wird davon ausgegangen, dass der Default-Namespace des XML-Dokuments "http://www.adv-online.de/namespaces/adv/gid/_version_" ist. Ansonsten sind alle Bezeichner durch das Namespacekürzel zu qualifizieren (wie dies im Beispiel von xlink:href oben bereits erfolgt ist), also in der Regel
+
+[source,xml]
+----
+<fes:ValueReference>adv:att</fes:ValueReference>
+----
+
+statt
+
+[source,xml]
+----
+<fes:ValueReference>att</fes:ValueReference>
+----
+
+Im Fall von einfachen Attributen wird i.d.R. der Vergleichsoperator den Attributwert mit einem festen Wert vergleichen (Element <fes:Literal>), z.B.
+
+[source,xml]
+----
+<fes:PropertyIsEqualTo>
+  <fes:ValueReference>stellenart</fes:ValueReference>
+  <fes:Literal>1100</fes:Literal>
+</fes:PropertyIsEqualTo>
+----
+
+was für alle Objekte in der Datenbasis erfüllt ist, bei denen das Stellenart-Attribut einen entsprechenden Wert (Werteart 1100) aufweist, oder
+
+[source,xml]
+----
+<fes:PropertyIsGreaterThanOrEqualTo>
+  <fes:ValueReference>lebenszeitintervall/AA_Lebenszeitintervall/beginnt</fes:ValueReference>
+  <fes:Literal>2003-05-20T00:00:00Z</fes:Literal>
+</fes:PropertyIsGreaterThanOrEqualTo>
+----
+
+oder
+
+[source,xml]
+----
+<fes:PropertyIsLessThan>
+  <fes:ValueReference>lebenszeitintervall/AA_Lebenszeitintervall/endet</fes:ValueReference>
+  <fes:Literal>2003-05-20T00:00:00Z</fes:Literal>
+</fes:PropertyIsGreaterThanOrEqualTo>
+----
+
+oder im Fall der Prüfung auf einen nicht vorhandenen Wert
+
+[source,xml]
+----
+<fes:PropertyIsNull>
+  <fes:ValueReference>lebenszeitintervall/AA_Lebenszeitintervall/endet</fes:ValueReference>
+</fes:PropertyIsNull>
+----
+
+Für den Operator <PropertyIsNotEqualTo> des OGC-Filter Encodings gehören keine NULL-Werte zur Ergebnismenge. <PropertyIsNotEqualTo> liefert somit zu <PropertyIsEqualTo> keine komplementären Mengen zurück, sodass eine zusätzliche <PropertyIsNull>-Abfrage hinzugenommen werden muss.
+
+Dies ist beispielsweise bei einer Abfrage nach allen Flustücksnennern ungleich 3 bezogen auf folgenden Gesamtbestand der Fall: Flurstück 100/1, 100/2, 100/3, 111. <PropertyIsNotEqualTo> 3 </PropertyIsNotEqualTo> würde liefern: Flurstücke 100/1, 100/2, *nicht aber* 111.
+
+Für die Prüfung auf Werte in einem Bereich, z.B. für die Prüfung ob die Stellenart ein Wert im 1xxx-Bereich ist, würde folgender Vergleich verwendet:
+
+[source,xml]
+----
+<fes:PropertyIsBetween>
+  <fes:ValueReference>stellenart</fes:ValueReference>
+  <fes:LowerBoundary>
+    <fes:Literal>1000</fes:Literal>
+  </fes:LowerBoundary>
+  <fes:UpperBoundary>
+    <fes:Literal>1999</fes:Literal>
+  </fes:UpperBoundary>
+</fes:PropertyIsBetween>
+----
+
+Analog ein Prädikat für Flurstücke mit einer amtlichen Fläche von mindestens 1000qm aber maximal 2000qm:
+
+[source,xml]
+----
+<fes:PropertyIsBetween>
+  <fes:ValueReference>amtlicheFlaeche</fes:ValueReference>
+  <fes:LowerBoundary>
+    <fes:Literal>1000</fes:Literal>
+  </fes:LowerBoundary>
+  <fes:UpperBoundary>
+    <fes:Literal>2000</fes:Literal>
+  </fes:UpperBoundary>
+</fes:PropertyIsBetween>
+----
+
+Der LIKE-Vergleich ist für flexible Textvergleiche hilfreich. So filtert das folgende Prädikat alle Anschriften heraus, deren Telefonnummer mit 0228 beginnt
+
+[source,xml]
+----
+<fes:PropertyIsLike wildCard="*" singleChar="?" escapeChar="\">
+  <fes:ValueReference>telefon</fes:ValueReference>
+  <fes:Literal>0228*</fes:Literal>
+</fes:PropertyIsLike>
+----
+
+während das folgende Prädikat die Personen filtert, bei denen der Geburtsname gesetzt ist, mit einem "M" beginnt und als dritten und vierten Buchstaben ein "t" hat:
+
+[source,xml]
+----
+<fes:PropertyIsLike wildCard="*" singleChar="?" escapeChar="\">
+  <fes:ValueReference>geburtsname</fes:ValueReference>
+  <fes:Literal>M?tt*</fes:Literal>
+</fes:PropertyIsLike>
+----
+
+Bei räumlichen Operatoren erfolgt ein Vergleich einer Eigenschaft (der Name der geometrischen Attributart) mit einer festen Geometrie analog zu den Vergleichen einer textlichen oder numerischen Eigenschaft mit einem festen Wert. Bei den räumlichen Operatoren wird der feste Wert statt durch ein <fes:Literal>-Element durch das jeweilige GML-Geometrieelement ausgedrückt, zum Beispiel
+
+[source,xml]
+----
+<fes:Intersects>
+  <fes:ValueReference>position</fes:ValueReference>
+  <gml:Polygon gml:id="_1">
+    <gml:exterior>
+      <gml:Ring>
+        <!-- hier steht der Umring der Suchfläche -->
+      </gml:Ring>
+    </gml:exterior>
+  </gml:Polygon>
+</fes:Intersects>
+----
+
+Sofern der Gesamtschlüssel eines Katalogeintrags bekannt ist, kann der entsprechende Katalogeintrag z.B. mit einer Query der folgenden Art erfragt werden (hier die Gemarkung mit der Kennung "071234"):
+
+[source,xml]
+----
+<wfs:Query typeNames="AX_Gemarkung">
+  <fes:Filter>
+    <fes:PropertyIsEqualTo>
+      <fes:ValueReference>schluesselGesamt</fes:ValueReference>
+      <fes:Literal>071234</fes:Literal>
+    </fes:PropertyIsEqualTo>
+  </fes:Filter>
+</wfs:Query>
+----
+
+Sollen alle Katalogeinträge mit einem bestimmten Teilschlüssel erfragt werden, dann kann entweder mit <fes:PropertyIsLike> oder mit Vergleichsoperatoren für die einzelnen Attribute des Schlüssel-Datentyps gesucht werden. Alle Gemarkungen im Land findet man z.B. mit:
+
+[source,xml]
+----
+<wfs:Query typeNames="AX_Gemarkung">
+  <fes:Filter>
+    <fes:PropertyIsLike wildCard="*" singleChar="?" escapeChar="\">
+      <fes:ValueReference>schluesselGesamt</fes:ValueReference>
+      <fes:Literal>07*</fes:Literal>
+    </fes:PropertyIsLike>
+  </fes:Filter>
+</wfs:Query>
+----
+
+oder
+
+[source,xml]
+----
+<wfs:Query typeNames="AX_Gemarkung">
+  <fes:Filter>
+    <fes:PropertyIsEqualTo>
+      <fes:ValueReference>schluessel/AX_Gemarkung_Schluessel/land</fes:ValueReference>
+      <fes:Literal>07</fes:Literal>
+    </fes:PropertyIsEqualTo>
+  </fes:Filter>
+</wfs:Query>
+----
+
+Neben der Filter-Bedingung können in das <wfs:Query>-Element noch weitere Elemente eingebettet sein. Das Element <wfs:PropertyName> mit dem Attribut resolve="local" kann dazu genutzt werden, mit einer Query auf einen Schlag auch noch weitere Objekte in die Ergebnismenge aufzunehmen. Auf diese Weise kann die Anzahl der Queries - und damit auch der Benutzungsaufträge - häufig deutlich reduziert werden.
+
+Das Element
+
+[source,xml]
+----
+<wfs:PropertyName resolve="local" resolveDepth="1">
+gehoertAnteiligZu
+</wfs:PropertyName>
+----
+
+in einer AX_Flurstueck-Query führt dazu, dass entlang der Relation gehoertAnteiligZu alle Relationspartner bis zu einer Tiefe von 1 (also die direkten Relationspartner, in diesem Fall die betroffenen Flurstücke) in die Ergebnismenge aufgenommen werden.
+
+Ein anderes Beispiel, dass alle Punktorte mit unanhängiger Geometrie sowie alle ihre ZUSOs zurückliefert:
+
+[source,xml]
+----
+<wfs:Query typeNames="AX_Punktort_AU">
+  <wfs:PropertyName resolve="local" resolveDepth="1">istTeilVon</wfs:PropertyName>
+</wfs:Query>
+----
+
+Eine weitere Präzisierung der Abfrage wird durch das Attribut resolvePath unterstützt, das dazu führt, dass nicht in der Breite, sondern genau die Objekte entlang des Pfades in die Ergebnismenge aufgenommen werden.
+
+[source,xml]
+----
+<wfs:Query typeNames="AX_Flurstueck">
+  <wfs:PropertyName resolve="local" resolvePath="istBestandteilVon/AX_Buchungsblatt">
+istGebucht
+  </wfs:PropertyName>
+</wfs:Query>
+----
+
+Das Element <wfsext:PropertyName> aus dem Schema "WFS-Erweiterungen" hat die- selbe Semantik wie das Element <wfs:PropertyName> aus dem WFS-Schema ohne das Attribut resolveDepth und erweitert dieses um zwei zusätzliche Fähigkeiten. Wird das Elemente mit dem Attribut resolvePath und 'this' als als Name der Eigenschaft verwendet, dann stelllt das Schlüsselwort 'this' eine Relation auf das Ausgangsobjekt selbst dar, so dass - anders als bei <wfs:PropertyName> aus dem WFS 2.0 Standard - der vollständige Relationspfad ausgehend von der Objektart der Query in resolvePath angegeben wird. Dies ermöglicht, dass alle darin enthaltenen Objektarten auf der Ebene instanziierbarer Objektarten angegeben werden können.
+
+[source,xml]
+----
+<wfs:Query typeNames="AX_Punktort_AU">
+  <wfsext:PropertyName resolve="local" resolvePath="istTeilVon/AX_Aufnahmepunkt/hat/AX_Sicherungspunkt">this</wfsext:PropertyName>
+</wfs:Query>
+----
+
+Bei Verwendung des Elements <wfsext:PropertyName> ist die Angabe der letzten Zielobjektart im Relationspfad optional, d. h. sie kann weggelassen werden, damit sich im Falle einer abstrakten Zielobjektart alle abgeleiteten instanziierbaren Objektarten qualifizieren. Die folgende Query liefert alle neben allen Punktorten mit unabhängiger Geometrie auch alle zugehörigen Schwerefestpunkte sowie alle übrigen REOs und NREOs der Schwerefestpunkte zurück.
+
+[source,xml]
+----
+<wfs:Query typeNames="AX_Punktort_AU">
+  <wfsext:PropertyName resolve="local" resolvePath="istTeilVon/AX_Schwerefestpunkt/bestehtAus">this</wfsext:PropertyName>
+</wfs:Query>
+----
+
+Des Weiteren kann durch die Angabe des Attributs 'leafOnly' mit dem Wert 'true' die Erweiterung der Ergebnismenge auf die Objekte am Ende des Pfads in resolvePath eingeschränkt werden. Die übrigen Objekte entlang des Pfads werden nicht zurückgeliefert. Die folgende Query hat dieselbe Wirkung wie die vorherige Query mit der Änderung, dass keine Schwerefestpunkte zurückgeliefert werden.
+
+[source,xml]
+----
+<wfs:Query typeNames="AX_Punktort_AU">
+  <wfsext:PropertyName resolve="local" leafOnly="true" resolvePath="istTeilVon/AX_Schwerefestpunkt/bestehtAus">this</wfsext:PropertyName>
+</wfs:Query>
+----
+
+Sofern nur einzelne, ganz bestimmte nachgeordnete Objekte benötigt werden (in den Beispielen nur für wenige Punktorte die Punkte oder weitere Bestandteile der Punkte), dann bietet es sich i.d.R. an, die Selektion in zwei Abfragen aufzuteilen. Die erste Abfrage zur Selektion der Punktorte und anschließend die gezielte Selektion der benötigten Punkte.
+
+Die nachfolgenden Tabellen geben einen Überblick, wie die Attribute resolve, resolveDepth und resolvePath das Ergebnis einer Flurstücks-Query beeinflussen können.
+
+Die erste Tabelle verwendet dabei die Query nach dem Muster:
+
+[source,xml]
+----
+<wfs:Query typeNames="AX_Flurstueck">
+  <wfs:PropertyName resolve=[X1] resolveDepth=[X2] resolvePath=[X3]>istGebucht</wfs:PropertyName>
+</wfs:Query>
+----
+
+[width="100%",cols="16%,16%,21%,47%",options="header",]
+|===
+|*Wert* [X1] *von resolve* |*Wert* [X2] *von resolveDepth* |*Wert* [X3]
+*von resolvePath* |*Ergebnis*
+
+|(ohne Wert) |(ohne Wert) |(ohne Wert) |AX_Flurstueck, eingeschränkt auf
+alle Pflichteigenschaften einschließlich <istGebucht
+xlink:href=urn:adv:oid:DE.../> mit Verweis auf die AX_Buchungsstelle.
+
+|local |1 |(ohne Wert) a|
+AX_Flurstueck, eingeschränkt auf alle Pflichteigenschaften
+einschließlich <istGebucht xlink:href=urn:adv:oid:DE../> mit Verweis
+auf die AX_Buchungsstelle.
+
+Die AX_Buchungsstelle ist im Benutzungsergebnis enthalten.
+
+|local |2 |(ohne Wert) a|
+AX_Flurstueck, eingeschränkt auf alle Pflichteigenschaften
+einschließlich <istGebucht xlink:href=urn:adv:oid:DE../> mit Verweis
+auf die AX_Buchungsstelle.
+
+Die AX_Buchungsstelle und alle damit direkt verbundenen Objekte, d.h. Objekte der Objektarten AX_Buchungsblatt (beziehtSichauf, istBestandteilVon), AX_Flurstueck (verweistAuf), AX_Buchungsstelle (zu, an, durch, hatVorgaenger), AX_Verwaltung, (wirdVerwaltetVon), usw. sind im Benutzungsergebnis enthalten.
+
+|local |(ohne Wert) |istBestandteilVon/ AX_Buchungsblatt a|
+AX_Flurstueck, eingeschränkt auf alle Pflichteigenschaften
+einschließlich <istGebucht xlink:href=urn:adv:oid:DE../> mit Verweis
+auf die AX_Buchungsstelle.
+
+Die AX_Buchungsstelle und alle damit über die Eigenschaft
+istBestandteilVon direkt verbundenen AX_Buchungsblatt-Objekte sind im
+Ergebnis in feature collection enthalten.
+
+|local |(ohne Wert) |(ohne Wert) a|
+Es gilt der Default resolveDepth=*, d.h. zurückgeliefert würde
+AX_Flurstueck, eingeschränkt auf alle Pflichteigenschaften
+einschließlich <istGebucht xlink:href=urn:adv:oid:DE../> mit Verweis
+auf die AX_Buchungsstelle.
+
+Die AX_Buchungsstelle und alle damit direkt oder indirekt verbundenen
+Objekte sind im Benutzungsergebnis enthalten. Achtung: Aufgrund der
+weitreichenden Verwendung von Relationen im AAA-Anwendungsschema kann
+der zurückgelieferte Datenumfang erheblich sein, bis hin zum gesamten
+Datenbestand.
+
+|===
+
+Es kann somit entweder nur 'resolvePath' oder nur 'resolveDepth' in einer Query verwendet werden, aber nicht beide gleichzeitig. Bei gleichzeitiger Angabe von 'resolvePath' und 'resolveDepth' ist letzterer Parameter zu ignorieren.
+
+Die zweite Tabelle verwendet die Query nach dem Muster:
+
+[source,xml]
+----
+<wfs:Query typeNames="AX_Flurstueck">
+  <wfsext:PropertyName resolve=[X1] resolvePath=[X3] leafOnly=[X4]>this</wfsext:PropertyName>
+</wfs:Query>
+----
+
+[width="100%",cols="16%,23%,18%,43%",options="header",]
+|===
+|*Wert* [X1] *von resolve* |*Wert* [X3] *von resolvePath* |*Wert* [X4]
+*von leafOnly* |*Ergebnis*
+
+|local |istGebucht/AX_Buchungsstelle |(ohne Wert), true false a|
+AX_Flurstueck, eingeschränkt auf alle Pflichteigenschaften einschließlich <istGebucht xlink:href="urn:adv:oid:DE..."/> mit Verweis auf die AX_Buchungsstelle.
+
+Die AX_Buchungsstelle ist im Benutzungsergebnis enthalten.
+
+'leafOnly' hat keine Auswirkungen.
+
+|local |istGebucht |(ohne Wert), true, false a|
+Gleiches Ergebnis, alle Werte von 'istGebucht' sind Buchungsstellen.
+
+|local |istGebucht/AX_Buchungsstelle/istBestandteilVon/AX_Buchungsblatt |(ohne Wert), false a|
+AX_Flurstueck, eingeschränkt auf alle Pflichteigenschaften einschließlich <istGebucht xlink:href="urn:adv:oid:DE…"/> mit Verweis auf die AX_Buchungsstelle.
+
+Die AX_Buchungsstelle und alle damit über die Eigenschaft 'istBestandteilVon' direkt verbundenen AX_Buchungsblatt-Objekte sind im Ergebnis in enthalten.
+
+|local |istGebucht/AX_Buchungsstelle/istBestandteilVon |(ohne Wert), false a|
+Gleiches Ergebnis, alle Werte von 'istBestandteilVon' sind Buchungsblätter.
+
+|local |istGebucht/AX_Buchungsstelle/istBestandteilVon/AX_Buchungsblatt |true a|
+AX_Flurstueck, eingeschränkt auf alle Pflichteigenschaften einschließlich <istGebucht xlink:href="urn:adv:oid:DE..."/> mit Verweis auf die AX_Buchungsstelle.
+
+Die mit der AX_Buchungsstelle über die Eigenschaft 'istBestandteilVon' direkt verbundenen AX_Buchungsblatt-Objekte sind im Ergebnis enthalten. Die Buchungsstelle ist selbst nicht im Ergebnis enthalten.
+
+|local |istGebucht/AX_Buchungsstelle/istBestandteilVon |true a|
+Gleiches Ergebnis, alle Werte von 'istBestandteilVon' sind Buchungsblätter.
+
+|===
+
+Bei 'Benutzungsergebnissen' erfolgt innerhalb einer <FeatureCollection> keine Klammerung in einer Ergebnismenge <AdditonalObjekts> für die zusätzlich über resolve, resolveDepth und resolvePath selektierten Objekte.
+
+In der NAS werden alle Relationen nur in einer, der im UML-Modell als navigierbar ausgezeichneten Richtung repräsentiert. Die folgende Query erfragt alle Flurstücke und die Buchungsstellen unter denen diese gebucht sind:
+
+[source,xml]
+----
+<wfs:Query typeNames="AX_Flurstueck">
+  <wfsext:PropertyName resolve="local" resolvePath="istGebucht/AX_Buchungsstelle/istBestandteilVon/AX_Buchungsblatt">this</wfsext:PropertyName>
+</wfs:Query>
+----
+
+Oder im Fall, dass ein Flurstück bekannt ist, dann kann aus dem <istGebucht>-Element der Identifikator der Buchungsstelle extrahiert werden (der String nach dem "urn:adv:oid:"-Präfix, in diesem Beispiel "DEBY123412345678") und die Buchungsstelle wie folgt erfragt werden:
+
+[source,xml]
+----
+<wfs:Query typeNames="AX_Buchungsstelle">
+  <fes:Filter>
+    <fes:ResourceId rid="DEBY123412345678"/>
+  </fes:Filter>
+</wfs:Query>
+----
+
+In umgekehrter Richtung, d.h. von der Buchungsstelle zum Flurstück ist die Relation zwar auch benannt ("grundstueckBestehtAus"), aber nicht in der NAS repräsentiert. Sollen nun die Flurstücke ermittelt werden, die über "istGebucht" einer bestimmten Buchungsstelle (im Beispiel wird wieder die ID "DEBY123412345678" verwendet) zugeordnet sind, so kann dies über die Prüfung der Relation erfolgen:
+
+[source,xml]
+----
+<wfs:Query typeNames="AX_Flurstueck">
+  <fes:Filter>
+    <fes:PropertyIsEqualTo>
+      <fes:ValueReference>istGebucht/AX_Buchungsstelle/gml:identifier</fes:ValueReference>
+      <fes:Literal>urn:adv:oid:DEBY123412345678</fes:Literal>
+    </fes:PropertyIsEqualTo>
+  </fes:Filter>
+</wfs:Query>
+----
+
+Eine äquivalente Abfrage (sofern sich Flurstück und Buchungsstelle in derselben lokalen Datenbasis befinden) ist
+
+[source,xml]
+----
+<wfs:Query typeNames="AX_Flurstueck">
+  <fes:Filter>
+    <fes:PropertyIsEqualTo>
+      <fes:ValueReference>istGebucht/AX_Buchungsstelle/@gml:id</fes:ValueReference>
+      <fes:Literal>DEBY123412345678</fes:Literal>
+    </fes:PropertyIsEqualTo>
+  </fes:Filter>
+</wfs:Query>
+----
+
+Eine Möglichkeit so etwas wie wfsext:PropertyName mit resolvePath auch in inverser Richtung, also das gleichzeitige Selektieren bestimmter Buchungsstellen und aller Flurstücke, die auf diese gebucht sind, besteht durch die Möglichkeit der Verwendung inverser Relationen in Filterausdrücken. Hier kann die Selektion stattdessen natürlich auch in zwei Schritten, d.h. über zwei Queries, erfolgen.
+
+In aller Regel werden mehrere Queries erforderlich sein, um sich die Objekte aus dem Datenbestand zu besorgen, die für komplexere Abfragen benötigt werden. Hierbei wird aus den Ergebnissen der vorigen Query die neue Query formuliert. Sehr häufig werden hierbei Zugriffe auf die Katalogeinträge zum Entschlüsseln von Schlüsselwerten erforderlich sein.
+
+In der NAS ist es unzulässig in einer WFS-Query durch die Angabe mehrerer Objektarten im Parameter 'typeNames' eine Verknüpfung als JOIN zu realisieren, auch wenn es diese Möglichkeit im WFS-Standard 2.0 gibt.
+
+[[nasops_funktionsumfang_erweiterungenogc]]
+==== Erweiterungen der OGC Standards
+
+Zur Codierung von Selektionskriterien wird das <wfs:Query>-Element aus der Spezifikation _"Web Feature Service, Version 2.0.2"_ in Verbindung mit den Festlegungen der Spezifikation _"Filter Encoding, Version 2.0.2"_ des Open Geospatial Consortiums verwendet. In OGC wird üblicherweise die Version nur bis zur zweiten Stelle referenziert (z.B. WFS 2.0, GML 3.2). Anzuwenden ist dann jedoch jeweils der letzte Bugfix, der über die dritte Stelle versioniert wird, bei WFS 2.0 beispielsweise WFS 2.0.2.
+
+Die Anforderungen an die Selektions- bzw. Filterfunktionalität von AFIS-ALKIS-ATKIS gingen in früheren GeoInfoDok-Versionen über die in den dabei zugrundeliegenden Versionen der OGC-Spezifikationen beschriebenen Funktionalitäten hinaus. Deshalb wurden bislang zusätzlich einige Erweiterungen festgeschrieben, die mit dieser Version nicht mehr erforderlich sind:
+
+* Über das matchAction-Attribut kann bei multiplen Objekteigenschaften inzwischen gesteuert werden, wie das Verhalten sein kann. Das für die GeoInfoDok vorgegebene Verhalten ist inzwischen das Standardverhalten des WFS (matchAction="Any").
++
+Das Verhalten von matchAction soll an einem einfachen Beispiel erläutert werden. Nehmen wir ein AX_Gebaeude mit den folgenden weiteren Gebäudefunktionen: 1010 (Hotel) und 1050 (Spielcasino).
++
+Verwendet wird die Query nach dem Muster
++
+[source,xml]
+----
+<wfs:Query typeNames="AX_Gebaeude">
+  <fes:Filter>
+    <fes:PropertyIsEqualTo matchAction="...">
+      <fes:ValueReference>weitereGebaeudefunktion</fes:ValueReference>
+      <fes:Literal>1050</fes:Literal>
+    </fes:PropertyIsEqualTo>
+  </fes:Filter>
+</wfs:Query>
+----
++
+Das Ergebnis der Query in Abhängigkeit von matchAction wird in folgender Tabelle erläutert.
+
+[width="100%",cols="19%,81%",options="header",]
+|===
+|*Wert von matchAction* |*Ergebnis*
+
+|Any |Das AX_Gebaeude wird im Ergebnis zurückgeliefert, da mindestens ein Attribut weitereGebaeudefunktion den Wert 1050 hat.
+
+|All |Das AX_Gebaeude wird im Ergebnis nicht zurückgeliefert, da nicht alle Attribute weitereGebaeudefunktion den Wert 1050 haben, sondern auch 1010 vorkommt.
+
+|One |Das AX_Gebaeude wird im Ergebnis zurückgeliefert, da genau ein Attribut weitereGebaeudefunktion den Wert 1050 hat.
+
+|(ohne Wert) |Das AX_Gebaeude wird im Ergebnis zurückgeliefert, da "Any" der Standardwert ist.
+|===
+
+* Das Element <wfsext:XlinkPropertyName> ist nicht länger erforderlich, wfs:PropertyName mit den Attributen resolve="local" und resolveDepth="1"hat dieselbe Wirkung wie bisher wfsext:XlinkPropertyName mit dem Attribut traverseXlinkDepth.
+* Das Element <wfsext:XlinkPropertyPath> wird durch wfs:PropertyName oder wfsext:PropertyName mit den Attributen resolve="local" und resolvePath ersetzt (siehe unten #*TBD:* Genaue Referenz?#). Das Element wfsext:PropertyName hat weitgehend die Wirkung wie bisher wfsext:XlinkPropertyPath.
++
+Hinweis: Der Grund für die Verwendung des GeoInfoDok-spezifischen Elements wfsext:PropertyName mit resolvePath statt wfs:PropertyName mit resolvePath ist folgender: Ist die Zielobjektart der im Inhalt des Elements <wfs:PropertyName> angegebenen Relationsart eine abstrakte Objektart und beginnt der weitere in resolvePath angegebene Relationspfad mit einer Relationsart, die in einer davon abgeleiteten Objektart definiert ist, dann ergibt sich insgesamt ein mehrdeutiger Relationspfad. Das Verhalten der Implementierung ist in diesem Fall undefiniert. Das Element wfsext:PropertyName mit vollständigem Pfad im Attribut resolvePath vermeidet diese Probleme.
+* Die Definition eines <wfsext:Replace>-Elements für Transaktionen ist nicht weiter erforderlich, da WFS 2.0.2 ein entsprechendes Element unterstützt.
+
+Darüber hinaus verwendet die GeoInfoDok noch einige wenige Festlegungen, die in dieser Form *kein* Bestandteil der oben genannten Spezifikationen sind:
+
+* Assoziationen können standardmäßig entweder über das Einbetten des referenzierten Objekts oder über einen "xlink:href"-Verweis zu diesem ausgedrückt werden. Beide Darstellungen sind hierbei semantisch grundsätzlich vollkommen äquivalent:
++
+[NOTE]
+======
+Zur einfacheren Interpretierbarkeit der NAS-Dateien ist die Verwendung der 2.
+Darstellung in der NAS explizit vorgeschrieben.
+======
++
+Darstellung 1:
++
+[source,xml]
+----
+<AX_Flurstueck>
+  <istGebucht>
+    <AX_Buchungsstelle gml:id="DEXXXX00000001">
+      <zu>
+        <AX_Buchungsstelle gml:id="DEXXXX00000002">
+          <laufendeNummer>1</laufendeNummer>
+        </AX_Buchungsstelle>
+      </zu>
+    </AX_Buchungsstelle>
+  </istGebucht>
+</AX_Flurstueck>
+----
++
+Darstellung 2:
++
+[source,xml]
+----
+<AX_Flurstueck>
+  <istGebucht xlink:href="urn:adv:oid:DEXXXX00000001"/>
+</AX_Flurstueck>
+<AX_Buchungsstelle gml:id="DEXXXX00000001">
+  <zu xlink:href="urn:adv:oid:DEXXXX00000002"/>
+</AX_Buchungsstelle>
+<AX_Buchungsstelle gml:id="DEXXXX00000002">
+  <laufendeNummer>1</laufendeNummer>
+</AX_Buchungsstelle>
+----
++
+Für die erste Darstellung ist eine explizite Verfolgung der Objekt-Assoziationen durch den "/"-Operator von Xpath in einem Web Feature Service bereits explizit erlaubt. Da diese Darstellungen semantisch äquivalent sind, wird explizit erlaubt, den "/"-Operator auch auf xlink:href-Verweise wirken zu lassen, wobei hier bis auf weiteres nur lokal auflösbare xlink:href-Verweise unterstützt werden müssen. Das bedeutet, dass z.B. eine Abfrage über die Flurstücke, deren Buchungsstelle über die "zu"-Relation mit einer anderen Buchungsstelle mit der laufenden Nummer "1" verbunden ist, wie folgt formuliert werden kann:
++
+[source,xml]
+----
+<wfs:Query typeNames="AX_Flurstueck">
+  <fes:Filter>
+    <fes:PropertyIsEqualTo>
+      <fes:ValueReference>istGebucht/AX_Buchungsstelle/zu/AX_Buchungsstelle/laufendeNummer</fes:ValueReference>
+      <fes:Literal>1</fes:Literal>
+    </fes:PropertyIsEqualTo>
+  </fes:Filter>
+</wfs:Query>
+----
++
+Verwendung von `<wfs:PropertyName>` mit Attributen `resolveDepth` bzw. `resolvePath`
++
+Die Verwendung ist innerhalb der Queries im Benutzungsauftrag sowie in den Nutzerprofilen erlaubt. Hierbei werden insbesondere die folgenden Regelungen festgehalten:
+
+** Sofern das Anwendungsschema (wie im Fall der NAS) fordert, dass die Objekt-Assoziationen nicht inline, sondern stets über xlink-Verweise angebunden sind, führt ein xlink-Traversal dazu, dass das referenzierte Objekt in der Ergebnismenge enthalten sind.
+** Die Auflösung von href-Verweisen unterstützt im Fall der NAS explizit die URN-Identifikatoren des AAA-Modells.
+** Eine Auflösung von href-Verweisen erfolgt nur für lokal verfügbare Ressourcen.
+
+* Verwendung von `<wfsext:PropertyName>` mit den Attributen resolve="local", resolvePath und optional 'leafOnly'. Das Verhalten ist identisch zur Verwendung von `<wfs:PropertyName>` mit den folgenden Unterschieden:
+
+** Als Inhalt des Elements kann das Schlüsselwort 'this' verwendet werden. Es stellt jeweils eine Relation von den Objektinstanzen der Ergebnismenge auf sich selbst dar. In 'resolvePath' wird bei der Verwendung von 'this' immer der vollständige Relationspfad bezogen auf die in der Query im Attribut 'typenames' angefragte Objektart angegeben. Die Objektart am Ende des Relationspfades in 'resolvePath' ist bei der Verwendung von 'this' optional. Wird sie nicht angegeben und ist das Ziel der letzten Relationsart eine abstrakte Objektart, dann qualifizieren sich alle daraus abgeleiteten Objektarten.
+
++
+Durch die Angabe des Attributs 'leafOnly' mit dem Wert 'true' kann zusätzlich die Erweiterung der Ergebnismenge auf die Objekte am Ende des Pfads in resolvePath eingeschränkt werden. Die übrigen Objekte entlang des Pfads werden nicht zurückgeliefert. Hinweis: In der GeoInfoDok 6.0.1 wurden diese WFS-Erweiterungen über das Element `<wfsext:XlinkPropertyPath>` realisiert.
+
+* Verwendung von `<wfsext:PropertyIsOfType>` zur Prüfung des Typs einer Objekteigenschaft. Bei Eigenschaften mit complexContent ist dies der qualifizierte Elementname des Kindelements, bei Eigenschaften mit simpleContent der qualifizierte Typname des Eigenschaftselements.
++
+Wenn der Typ der Objekteigenschaft `gml:ReferenceType` ist, ermittelt `<wfsext:PropertyIsOfType>` den qualifizierten Elementnamen des referenzierten Objekts (dessen Objektart).
++
+Beispiele unter Verwendung der Objektart AX_Flurstueck und "adv" als Namespacepräfix für die NAS und "xs" als Namespacepräfix für XML Schema:
+
+** Beim Attribut 'flurstuecksnummer', das einen Datentyp als Wert hat, liefert der Operator als Wert 'adv:AX_Flurstuecksnummer'.
+** Beim Attribut 'flurstueckskennzeichenKennung' (Attribut mit einem einfachen Wert) ist es 'xs:string'.
+** Bei der Relationsart 'istGebucht' ist es 'adv:AX_Buchungsstelle'.
+
++
+Besonders nützlich ist der Operator bei Fällen, wo der Wert der Relationsart eine abstrakte Objektart ist. Bei Punktorten ermöglicht der Operator beispielsweise das Filtern anhand der Art des Punktes (der Wert bei 'istTeilVon' ist der Elementname des referenzierten ZUSOs, also z.B. 'adv:AX_Sicherungspunkt').
+
+[[nasops_funktionsumfang_ausgabebenutzungsdaten]]
+==== Ausgabe von Benutzungsdaten
+
+Die Ausgabe von Benutzungsdaten ist eine Datenausgabe ohne explizite Angabe einer im aufnehmenden System auszuführenden Funktionalität. Eine spezielle Aufbereitung der Daten in Abhängigkeit von der Ausgabeanforderung (z.B. Herstellung der "flurstückszentrierten Sicht" in ALKIS) ist möglich, indem entsprechende temporäre Objekte ausgegeben werden.
+
+Für das Ergebnis einer Benutzung wird die wfs:FeatureCollection aus dem _Web Feature Service_ von OGC verwendet und für AAA entsprechend um weitere Informationen ergänzt. Für jede Art der Ausgabe wird je nach Benutzungsauftrag eine eigene Schema-Datei verwendet.
+
+[[nasops_funktionsumfang_sekundaernachweise]]
+==== Führung von Sekundärnachweisen
+
+Die Führung von Sekundärnachweisen erfolgt über die Nutzerbezogene Bestandsdatenaktualisierung fallbezogen oder stichtagsbezogen. Die nachfolgenden Regelungen gelten unabhängig davon, ob das NBA-Verfahren stichtags- oder fallbezogen erfolgt.
+
+Im Fall einer Führung der Sekundärdatenbank ohne vollständigen Historiennachweis, d.h. es ist in der Sekundärdatenbank stets nur der aktuelle Stand der Daten verfügbar, gelten die folgenden Regeln:
+
+* Die Operationen <wfs:Insert>, <wfs:Replace> und <wfs:Delete> werden sinngemäß wie bei der Führung von Primärnachweisen ohne vollständigen Historiennachweis durch das aufnehmende System ausgeführt.
+
+Im Fall einer Führung der Sekundärdatenbank mit vollständigem Historiennachweis, d.h. es werden in der Sekundärdatenbank zumindest temporär auch untergegangene Objekte und Objektversionen vorgehalten, gelten die folgenden Regeln:
+
+* Die Operationen <wfs:Insert> und <wfs:Replace> werden sinngemäß wie bei der Führung von Primärnachweisen mit vollständigem Historiennachweis durch das aufnehmende System ausgeführt.
++
+Ausnahme: Da in der Sekundärdatenhaltung Objektidentifikatoren und der Beginn des Lebenszeitintervalls der neuen Objektversionen nicht vom System vergeben werden, müssen diese abweichend zur Regelung bei der Fortführung von Primärnachweisen aus dem Attribut "@gml:id" bzw. dem Element "lebenszeitintervall/AA_Lebenszeitintervall/beginnt" übernommen werden.
+
+* In dem Fall, dass ein Objekt untergeht ("historisiert" wird), ist statt des <wfs:Delete>-Operators der ansonsten in der NAS nicht unterstützte <wfs:Update>-Operator verwendet. Mit dem Update dürfen ausschließlich die folgenden Eigenschaften verändert werden:
+* "lebenszeitintervall/AA_Lebenszeitintervall/endet" mit dem Zeitpunkt an dem die letzte Version des Objekts in der Primärdatenbank untergegangen ist. Die Fortschreibung dieser Eigenschaft muss bei jeder <wfs:Update>-Operation erfolgen.
+* "anlass" mit dem Entstehungs- und Untergangsanlass. Hierfür sind zwei <wfs:Property>-Elemente, jeweils mit dem qualifizierten Namen "anlass" zu verwenden; <wfs:Value> im ersten <wfs:Property>-Element ist der Entstehungsanlass, <wfs:Value> im zweiten <wfs:Property>-Element der Untergangsanlass. Diese Angaben sollen nur erfolgen, sofern in der Primärdatenbank ein Untergangsanlass vergeben wurde.
++
+Beispiel:
++
+[source,xml]
+----
+<wfs:Update typeName="adv:AX_Flurstueck">
+  <wfs:Property>
+    <wfs:ValueReference>adv:lebenszeitintervall/adv:AA_Lebenszeitintervall/adv:endet</wfs:ValueReference>
+    <wfs:Value>2007-11-13T12:00:00Z</wfs:Value>
+  </wfs:Property>
+  <wfs:Property>
+    <wfs:ValueReference>adv:anlass</wfs:ValueReference>
+    <wfs:Value>000000</wfs:Value>
+  </wfs:Property>
+  <wfs:Property>
+    <wfs:ValueReference>adv:anlass</wfs:ValueReference>
+    <wfs:Value>010102</wfs:Value>
+  </wfs:Property>
+  <fes:Filter>
+    <fes:ResourceId rid="DEBY123412345678"/>
+  </fes:Filter>
+</wfs:Update>
+----
+
+Da in der Sekundärdatenhaltung nie eine Aktualitätsprüfung erfolgt, wird für die Führung von Sekundärnachweisen abweichend von der Führung von Primärnachweisen festgelegt, dass das Attribut rid des Filterausdrucks im <wfs:Delete>-, <wfs:Replace>- oder <wfs:Update>-Element nie um die Angabe des Entstehungsdatums/-zeit der vorhandenen Version ergänzt wird.
+
+Diese Definitionen wurden so gewählt, dass möglichst weitgehend ein bestehender Web Feature Service ohne zusätzliche Anpassungen verwendet werden kann - insbesondere im Fall ohne Historienführung. Es ist allerdings erforderlich, dass der Web Feature Service die <wfs:Replace>-Operation der GeoInfoDok unterstützt.
+
+Wenn eine Sekundärdatenhaltung NBA-Abgaben an ein Tertiärsystem vornehmen soll, muss diese sicherstellen, dass alle Aufnahmen aus Primärsystemen auch berücksichtigt werden. Können bei der Abgabe der Daten aus Primärsystemen an eine Sekundärdatenhaltung nicht alle Daten übernommen werden, gibt es 2 Möglichkeiten:
+
+* Die Sekundärdatenhaltung muss bis zu einer Abgabe an ein Tertiärsystem warten bis alle Datenlieferungen aus den Primärsystemen übernommen werden können.
+* Die Sekundärdatenhaltung gibt nur die bisher von Primärsystemen übernommenen Daten an ein Tertiärsystem weiter. Sind die fehlenden Daten im Sekundärsystem übernommen, ist sicherzustellen, dass diese im nächsten Lieferzyklus an das Tertiärsystem weitergereicht werden. Dies kann z. B. in der Implementierung durch die Vergabe eines technischen Datums bei der NBA-Übernahme und Auswertung der NBA-Abgabe erfolgen.
+
+Um die unterschiedlichen Kundenanforderungen erfüllen zu können, ist bei Bedarf die entsprechende Möglichkeit in den Verfahrenslösungen zu implementieren.
+
+[[nasops_funktionsumfang_sperren]]
+==== Sperren und Entsperren von Objekten
+
+Sperraufträge ermöglichen das Sperren von Objekten im Führungssystem gegen Fortführungen von Dritten durch Angabe einer Liste mit Objekt-Identifikatoren. Entsperraufträge heben die Sperrung wieder auf. Objekte mit Stereotype und Tagged Value "retired" können weder gesperrt noch entsperrt werden.
+
+[[nasops_funktionsumfang_reservierungen]]
+==== Reservierungen
+
+Zur Reservierung von Kennungen (z.B. für Vermessungspunkte, Flurstückskennzeichen, etc.) können entsprechende Aufträge an ein Führungssystem formuliert werden. In der Ergebnis-Datei erhält man eine Liste mit den angeforderten Kennungen.
+
+[[nasops_funktionsumfang_protokolluebermittlung]]
+==== Übermittlung von Protokollinformationen
+
+Da für jede Operation der NAS sowohl eine _Request-_ als auch eine _Response_-Klasse definiert wurden, wird in letzterer definiert, welche Protokollinformation bei der jeweiligen Operation ausgegeben wird. Sie sind somit in den bei den einzelnen Operationen enthalten.
+
+[[nasops_funktionsumfang_bestandsdatenhaltungseigenschaften]]
+==== Ermitteln der Eigenschaften einer Bestandsdatenhaltung
+
+Jede Software-Komponente, die eine NAS-Schnittstelle besitzt, sollte die GetCapabilities-Operation unterstützen.
+
+[[nasops_austauscheinheiten]]
+=== Auszutauschende Einheiten
+
+Die kleinsten Einheiten des Datenaustauschs sind vollständige Fachobjekte. Dies gilt grundsätzlich auch für die Fortführung des Primärnachweises (AAA-Führungssystem). Unabhängig davon, ob sich Objekte durch eigene Eigenschaften zur Ausgabe qualifiziert haben oder über die Auswertung einer vorgegebenen Selektionskette zur Ausgabe qualifiziert wurden, sind sie hinsichtlich der Fortführungsfunktionalität grundsätzlich als eigene fortzuführende Einheit zu betrachten (Ausnahmen siehe Abschnitt "Erläuterungen zu ALKIS" #*TBD:* Genaue Referenz?#).
+
+Benutzungen, die nicht dem Zweck der Fortführung des Primärnachweises dienen, können, je nach Nutzerwunsch oder Nutzerprofil, unvollständige Fachobjekte (fehlende Attribute oder Relationen) oder durch spezielle Aufbereitung der Daten entstandene "temporäre Objekte" für den Datenaustausch erzeugen.
+
+Der Datenaustausch erfolgt in der NAS unabhängig vom konzeptuellen Modell der Versionierung (Behälter mit Versionen) so, als ob alle Objektversionen unabhängige Objekte wären. Auf diese Art und Weise ist es möglich, die Austauschschnittstelle für Stellen, die eine vollständige Historie führen und solche, die dies nicht tun, identisch zu definieren. Dabei sind jedoch folgende Rahmenbedingungen zu beachten:
+
+* Damit die Zahl der entstehenden Versionen reduziert wird, müssen zweiseitige Relationen im Datenaustausch durch eine einzige einseitige Relation dargestellt werden. Es wird diejenige Relation im Datenaustausch codiert, die im UML-Schema als bevorzugte Navigationsrichtung definiert wurde. Zweiseitige Relationen in genormten Schemata werden mittels geeigneten Parametrisierung durch einseitige ersetzt.
+* Um beim Datenaustausch die zu löschende oder zu überschreibende bzw. zu versionierende Version eines Objekts eindeutig identifizieren zu können, wird in der Austauschdatei der Identifikator in den XML-<Delete>- und -<Replace>-Elementen um Entstehungsdatum/-zeit ergänzt. Die Ergänzung des Identifikators um den Zeitstempel ist nur im Datenaustausch erforderlich, um sicherzustellen, dass sich Fortführungen auch auf den aktuellen Datenbestand beziehen. Im Datenbestand selbst werden die zu referenzierenden Versionen durch Auswertung des Lebenszeitintervalls der Versionen auf attributiver Ebene gewonnen.
+
+[[nasops_implfunkt]]
+=== Implizite Funktionalität
+
+Bei der Führung von Primär- und Sekundärnachweisen über die Schnittstelle NAS ist es erforderlich, dass das aufnehmende System neben der Ausführung der expliziten Funktionen _<Insert>, <Delete>_ und _<Replace>_ auch über implizite Funktionen verfügt, die erst die komfortable Arbeitsweise mit dem System erlauben.
+
+Der Umfang der zu realisierenden impliziten Funktionalität eines Datenhaltungssystems ist für ein System zum Primärnachweis und zum Sekundärnachweis unterschiedlich groß. Die von einem Sekundärnachweissystem beim Datennutzer zu fordernden Funktionen sollten grundsätzlich möglichst gering sein, damit eine einfache Implementierung ermöglicht wird. Demgegenüber kann ein Datenhaltungssystem für den Primärnachweis bei der originär zuständigen datenführenden Stelle über wesentlich mehr Funktionen verfügen.
+
+==== Implizite Funktionalität eines Systems für den Primärnachweis
+
+Bei der Nutzung der NAS für die Kommunikation zwischen einem Qualifizierungs- bzw. Erfassungssystem und einem Führungssystem sind folgende implizite Funktionen notwendig:
+
+* Das aufnehmende System leitet beim Eintrag neuer Versionen das *Entstehungsdatum/-zeit* aus der Systemzeit ab. Alle in einem Fortführungsfall eingetragenen (oder durch die Funktion _<Replace>_ entstandenen) neuen Versionen erhalten dasselbe Entstehungsdatum/-zeit. Dies ist i.d.R. die Zeit, an der die Transaktion begonnen wird (_commit_). Besteht ein Auftrag aus Teilaufträgen (Fortführungsfällen), werden diese in der Reihenfolge ihres Auftretens in der NAS-Datei abgearbeitet. Für jeden Teilauftrag wird ein eigenes Entstehungsdatum/-zeit vergeben.
+* Referenzen werden beim Datenaustausch über die NAS nur einseitig in der bevorzugten Richtung der Referenz ausgetauscht. Das aufnehmende System baut die *Gegenreferenz* implizit auf. Durch den Aufbau der Gegenreferenz entsteht keine neue Version.
+* Es gibt Fachobjekte, die nur dann eine Existenzberechtigung haben, wenn sie von anderen Objekten referenziert werden (z.B. Objekte vom Typ Lage). Weil Gegenreferenzen nicht über die NAS übermittelt werden, kann ein fortführendes System dann nicht wissen, ob ein Objekt, das durch die Fortführung nicht mehr referenziert wird auch gelöscht werden kann. Das *nicht mehr referenzierte Fachobjekt* muss durch die Datenbank *gelöscht* werden. Die Fachobjekte, die wegen fehlender Referenzierung gelöscht werden können, sind im Objektartenkatalog zu bezeichnen. Dieser Fortführungsfall findet Eingang in die Versionierung und Historisierung.
+* Es gibt Fachobjekte, die Objekte referenzieren, die im Rahmen der Fortführung gelöscht werden sollen. Weil Gegenreferenzen nicht über die NAS übermittelt werden, kann ein fortführendes System nicht wissen, ob ein zu löschendes Objekt durch weitere Objekte referenziert wird. Dadurch kann es vorkommen, dass Referenzen nach der Fortführung nicht mehr befriedigt werden. Das Datenhaltungssystem muss solche *unbefriedigten Referenzen automatisch löschen*. Dieser Fortführungsfall findet Eingang in die Versionierung und Historisierung.
+* Es gibt Fachobjekte, die nur dann eine Existenzberechtigung haben, wenn sie andere Fachobjekte referenzieren (z.B. Präsentationsobjekte). Werden im Rahmen einer Fortführung alle solchen Referenzen explizit oder implizit gelöscht, so *löscht* das Datenhaltungssystem automatisch das entsprechende *Fachobjekt, dem die notwendigen Referenzen fehlen*. Die Fachobjekte, die wegen fehlender notwendiger Referenzen gelöscht werden müssen, sind im Objektartenkatalog zu bezeichnen. Dieser Fortführungsfall findet Eingang in die Versionierung und Historisierung.
+* Werden im Zuge einer Fortführung nur die fachlich geänderten Objekte angeliefert, muss die Datenbank ggf. die topologische und geometrische Konsistenz selbstständig herstellen (Geometriebehandlung).
+* Beim *Löschen von Geometrien* sind ggf. Zerschlagungen aus vorherigen Implizitprozessen nach folgender Regel wieder rückgängig zu machen. Eine Position wird aus der Geometrie aller Objekte entfernt, wenn sie in keinem Objekt, in dem sie verwendet wird zur geometrischen Definition dieses Objektes beiträgt; trägt sie auch nur in einem Objekt zur geometrischen Definition bei, bleibt sie in allen Objekten erhalten. Eine Position trägt dann zur geometrischen Definition eines Objekts bei, wenn das Objekt punktförmigen Raumbezug hat, oder wenn sie (bei linienhaftem oder flächenhaftem Raumbezug) nicht in einer Geraden mit der vorhergehenden und der folgenden Position liegt. Der Begriff "liegt in der Geraden" ist dabei in Abhängigkeit von der festgelegten Koordinatenauflösung (für metrische Lagekoordinaten in AFIS-ALKIS-ATKIS: Millimeter) zu definieren. Dieses Implizitverhalten führt im aufnehmenden System zu Fortführungen, die im auslösenden Fortführungsauftrag aus der NAS nicht explizit angegeben sind. Diese Fortführungen sind durch das aufnehmende System implizit zu veranlassen und führen zur Erzeugung neuer Versionen aller beteiligten Objekte.
+* Werden zur Fortführung eines Primärnachweises Austauschelemente mit vorläufigen Identifikatoren angeliefert, erzeugt das aufnehmende System endgültige eineindeutige Identifikatoren.
+* Beim Löschen von Flurstücken in Systemen mit vollständigem Historiennachweis wird der erste Fortführungsanlass aus dem Attribut "ueberschriftImFortfuehrungsnachweis" der Objektart AX_Fortfuehrungsfall in die untergehende Version des Flurstücks als zusätzlicher Untergangsanlass in das Attribut "Anlass" übernommen.
+* Bei den Stellen, die keine vollständige Historie führen, erzeugt die Datenhaltung beim Löschen eines aktuellen Flurstücks automatisch das entsprechende Objekt "Historisches Flurstück". Dabei ist der erste Fortführungsanlass aus dem Attribut "ueberschriftImFortfuehrungsnachweis" der Objektart AX_Fortfuehrungsfall als zusätzlicher Untergangsanlass in das Attribut "Anlass" zu übernehmen.
+* Weitere implizite Funktionen (z.B. Vergabe von Punktkennzeichen) sind implementierungsspezifisch.
+
+*Geometriebehandlung*
+
+Geometriebehandlung stellt eine Funktionalität der Datenbank (AAA-Führungskomponente) im Rahmen der Fortführungsverarbeitung dar. Dabei werden neue bzw. geänderte Geometrien so mit dem Altbestand verknüpft, dass bei geometrischen Identitäten zwischen Alt- und Neubestand in Abhängigkeit von der Themenzugehörigkeit der beteiligten Objekte redundanzfreie Geometrien entstehen.
+
+Diese Funktionalität ist unabhängig von den Geometrie behandelnden bzw. Identitäten herstellenden Funktionen des Verarbeitungssystems (AAA-Verarbeitungskomponente) immer dann notwendig, wenn vom Verarbeitungssystem im Rahmen einer Fortführung nicht alle von geometrischen Operationen betroffenen Objekte an die AAA-Führungskomponente geliefert werden (z.B. bei einer Flurstückszerlegung nur das gelöschte und die neuen Flurstücke). Für die Geometriebehandlung gelten folgende Grundsätze:
+
+* Die Funktionalität der Geometriebehandlung kann von AAA-Führungssystemen optional realisiert werden. AAA-Verarbeitungskomponenten können ggf. von einer vorhandenen Geometriebehandlung in der AAA-Führungskomponente Gebrauch machen. Sofern in der AAA-Führungskomponente keine Geometriebehandlung realisiert ist, müssen die AAA-Verarbeitungskomponenten vollständige Daten anliefern. Unberührt davon ist die Verpflichtung der AAA-Führungskomponente zur Prüfung der Daten auf (geometrische) Konsistenz.
+* Die durch Geometriebehandlung implizit veränderten Objekte werden versioniert.
+* Die Geometriebehandlung beschränkt sich auf Klassen-Themen; eine Geometriebehandlung bei individuell gewollten Geometrieidentitäten ist nicht vorgesehen. Insofern wirkt sich eine Geometriebehandlung bei Klassen-Themen auch nicht auf Instanzen aus, für die Geometrieidentitäten individuell festgelegt wurden (keine "kaskadierende" Geometriebehandlung).
+* Bei individuell festgelegter, gewollter Geometrieidentität von Instanzen hat die AAA-Verarbeitungskomponente dafür zu sorgen, dass a) bei gewollter Identität (redundanzfreie Geometrie) ggf. ein Aufsplitten der Linien erfolgt und b) alle betroffenen Objekte im Fortführungsauftrag mitgeliefert werden.
+* AX_Fortfuehrungsauftrag wird um einen Steuerparameter (Geometriebehandlung ja/nein) ergänzt. Die AAA-Führungskomponente muss diesen Schalter auswerten und entsprechend reagieren, d.h. entweder die Geometriebehandlung ein- bzw. ausschalten oder den Fortführungsauftrag ablehnen. Die AAA-Verarbeitungskomponente hat dafür zu sorgen, dass die Schalterstellung dem Inhalt des Fortführungsauftrags entspricht.
+* Eine Geometriebehandlung bei aufnehmenden Systemen im NBA-Verfahren wird nicht vorgesehen/erwartet. Es werden alle veränderten Objekte übermittelt, auch die, die lediglich durch Geometriebehandlung in der AAA-Führungskomponente geändert wurden.
+
+Es gelten folgende geometrische Kriterien:
+
+* Das Such- bzw. Trennkriterium für die Geometriebehandlung beträgt Wurzel 2 [mm].
+* An der Geometriebehandlung nehmen Punkte/Stützpunkte und Linien teil.
+* Bei Linien nehmen nur Geraden und Kreisbögen/Vollkreise an der Geometriebehandlung teil. Splines nehmen nicht an der Geometriebehandlung teil; hier muss die Verarbeitungskomponente dafür sorgen, dass alle betroffenen Objekte fortgeführt werden.
+* Auch wenn eine Neulinie eingetragen wird, muss ein "darunter liegender" Altpunkt die Neulinie splitten. Diese muss über den Altpunkt geführt werden.
+
+Eine Tabelle mit einer Zusammenstellung der Impliziten Funktionen im Führungsprozess für ein System zum Primärnachweis befindet sich in xref:implfunkt_primaernachweis[] dieses Dokumentes.
+
+==== Implizite Funktionalität eines Systems für den Sekundärnachweis
+
+Bei der Führung von Sekundärnachweisen über die Schnittstelle NAS baut das aufnehmende System (soweit vom Nutzer gewünscht) die Gegenreferenzen zu den ausgetauschten Referenzen auf und pflegt sie.
+
+Replace-Befehle, bei denen das fortzuführende Objekt noch nicht im Datenbestand des Nutzers ist, sind bei der Übernahme wie _Insert_-Befehle zu behandeln. (Beispiel: Ein Nutzer erhält im Interessengebiet alle Flurstücke und die zugehörigen Eigentümer. Ein Flurstück wechselt seinen Eigentümer. Der Eigentümer ist aus Sicht des Nutzers neu (_Insert_) aus Sicht des ALKIS-Führungssystems aber alt (_Replace_), weil er bereits an Flurstücken außerhalb des Interessengebiets Eigentum hatte und deshalb seit langem im abgebenden System geführt wird, jedoch noch nie im System des Nutzers geführt wurde.)
+
+Insert-Befehle, bei denen das einzutragende Objekt im Datenbestand des Nutzers bereits vorhanden ist, sind bei der Übernahme zu ignorieren. Ein aufnehmendes System muss Objektversionen verarbeiten können, deren Lebenszeitbeginn vor dem Intervallbeginn des NBA-Verfahrens liegt und im Abgabezeitraum nicht verändert wurde.
+
+Eine Objektversion kann durch die neue Abgabeform mit gleichem Lebenszeitbeginn in unterschiedlichen Folgeabgaben auftauchen. Das aufnehmende System muss daher identische Versionen bei der Übernahme erkennen und ignorieren.
+
+Eine Tabelle mit einer Zusammenstellung der Impliziten Funktionen im Führungsprozess für ein System zum Sekundärnachweis befindet sich in xref:implfunkt_sekundaernachweis[] dieses Dokumentes.
+
+[[nasops_nba]]
+=== Nutzerbezogene Bestandsdatenaktualisierung (NBA)
+
+In diesem Abschnitt wird klargestellt, dass die folgenden Modi gemäß der Enumeration AX_Art_BereichZeitlich unterschieden werden müssen:
+
+* Selektion der abzugebenden Änderungen:
+
+** "stichtagsbezogen": Differenzdaten zwischen letzter erfolgreicher Datenabgabe und Stichzeitpunkt
+** "fallbezogen": alle Änderungen zwischen letzter erfolgreicher Datenabgabe und Stichzeitpunkt
+
+* Codierung der Änderungen in Abhängigkeit von einer Führung eines Historiennachweises im aufnehmenden System:
+
+** "ohne Historie": in der Sekundärdatenbank ist stets nur der aktuelle Stand der Daten verfügbar
+** "mit Historie": in der Sekundärdatenbank werden zumindest temporär auch untergegangene Objekte und Objektversionen vorgehalten.
+
+Die Regeln zur Codierung in der NAS sind in xref:nasschema[] beschrieben.
+
+In der Kombination "fallbezogen" / "mit Historie" ist der Datenumfang in der Sekundärdatenbank grundsätzlich geeignet, selbst zur Abgabe von Ausgaben oder als Quelle für die Fortführung von weiteren Sekundärdatenbeständen genutzt zu werden.
+
+Bei Einführung einer neuen GeoInfoDok-Referenzversion qualifizieren sich im Rahmen der Migration übertragene bzw. gebildete Objekte mit Sterotype und Tagged Value "retired" nicht aufgrund ihres Migrationshintergrundes zur NBA-Abgabe.
+
+[[nasops_nba_fachreqs]]
+==== Fachliche Anforderungen
+
+Die fachlichen Anforderungen zur Nutzerbezogenen Bestandsdatenaktualisierung (NBA) gründen sich auf die vorhandenen Verfahren, wie sie in ALK/ATKIS und im ALB realisiert vorliegen. Diese Verfahren sind nicht identisch. Weitere fachliche Anforderungen lassen sich folgendermaßen zusammenfassen:
+
+Änderungsdaten sind auf der Grundlage der Fortführungsdaten abzuleiten, die ihrerseits die Struktur der Bestandsdaten aufweisen. Änderungsdaten zur Nutzerbezogenen Bestandsdatenaktualisierung sollen:
+
+. kontinuierlich und fortführungsfallbezogen (Änderungsdaten) und/oder
+. stichtagsbezogen (Differenzdaten) abgegeben werden können.
+
+Fortführungsfallbezogen bedeutet, dass alle Veränderungen, die in einem zurückliegenden Zeitraum stattgefunden haben, der zeitlichen Reihenfolge nach aufgeführt werden. Damit wird es möglich, alle Prozesse schrittweise im aufnehmenden System nachzuvollziehen. Voraussetzung ist allerdings, dass auch alle Informationen in den Änderungsdaten enthalten sind, die das Erzeugen, Ändern und Löschen von Objekten in dem zurückliegenden Zeitraum betreffen.
+
+Im Gegensatz dazu liefert das stichtagsbezogene Verfahren nur die Differenzdaten, die nötig sind, um den Ausgangszustand beim Nutzer auf den vom Nutzer gewünschten Endzustand zu bringen. Was auf dem Weg zum Endzustand mit den Objekten geschehen ist, kann in diesem Fall nicht nachvollzogen werden. Die stichtagsbezogenen Differenzdaten stellen eine Untermenge der Änderungsdaten dar und können durch Auswertung aus ihnen abgeleitet werden; sie umfassen alle neu entstandenen Objekte, die jeweils aktuellen Versionen von fortgeführten Objekten sowie Angaben zu historisch gewordenen Objekten.
+
+Für jeden Nutzer wird ein Profil angelegt, das beschreibt, nach welchen Kriterien der Nutzer mit Änderungsdaten aus dem einmal für das NBA-Verfahren vorgehaltenen Bestand versorgt werden soll. Dieses Profil ist vor der ersten Datenabgabe zu erstellen.
+
+[NOTE]
+======
+Der Benutzungsauftrag 0040 für die erste Datenabgabe enthält eine
+Profilkennung; diese [.underline]#muss# dem System [.underline]#vor# der Verarbeitung
+bekannt sein.
+======
+
+Für jeden Benutzer wird eine Profilkennung angegeben. Diese Kennung wird auch verwendet, um in der OA AX_NutzerbezogeneBestandsdatenaktualisierung_NBA eine automatische Abarbeitung der NBA-Dateien zu ermöglichen. Mit der Profilkennung kann eindeutig der Bezug zur AX_BenutzergruppeNBA hergestellt werden, welche die maßgeblichen Selektionskriterien des Nutzers enthält. Nutzerbezogene Selektionskriterien sind:
+
+. Fachlich durch Angabe von Objektarten, Attributarten und -werten sowie Relationen,
+. Räumlich durch Angabe einer Fläche und
+. Zeitlich durch Angabe eines Zeitintervalls.
+
+Objektarten, Attribute und Relationen bestimmen auch den inhaltlichen Umfang der abzugebenden Daten für den einzelnen Nutzer; diese Angaben sind ebenfalls im Nutzerprofil, das z.B. in ALKIS durch die Objektart AX_Benutzergruppe realisiert ist, zu hinterlegen.
+
+==== Modellierung
+
+Das NBA-Verfahren ist für alle Objektarten anzubieten, die eine datenführende Stelle im Bestand führt, ausgenommen Objekte mit dem Stereotype und dem Tagged Value "retired". Für den Nutzer kann die Selektion auf dem gesamten Vorrat der Objekteigenschaften aufsetzen; die Anforderungen des Datenschutzes sind dabei jedoch zu berücksichtigen. Als Ergebnis liefert das NBA-Verfahren als kleinste Einheiten der Änderungsdaten immer Fachobjekte. Werden Fortführungsdaten für dasselbe Zeitintervall in mehreren Portionen an Nutzer abgegeben, stellt das abgebende System sicher, dass dieselbe Version eines Fachobjektes nur einmal an den Nutzer abgegeben wird.
+
+Diese Daten sind vollständig in Bezug auf das aktuelle Nutzerprofil; aus Sicht des gesamten Datenbestandes können diese Objekte unvollständig sein. Sofern der Nutzer seine Selektion auf einzelne Objekteigenschaften beschränkt (Nutzerprofil), können zwischen den Lieferungen Inkonsistenzen zwischen dem vorhandenen Datenbestand beim Nutzer und der aktuellen Datenhaltung in der datenführenden Stelle auftreten. Dies kann passieren durch die Aktualisierung der Bestandsdaten im Bereich der Selektionskriterien oder Änderungen der Selektionskriterien. Derartige Inkonsistenzen müssen vom aufnehmenden System gehandhabt werden.
+
+Die räumliche Ausdehnung des Interessengebiets eines Nutzers wird durch Angabe beliebiger Flächen (Flächenobjekte) im Nutzerprofil beschrieben. Raumbezogene Elementarobjekte (REO) qualifizieren sich, sobald die Geometrie eines Objekts durch die Geometrie des Interessengebietes angeschnitten wird (Operation INTERSECTS) oder die Geometrie des Objektes vollständig im Interessensgebiet liegt.
+
+Vor der ersten Datenabgabe ist das Nutzerprofil (AX_Benutzergruppe) mit den fachlichen, räumlichen und zeitlichen Kriterien für die NBA-Änderungsdaten zu erstellen. Die fachlichen und räumlichen Kriterien können auch im Nachhinein verändert werden.
+
+Technisch soll die Änderung von Selektionskriterien einer NBA stets durch einen Fortführungsauftrag der Verarbeitungsart 4000 (Fortführen ohne Sperre) abgewickelt werden, der die Objektarten AX_BenutzergruppeNBA und ggf. AX_Benutzer umfasst. Dabei sind Fortführungen während laufenden NBA-Prozessen unzulässig.
+
+Aus Sicht des NBA-Beziehers müssen alle Objekte und mit ihnen in relationalem und attributivem [sprich: schlüsselseitigem] Zusammenhang stehenden weiteren Objekte, die in das Gebiet der Erweiterung ganz oder teilweise fallen, wie bei einer NBA-Erstabgabe behandelt werden. Gleiches gilt auch für fachliche Erweiterungen innerhalb eines NBA-Gebietes. Das heißt, dass die zum bisherigen NBA-Gebiet gehörige Datenabgabe sich um Einfüge-Operationen für die erstmalig abzugebenden Objekte vergrößert. Erweiterungen und Wieder- bzw. Aufholungsläufe schließen sich aus. Für NBA-Bezieher sollen in Zusammenhang mit räumlichen und fachlichen Reduzierungen keine Löschsätze erzeugt werden. Änderungen zu den nicht mehr räumlich bzw. fachlich inbegriffenen Objekten werden ab der Reduzierung einfach nicht mehr geliefert. Zeitliche Erweiterungen (zusätzliche Abgabe von historischen Versionen) und Reduzierungen sind nicht vorgesehen.
+
+In welchem Umfang Objekte durch Nachverfolgung von Relationen nachzuziehen sind, muss ebenfalls in den Selektionskriterien des Nutzerprofils beschrieben sein.
+
+Der Zeitraum, für den die Bereitstellung von Änderungsdaten nach dem Verfahren NBA für verschiedene Nutzer sichergestellt werden muss, kann zeitlich begrenzt werden (zeitlicher Rahmen). Damit wird es möglich,
+
+. für jeden Nutzer Änderungsdaten rückwirkend innerhalb dieses Zeitraums anzufordern und
+. Änderungsdaten nutzerbezogen abzugeben, sie aber nicht nutzerbezogen vorhalten zu müssen.
+
+Das Verfahren zur Nutzerbezogenen Bestandsdatenaktualisierung erfordert, dass für diesen Zeitraum Informationen über die Veränderung des Datenbestandes vorgehalten werden. Der Zeitraum wird durch die datenführende Stelle in Abstimmung mit den Nutzern bestimmt.
+
+Die beim Verfahren NBA erforderliche Verwaltung der verschiedenen Ausprägungen eines Objektes über die Zeit wird durch das Versionskonzept abgedeckt. Deshalb wird
+
+* die Datenhaltung der Änderungsdaten auf der Ebene der Bestandsdaten vorgenommen,
+* die Führung der Informationen für das Verfahren der Nutzerbezogenen Bestandsdatenaktualisierung auf das Versionskonzept aufgesetzt und
+* keine neue, zusätzliche und damit redundante Datenstruktur entwickelt.
+
+Damit ist es möglich,
+
+* aus einer Sammlung von Veränderungen,
+* die jeweils die vollständigen Informationen zu den Objekten des Bestandes enthalten müssen,
+* über den Zeitraum mehrerer Jahre hinweg (in Abhängigkeit vom zeitlichen Rahmen),
+* Auswertungen nach
+
+** inhaltlichem Umfang durch Objektarten, Attribute und Relationen,
+** räumlicher Ausdehnung durch Flächen und
+** zeitlicher Ausdehnung durch Zeitintervalle sowie
+
+* nutzerbezogen
+
+durchzuführen.
+
+Um eindeutig die zu überschreibende Version zu kennzeichnen und Übermittlungsfehler im NBA-Verfahren aufzudecken, ist es erforderlich, den Objektidentifikator beim Datenaustausch um das Entstehungsdatum/-zeit zu ergänzen. Dies erfordert folgende Regeln:
+
+* Entstehungsdatum/-zeit im Objektidentifikator kann bei der Implementierung (z.B. im aufnehmenden System) weggelassen werden (Ersatz durch Zeitstempel der Versionen).
+* Beim Datenaustausch mittels NBA-Verfahren mit fortführungsfallbezogener (kontinuierlicher) Datenabgabe wird beim Austausch von Objektversionen die Relation mit einem zum Entstehungsdatum der Objektversion passenden Entstehungsdatum der referenzierten Information ausgegeben.
+* Beim Datenaustausch mittels NBA-Verfahren mit stichtagsbezogener Datenabgabe (Differenzdaten) wird beim Austausch von Objektversionen die Relation mit einem zum Stichtagsdatum passenden Entstehungsdatum der referenzierten Information ausgegeben.
+* Bei der Erzeugung der Austauschdatei für die Nutzerbezogene Bestandsdatenaktualisierung muss das abgebende System folgende Funktionen erfüllen:
+** Selektion der abzugebenden Daten aus dem (ggf. temporären) Historiennachweis entsprechend den im Nutzerprofil hinterlegten Selektionsketten und Filterangaben,
++
+Erzeugung der Fortführungsoperationen für das aufnehmende System aus dem Historiennachweis,
+** Umwandlung der Daten in die Normbasierte Austauschschnittstelle.
+
+Für die Ableitung der zu erzeugenden Fortführungsoperationen ist auszuwerten, ob das sich für die Datenausgabe qualifizierende Objekt aus Sicht der Datenhaltung eine erste, weitere oder letzte Version ist.
+
+Bei Verfolgung von inversen Relationen kann <wfs:PropertyName> bzw. <wfsext:PropertyName> mit dem Attribut resolve="local" kein Lebenszeitintervall bei Selektionskriterien für die NBA-Abgabe transportieren. Das hat zur Folge, dass eine oder mehrere Objektversion(en) als Ergebnis geliefert werden. Für die korrekte zeitliche Zuordnung sind weitere Bearbeitungsschritte erforderlich, die durch die Software-Implementierungen sicherzustellen sind.
+
+===== Abgabe von Änderungsdaten
+
+Bei der kontinuierlichen, fortführungsfallbezogenen Datenabgabe (Änderungsdaten) werden alle sich für die Datenabgabe qualifizierenden Versionen eines Objektes verarbeitet. Das betrachtete Zeitintervall erstreckt sich von der letzten Datenabgabe bis maximal zur Gegenwart. Dabei ist aus Sicht der Datenhaltung auszuwerten, ob es sich um eine erste, weitere oder letzte Version eines Objektes handelt.
+
+[width="100%",cols="1,1",options="header"]
+|===
+a|
+sich qualifizierende Version aus Sicht der Bestandsdaten-DB
+a|
+auszugebende Operation
+
+a|
+[.underline]#erste# Version eines neuen Objekts
+a|
+_<Insert>_
+
+a|
+[.underline]#weitere# Version eines Objektes
+a|
+_<Replace>_ der letzten übermittelten Version (Entstehungsdatum/-zeit angeben)
+
+a|
+[.underline]#letzte# Version eines Objektes
+a|
+_<Delete>_ der letzten übermittelten Version (Entstehungsdatum/-zeit angeben)
+
+|===
+
+In dem Fall, dass ein Objekt untergeht ("historisiert" wird), ist bei Sekundärdatenbanken mit vollständigem Historiennachweis statt des <wfs:Delete>-Operators der ansonsten in der NAS nicht unterstützte <wfs:Update>-Operator verwendet (siehe xref:nasops_funktionsumfang_sekundaernachweise[]).
+
+===== Abgabe von Differenzdaten
+
+Bei der stichtagsbezogenen Datenabgabe (Differenzdaten) wird unter den Versionen eines Objektes jeweils nur die jüngste oder letzte Version verarbeitet, deren Entstehungs- bzw. Untergangszeit im betrachteten Zeitintervall liegt. Auch hier muss bei Sekundärdatenbanken mit vollständigem Historiennachweis im Fall, dass ein Objekt untergeht ("historisiert" wird), statt des <wfs:Delete>-Operators der ansonsten in der NAS nicht unterstützte <wfs:Update>-Operator verwendet werden (siehe xref:nasops_funktionsumfang_sekundaernachweise[]).
+
+[width="100%",cols="1,1",options="header"]
+|===
+a|
+jüngste oder letzte sich qualifizierende Version aus Sicht der Bestandsdaten-DB
+a|
+auszugebende Operation
+
+a|
+[.underline]#erste# Version eines neuen Objektes
+a|
+_<Insert>_ der [.underline]#aktuellen# Version dieses Objektes
+
+a|
+[.underline]#weitere# Version eines Objektes
+a|
+_<Replace>_ der letzten übermittelten Version (Entstehungsdatum/-zeit angeben) mit der [.underline]#aktuellen# Version dieses Objektes
+
+a|
+[.underline]#letzte# Version eines Objektes
+a|
+_<Delete>_ der letzten übermittelten Version (Entstehungsdatum/-zeit angeben)
+
+|===
+
+[[nasops_nba_portionierung]]
+==== Portionierung von NBA-Daten, Protokolldatei
+
+Die Portionierung von NBA-Daten ist optional. Es besteht kein Zwang, diese zu verwenden, sie erlaubt jedoch den NBA-Beziehern die Übernahme der Daten in Etappen, was sich in der Vergangenheit bezüglich der Altverfahren insbesondere bei umfangreichen Datenbeständen bewährt hat.
+
+Es werden insbesondere die folgenden Anforderungen adressiert: Bereitstellung der Daten von ALKIS und von ATKIS in geometrischer Portionierung. Die Portionsgröße soll variabel, aber einheitlich für einen Bezieher (Parametrisierung der Portionsgröße im Benutzerprofil) sein. NREO und ZUSO werden portionsbezogen über Relationen gemäß Selektionskriterien im Nutzerprofil nachgezogen. Eine Portionierung allein nach Datenmenge ist nicht ausreichend.
+
+Die Datenabgabe an Sekundärnutzer soll möglichst "vollautomatisch" für das abgebende System und das aufnehmende System sein. Hierfür wird das Attribut <profilkennung> verwendet.
+
+[#img_56,reftext='{figure-caption} {counter:figure-num}']
+.Geänderte Objektart AX_Nutzerbezogene-BestandsdatenaktualisierungNBA
+image::media/image56.png[media/image56,width=396,height=211]
+
+Bei der unportionierten Ausgabe war die Ausgabe der Profilkennung früher nicht verpflichtend. Diese Attributart wurde daher als Pflichtattribut bei AX_NutzerbezogeneBestandsdatenaktualisierungNBA ergänzt. Damit wird nicht zwischen der portionierten und unportionierten Ausgabe durch Weglassen der Attributart <portionskennung> unterschieden, sondern durch die Angaben in <laufendeNummerVonGesamtzahl> und <gesamtzahl> im Datentyp AX_Portionskennung. Im Falle der unportionierten Abgabe sind beide Werte mit "1" belegt.
+
+*Portion ohne Raumbezug*
+
+Vor der Portionierung müssen über einen Benutzungsauftrag alle Objekte und mit ihnen in relationalem und attributivem Zusammenhang stehenden weiteren Objekte (ZUSO, NREO, REO) über die Selektionskriterien aus der DHK selektiert worden sein. Diese selektierte Menge an Objekten kann dann ggf. portioniert werden, entweder mit Hilfe von geometrischen Parametern oder ohne. Die Portionierung zieht keine weiteren (ggf. fehlende) Objekte nach.
+
+Dazu kann die Attributart AX_Portionskennung.suedwestEcke mit einem der Portionierungskonvention konformen Wert belegt werden oder unbelegt bleiben. Der Dateiname enthält je nachdem den o.g. konformen Wert oder der Dateinamensanteil von suedwestEcke wird nicht belegt. Die Position der nicht-raumbezogenen Portionen in der Portionsfolge ist frei wählbar.
+
+*Protokolldatei*
+
+Mit einer Portionsfolge bzw. einer unportionierten Gesamtlieferung kann eine optionale Protokolldatei mit Erläuterungen geliefert werden.
+
+[NOTE]
+======
+Im Rahmen von massenhaft betriebenen NBA-Verfahren ist es besser, ein Protokoll mit Fehlermeldungen zu erhalten als nicht zu wissen, was mit der NBA-Lieferung schief gelaufen ist. Dass soll nicht heißen, dass fehlerhafte NBA-Daten zur Auslieferung kommen sollen: Man bekommt dann eben nur ein Protokoll ohne Daten.
+======
+
+Im Falle der Portionierung ist diese als erste Portion einer Portionsfolge mit der laufenden Nummer 0 anzugeben. Im Falle der unportionierten Gesamtlieferung soll der Zusammenhang der Protokolldatei mit der NBA-Lieferung durch deren Dateinamen zum Ausdruck kommen, indem der Name der Protokolldatei gleich dem Namen der NBA-Lieferung ergänzt um "_p" am Ende, gefolgt vom Punkt mit Dateiextension (i.d.R. ".xml", ggf. auch "zip" usw.) sein soll. Ansonsten gelten für die Protokolldatei die Regeln einer Portionsdatei ohne Raumbezug (siehe oben #*TBD:* Genaue Referenz?#).
+
+===== Formale Form der Portionierung
+
+Die Abwicklung erfolgt über im automatisierten NBA-Ablauf systemseitig erzeugte AX_NutzerbezogeneBestandsdatenaktualisierung_NBA-Dokumente. Diese werden zu Zeitpunkten gemäß den Vorgaben in AX_BenutzergruppeNBA erzeugt. Die zur jeweiligen Auftragsabwicklung verwendete Anzahl von NBA-Dokumenten bleibt dabei der Implementierung überlassen, allerdings soll es ein zusammenfassendes Auftragsprotokoll zu den ggf. n Ergebnisdateien geben. Aufgrund von [1..n] Benutzungsaufträgen mit Anlass "Nutzerbezogene Bestandsdatenaktualisierung NBA" (0040) werden alle erforderlichen Portionen als eigene unabhängige "Fortführungsaufträge" abgegeben.
+
+[NOTE]
+======
+Hier ist der Begriff "Fortführungsauftrag" nicht wortwörtlich im Sinne des AX_Fortfuehrungsauftrag zu verstehen sondern in Form der Response AX_NutzerbezogeneBestandsdatenaktualisierung_NBA, welche die WFS-Operation "Transaction" wie der Fortführungsauftrag enthält.
+======
+
+Zur redundanzfreien Abgabe von Objekten folgen Erläuterungen bei der Parametrisierung der Portionierung (siehe xref:nasops_nba_portionierung_anforderungenabgebendessystem[]).
+
+Alle Portionen eines Benutzungsauftrages erhalten dieselbe Antragsnummer und dieselbe Auftragsnummer. Bei Folgelieferungen erhöht sich die Auftragsnummer.
+
+Zu jeder Portion sind Metadaten zu erzeugen, aus denen mindestens das geometrische und logische Gebiet der Portion hervorgeht.
+
+[[nasops_nba_portionierung_anforderungenabgebendessystem]]
+
+===== Anforderungen an das abgebende System
+
+*Parametrisierung der Portionierung*
+
+Auf Ebene des Nutzerprofils für NBA kann die Portionierung durch Angabe des Portionierungsparameters aktiviert bzw. durch weglassen deaktiviert werden.
+
+Die Selektion und Portionierung erfolgt als zweistufiger Prozess:
+
+. Die Selektionskriterien in AX_BenutzergruppeNBA dienen zur Auswahl der insgesamt in der Lieferung abzugebenden Objekte (unabhängig davon, ob eine Portionierung erfolgt oder nicht).
+. Die Aufteilung der selektierten Objekte in Portionen erfolgt anhand des Portionierungsparameters wie nachfolgend beschrieben. Bei Einrichtung des NBA-Profils muss auf sinnvolle Parametrisierung der Portionierung geachtet werden.
+
+Fallen in einer Portion keine Fortführungsdaten für die betreffende Lieferung an, so muss diese Portion nicht erzeugt werden. Hierdurch wird die Anzahl der Portionen pro Lieferung variabel, jedoch wird durch die Festlegungen bzgl. Dateinamen klar, welchen Umfang die Gesamtlieferung hat.
+
+Der folgende Portionierungsparameter steht zur Verfügung: *Angabe der Seitenlänge* in Metern. Sofern gesetzt, handelt es sich um einen positiven, von Null verschiedenen Integer-Wert. Das abgebende System unterteilt automatisch das in den Selektionskriterien insgesamt angegebene Gebiet in entsprechende Quadrate. Dabei gelten die folgenden Regeln:
+
+* Das Gebiet wird erst von West nach Ost, dann von Süd nach Nord abgearbeitet. Die erste linke untere Ecke ergibt sich dadurch, dass vom südwestlichsten Punkt des Abgabegebietes auf das nächste Koordinatenpaar mit vollen Meterwerten gegangen wird, das südwestlich davon liegt. Ist der südwestlichste Punkt des Abgabegebietes bereits ein Koordinatenpaar auf volle Meterwerte, so wird er direkt verwendet.
+* Alle REOs, die innerhalb eines Portionsquadrates liegen, sowie alle über die Selektionskriterien zusätzlich angeforderten, mit den jeweiligen REOs assoziierten NREO und ZUSO, kommen gemeinsam in eine Portion.
+* Würde ein Objekt aufgrund seiner Ausdehnung in mehreren Portionen auftauchen, so wird es lediglich mit dem in der Reihenfolge am Anfang stehenden Quadrat abgegeben. Ein Beispiel: Ein Flächenobjekt erstreckt sich über Portion (=Quadrat) 12, 13, 21 und 22. Es wird nur in Portion 12 abgegeben.
+* Anhängende NREO und ZUSO werden nur in der jeweils ersten Portion ihres Auftretens abgegeben.
+
+*Klammerung der Lieferungsportionen*
+
+Die Portionen einer Lieferung werden über geeignete Portionskennungen als zusammengehörig kenntlich gemacht. Diese Kennung ist abzulegen
+
+* im Attribut AX_NutzerbezogeneBestandsdatenaktualisierung_NBA.portionskennung,
+* im Dateinamen der Portion.
+
+Die Portionskennungen setzen sich wie folgt zusammen:
+
+[source]
+----
+<NBA-Profilkennung>
+<_>
+<Datum der NBA-Erzeugung im Format jjjjmmttf>
+<_>
+<Laufende Nummer der Portion, mit führenden Nullen>
+<von>
+<Gesamtzahl der Portionen der Lieferung, ohne führende Nullen>
+<_>
+<Koordinatenpaar der linken unteren Ecke der jeweiligen Portion, durch
+Unterstrich getrennt>
+----
+
+[NOTE]
+====
+* bzgl. NBA-Profilkennung: Die Profilkennung sollte eine prägnante,
+nicht zu lange Bezeichnung sein. Bei Dateinamen problematische Zeichen
+(z.B. Leerzeichen) werden vermieden, indem sie bei der Ableitung dieses
+Namensbestandteils aus der Profilkennung nicht übernommen werden.
+* bzgl. Datum der NBA-Erzeugung: Will man an einem
+Tag mehrere NBA-Ausgaben erzeugen, so ist eine Ergänzung um entsprechend
+genaue Uhrzeitangaben im Format hhmmss (d.h. ohne Trennzeichen) nötig.
+Hierbei ist das Datum von der Uhrzeit durch den Großbuchstaben "T" zu
+trennen (time designator). Am Ende der Uhrzeitangabe muss der
+Großbuchstabe "Z" verwendet werden (time-zone designator).
+* bzgl. Laufende Nummer der Portionen: Dateinamen sind mit führenden Nullen zu kodieren, damit die korrekte Reihenfolge der Dateien leichter erkannt werden kann; die Sortierung nach Dateinamen würde bei mehr als 9 Portionen nämlich ohne führende Nullen fehlschlagen:
+** xyz_20070301_10von12...
+** xyz_20070301_11von12...
+** xyz_20070301_12von12...
+** xyz_20070301_01von12...
+** xyz_20070301_02von12...
+** xyz_20070301_03von12...
+
+* bzgl. des Koordinatenpaars:
+** Genauigkeit auf volle Meter, d.h. ohne
+Nachkommastellen. Beispiel: "3401559_5572720", Rechtswert ohne
+Zonenangabe
+** Das Koordinatenpaar ist optional. Es kann bei
+unportionierter NBA-Lieferung auch weggelassen werden.
+
+
+====
+
+Die Attribute 'abgabeintervallBeginn' (Definition: Intervallbeginn der NBA-Abgabe, Kennung: AIB) und 'abgabeintervallEnde' (Definition: Intervallende der NBA-Abgabe, Kennung: AIE) enthalten Angaben über den zeitlichen Geltungsbereich einer NBA-Abgabe. Aus diesen Zeitangaben kann die Reihenfolge der NBA-Lieferungen durch den Empfänger nachvollzogen werden. Die Festlegungen zum Dateinamen bei der Portionierung von NBA-Abgaben sind davon nicht betroffen.
+
+Jede NBA-Portion wird als "lfd.Nr. von Gesamtanzahl", also z.B. "2von8" kenntlich gemacht. Führende Nullen sind zu kodieren, damit nach Dateinamen sortiert werden kann. Dabei gilt: Anzahl der führenden Nullen = Stellenzahl der Gesamtzahl - Stellenzahl der aktuell zu benennenden Portion. Beispiel: 1000 Portionen insgesamt. Aktuell zu benennende Portion ist die vierundneunzigste, daher ergeben sich zwei führenden Nullen: 0094von1000. Gäbe es bei diesem Beispiel als Gesamtanzahl nur 114 Portionen, so ergäbe sich 094von114, also hier nur eine führende Null.
+
+Sinn und Zweck dieser Namenskonvention ist a) die Klammerung der Portionen einer Lieferung und b) es Nutzern zu ermöglichen, Portionen räumlich zuordnen zu können ohne dazu in das NBA-Dokument schauen zu müssen.
+
+Insgesamt ergeben sich Dateinamen z.B. wie folgt:
+
+* _KUNDE_20221026_4von9_3401559_5572720.xml_
+* _RMR_20080229T141557Z _07von31_3401449_5573000.xml_
+* _Firmaxy_20040229_004von211_3401559_5572720.xml_
+* _Firmaxy_20040229_024von211_3401559_5572720.xml_
+* _Firmaxy_20040229_124von211_3401559_5572720.xml_
+
+Erläuterndes Beispiel:
+
+. In den Selektionskriterien bei der AX_BenutzergruppeNBA steht:
++
+[source,xml]
+----
+<wfs:Query typeNames="AX_PunktortTA">
+  <adv:XlinkPropertyPath>istTeilVon/AX_Grenzpunkt</adv:XlinkPropertyPath>
+  <fes:Filter>
+    <fes:BBOX>
+      <fes:ValueReference>position</fes:ValueReference>
+      <gml:Envelope srsName="urn:adv:crs:DE_DHDN_3GK3">
+        <gml:lowerCorner>353100.000 5532300.000</gml:lowerCorner>
+        <gml:upperCorner>353300.000 5532500.000</gml:upperCorner>
+      </gml:Envelope>
+    </fes:BBOX>
+  </fes:Filter>
+</wfs:Query>
+----
++
+. In den zusätzlich wirkenden Portionierungsparametern steht:
++
+Seitenlänge = 100m
++
+. Ergebnis:
++
+Es entstehen maximal vier Portionen, gefüllt mit AX_PunktortTA und zugehörigen AX_Grenzpunkt
+
+Aus Profilkennung und Datum können zur Erhöhung der Übersichtlichkeit geeignete Verzeichnisstrukturen generiert werden.
+
+===== Anforderungen an das aufnehmende System -Verarbeitung der Lieferung
+
+Anhand der Portionskennung ("3von8") wird ausgewertet, ob alle Portionen einer Lieferung übernommen worden sind. Dem aufnehmenden System muss hierzu bekannt sein, aus welchen Portionen die Gesamtlieferung besteht.
+
+Inkonsistenzen müssen so lange "zwischengepuffert" akzeptiert werden, bis die portionierte NBA-Lieferung, also der ganze NBA-Konvoi, komplett übernommen wurde. +
+Mit vollständiger Übernahme einer portionierten NBA-Lieferung müssen alle "zwischengepufferten" Inkonsistenzen aufgelöst werden können - sollte dies nicht möglich sein, muss eine Fehlermeldung erfolgen und die NBA-Übernahme scheitern.
+
+Erst nach vollständiger Übernahme einer NBA-Lieferung kann diese auf Anforderung quittiert werden und es darf mit der Übernahme der Folgelieferung begonnen werden.
+
+==== Quittierung von NBA-Lieferungen
+
+Bei Übernahme einer NBA-Lieferung kann eine Quittierung an die liefernde Stelle in Form des NBA-Quittierungs-Auftrags AX_NBAQuittierung erfolgen, soweit dies länderspezifisch gewünscht wird und in der NBA-Lieferung angefordert wurde. Die Art der Verarbeitung der NBA-Quittierung obliegt länderspezifischen Regelungen.

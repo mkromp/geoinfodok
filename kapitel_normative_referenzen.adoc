@@ -1,0 +1,38 @@
+:sectnums!:
+[[referenzen]]
+== Normative Referenzen
+
+Die folgenden referenzierten Dokumente sind für die Implementierung des AAA-Anwendungsschemas unabdingbar. Für Quellen mit Datumsangabe gilt nur diese eine genannte Version. Für Quellen ohne Datumsangabe gilt immer die letzte veröffentlichte Version einschließlich eventueller Überarbeitungen.
+
+* ISO/IEC 19501:2005, Unified Modeling Language Specification (UML), http://www.uml.org/
+* XML 1.0, 5^th^ Edition, Extensible Markup Language (XML), W3C Recommendation, 26 November 2008, http://www.w3.org/TR/2008/REC-xml-20081126/
+* XML Schema Part 1, 2^nd^ Edition: Structure-W3C Recommendation, 28. Oktober 2004, http://www.w3.org/TR/2004/REC-xmlschema-1-20041028/
+* XML Schema Part 2, 2^nd^ Edition: Datatypes-W3C Recommendation, 28. Oktober 2004, http://www.w3.org/TR/xmlschema-2/[http://www.w3.org/TR/2004/REC-xmlschema-2-20041028/]
+* XLink XML Linking Language (XLink) Version 1.1, W3C Recommendation 06 May 2010, http://www.w3.org/TR/2010/REC-xlink11-20100506/
+* OGC Web Feature Service 2.0 Interface Standard - With Corrigendum, Open Geospatial Consortium, 2014, http://docs.opengeospatial.org/is/09-025r2/09-025r2.html
+** Die Version 2.0.0 dieses Standards ist als ISO 19142 veröffentlicht.
+* OGC Web Services Common Specification 1.1.0 with Corrigendum 1, Open Geospatial Consortium, 2007, http://portal.opengeospatial.org/files/?artifact_id=20040
+* OGC Filter Encoding 2.0 Encoding Standard - With Corrigendum, Open Geospatial Consortium, 2014, http://docs.opengeospatial.org/is/09-026r2/09-026r2.html
+** Die Version 2.0.0 dieses Standards ist als ISO 19143 veröffentlicht.
+* OpenGIS Implementation Specification for Geographic information - Simple feature access - Part 2: SQL option, Version 1.2.1, Open Geospatial Consortium, 2010, http://portal.opengeospatial.org/files/?artifact_id=25354
+* OGC Geography Markup Language (GML) - Extended schemas and encoding rules, Version 3.3, Open Geospatial Consortium, 2012, https://portal.opengeospatial.org/files/?artifact_id=46568
+** Dieser Standard wurde 2015 als ISO 19136-2 veröffentlicht.
+* OGC GML Application Schema - Coverages, Version 1.0.1, Open Geospatial Consortium, 2012, https://portal.opengeospatial.org/files/?artifact_id=48553
+** Dieser Standard soll zukünftig als ISO 19123-2 veröffentlicht werden.
+* XML Path Language (XPath) Version 1.0, W3C Recommendation 16. November 1999, http://www.w3.org/TR/1999/REC-xpath-19991116/
+* https://www.iso.org/standard/56734.html[ISO - ISO 19103:2015 - Geographic information — Conceptual schema language]
+* https://www.iso.org/standard/66175.html[ISO - ISO 19107:2019 - Geographic information — Spatial schema]
+* https://www.iso.org/standard/59193.html[ISO - ISO 19109:2015 - Geographic information — Rules for application schema]
+* https://www.iso.org/standard/57303.html[ISO - ISO 19110:2016 - Geographic information — Methodology for feature cataloguing]
+* https://www.iso.org/standard/74039.html[ISO - ISO 19111:2019 - Geographic information — Referencing by coordinates]
+* https://www.iso.org/standard/53798.html[ISO - ISO 19115-1:2014 - Geographic information — Metadata — Part 1: Fundamentals]
+* https://www.iso.org/standard/44212.html[ISO - ISO 19118:2011 - Geographic information — Encoding]
+* https://www.iso.org/standard/40121.html[ISO - ISO 19123:2005 - Geographic information — Schema for coverage geometry and functions]
+* https://www.iso.org/standard/67252.html[ISO - ISO 19127:2019 - Geographic information — Geodetic register]
+* https://www.iso.org/standard/54721.html[ISO - ISO 19135-1:2015 - Geographic information — Procedures for item registration — Part 1: Fundamentals]
+* https://www.iso.org/standard/75676.html[ISO - ISO 19136-1:2020 - Geographic information — Geography Markup Language (GML) — Part 1: Fundamentals]
+* https://www.iso.org/standard/32557.html[ISO - ISO/TS 19139:2007 - Geographic information — Metadata — XML schema implementation]
+* https://www.iso.org/standard/32575.html[ISO - ISO 19157:2013 - Geographic information — Data quality]
+* [KOSIT-01]: Koordinierungsstelle für IT-Standards (KOSIT), "Zeichen und definierte Zeichensequenzen in Unicode für die elektronische Verarbeitung von Namen und den Datenaustausch in Europa", DIN 91379, (2022), https://github.com/String-Latin/DIN-91379-Characters-and-Sequences[GitHub - String-Latin/DIN-91379-Characters-and-Sequences: List of characters and sequences of DIN 91379]
+
+:sectnums:

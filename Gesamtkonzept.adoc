@@ -1,0 +1,104 @@
+////
+
+Asciidoctor Voraussetzungen:
+
+- gem install asciidoctor
+- gem install asciidoctor-lists
+- gem install asciidoctor-pdf
+- gem install pygments.rb
+
+Installation von pygments: https://docs.asciidoctor.org/asciidoctor/latest/syntax-highlighting/pygments/
+
+(Erweiterung: https://github.com/Alwinator/asciidoctor-lists)
+
+Zum Update (ggfs. ist aktuelle(re) ruby-Version erforderlich):
+
+- gem update asciidoctor
+- gem update asciidoctor-lists
+- gem update asciidoctor-pdf
+
+Aufruf von Asciidoctor:
+
+* HTML: asciidoctor -r asciidoctor-lists.rb Gesamtkonzept.adoc
+* PDF: asciidoctor-pdf -r asciidoctor-lists.rb Gesamtkonzept.adoc
+
+Schreibhilfe für Stereotypen:
+
+* Um die öffnende Klammer zu schreiben, nutze folgende Kombination: Halte die Alt-Taste gedrückt und Tippe folgende Zahlen ein: 1, 7, 4 - dann Alt-Taste loslassen. Ergebnis: «
+* Um die schließende Klammer zu schreiben, nutze folgende Kombination: Halte die Alt-Taste gedrückt und Tippe folgende Zahlen ein: 1, 7, 5 - dann Alt-Taste loslassen. Ergebnis: »
+
+////
+
+:doctype: book
+:encoding: utf-8
+:lang: en
+:toc: macro
+:toc-title: Inhaltsverzeichnis
+:toclevels: 5
+
+:toc-position: left
+
+:figure-caption: Abbildung
+:table-caption: Tabelle
+:appendix-caption: Anhang
+
+:numbered:
+:sectanchors:
+:sectnumlevels: 5
+
+:source-highlighter: pygments
+
+// https://docs.asciidoctor.org/asciidoc/latest/macros/xref-text-and-style/
+:xrefstyle: short
+
+:appendix-refsig: Anhang
+:chapter-refsig: Kapitel
+:section-refsig: Abschnitt
+
+// Für PDF-Ableitung relevant:
+// https://docs.asciidoctor.org/asciidoc/latest/sections/chapters/
+:chapter-signifier: 
+
+:data-uri:
+
+= Dokumentation zur Modellierung der Geoinformationen des amtlichen Vermessungswesens (GeoInfoDok) - Gesamtkonzept
+
+// TBD: Kann das Datum automatisch gesetzt werden? Z.B. per localdate-Attribut und Kommandozeile? Siehe https://docs.asciidoctor.org/asciidoc/latest/attributes/document-attributes-ref/
+
+**Stand: 01.12.2022**
+
+// Überführung in Asciidoc durch ii am 17.04.2025, basierend auf 2025_01_09_GeoInfoDok_Gesamtkonzept_mit_Änderungen.docx
+
+---
+
+
+Arbeitsgemeinschaft der Vermessungsverwaltungen der Länder der Bundesrepublik Deutschland (AdV)
+
+
+include::kapitel_dokumenthistorie.adoc[]
+
+include::kapitel_release_notes.adoc[]
+
+include::kapitel_normative_referenzen.adoc[]
+
+include::kapitel_aufbau_inhalt_ziel.adoc[]
+
+include::kapitel_aaa_referenzmodell.adoc[]
+
+include::kapitel_basisschema.adoc[]
+
+include::kapitel_nas_schema.adoc[]
+
+include::kapitel_nas_operationen.adoc[]
+
+include::kapitel_metadaten.adoc[]
+
+include::kapitel_registry.adoc[]
+
+include::kapitel_crs_uom.adoc[]
+
+include::kapitel_qualitaetssicherung.adoc[]
+
+include::kapitel_glossar.adoc[]
+
+include::Anhang_implizite_funtionalitaeten.adoc[]
