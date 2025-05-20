@@ -1,0 +1,2526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.23">
+<title>NAS-Operationen</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<style>
+/*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
+/* Uncomment the following line when using as a custom stylesheet */
+/* @import "https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700"; */
+html{font-family:sans-serif;-webkit-text-size-adjust:100%}
+a{background:none}
+a:focus{outline:thin dotted}
+a:active,a:hover{outline:0}
+h1{font-size:2em;margin:.67em 0}
+b,strong{font-weight:bold}
+abbr{font-size:.9em}
+abbr[title]{cursor:help;border-bottom:1px dotted #dddddf;text-decoration:none}
+dfn{font-style:italic}
+hr{height:0}
+mark{background:#ff0;color:#000}
+code,kbd,pre,samp{font-family:monospace;font-size:1em}
+pre{white-space:pre-wrap}
+q{quotes:"\201C" "\201D" "\2018" "\2019"}
+small{font-size:80%}
+sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}
+sup{top:-.5em}
+sub{bottom:-.25em}
+img{border:0}
+svg:not(:root){overflow:hidden}
+figure{margin:0}
+audio,video{display:inline-block}
+audio:not([controls]){display:none;height:0}
+fieldset{border:1px solid silver;margin:0 2px;padding:.35em .625em .75em}
+legend{border:0;padding:0}
+button,input,select,textarea{font-family:inherit;font-size:100%;margin:0}
+button,input{line-height:normal}
+button,select{text-transform:none}
+button,html input[type=button],input[type=reset],input[type=submit]{-webkit-appearance:button;cursor:pointer}
+button[disabled],html input[disabled]{cursor:default}
+input[type=checkbox],input[type=radio]{padding:0}
+button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0}
+textarea{overflow:auto;vertical-align:top}
+table{border-collapse:collapse;border-spacing:0}
+*,::before,::after{box-sizing:border-box}
+html,body{font-size:100%}
+body{background:#fff;color:rgba(0,0,0,.8);padding:0;margin:0;font-family:"Noto Serif","DejaVu Serif",serif;line-height:1;position:relative;cursor:auto;-moz-tab-size:4;-o-tab-size:4;tab-size:4;word-wrap:anywhere;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased}
+a:hover{cursor:pointer}
+img,object,embed{max-width:100%;height:auto}
+object,embed{height:100%}
+img{-ms-interpolation-mode:bicubic}
+.left{float:left!important}
+.right{float:right!important}
+.text-left{text-align:left!important}
+.text-right{text-align:right!important}
+.text-center{text-align:center!important}
+.text-justify{text-align:justify!important}
+.hide{display:none}
+img,object,svg{display:inline-block;vertical-align:middle}
+textarea{height:auto;min-height:50px}
+select{width:100%}
+.subheader,.admonitionblock td.content>.title,.audioblock>.title,.exampleblock>.title,.imageblock>.title,.listingblock>.title,.literalblock>.title,.stemblock>.title,.openblock>.title,.paragraph>.title,.quoteblock>.title,table.tableblock>.title,.verseblock>.title,.videoblock>.title,.dlist>.title,.olist>.title,.ulist>.title,.qlist>.title,.hdlist>.title{line-height:1.45;color:#7a2518;font-weight:400;margin-top:0;margin-bottom:.25em}
+div,dl,dt,dd,ul,ol,li,h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6,pre,form,p,blockquote,th,td{margin:0;padding:0}
+a{color:#2156a5;text-decoration:underline;line-height:inherit}
+a:hover,a:focus{color:#1d4b8f}
+a img{border:0}
+p{line-height:1.6;margin-bottom:1.25em;text-rendering:optimizeLegibility}
+p aside{font-size:.875em;line-height:1.35;font-style:italic}
+h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{font-family:"Open Sans","DejaVu Sans",sans-serif;font-weight:300;font-style:normal;color:#ba3925;text-rendering:optimizeLegibility;margin-top:1em;margin-bottom:.5em;line-height:1.0125em}
+h1 small,h2 small,h3 small,#toctitle small,.sidebarblock>.content>.title small,h4 small,h5 small,h6 small{font-size:60%;color:#e99b8f;line-height:0}
+h1{font-size:2.125em}
+h2{font-size:1.6875em}
+h3,#toctitle,.sidebarblock>.content>.title{font-size:1.375em}
+h4,h5{font-size:1.125em}
+h6{font-size:1em}
+hr{border:solid #dddddf;border-width:1px 0 0;clear:both;margin:1.25em 0 1.1875em}
+em,i{font-style:italic;line-height:inherit}
+strong,b{font-weight:bold;line-height:inherit}
+small{font-size:60%;line-height:inherit}
+code{font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;font-weight:400;color:rgba(0,0,0,.9)}
+ul,ol,dl{line-height:1.6;margin-bottom:1.25em;list-style-position:outside;font-family:inherit}
+ul,ol{margin-left:1.5em}
+ul li ul,ul li ol{margin-left:1.25em;margin-bottom:0}
+ul.circle{list-style-type:circle}
+ul.disc{list-style-type:disc}
+ul.square{list-style-type:square}
+ul.circle ul:not([class]),ul.disc ul:not([class]),ul.square ul:not([class]){list-style:inherit}
+ol li ul,ol li ol{margin-left:1.25em;margin-bottom:0}
+dl dt{margin-bottom:.3125em;font-weight:bold}
+dl dd{margin-bottom:1.25em}
+blockquote{margin:0 0 1.25em;padding:.5625em 1.25em 0 1.1875em;border-left:1px solid #ddd}
+blockquote,blockquote p{line-height:1.6;color:rgba(0,0,0,.85)}
+@media screen and (min-width:768px){h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{line-height:1.2}
+h1{font-size:2.75em}
+h2{font-size:2.3125em}
+h3,#toctitle,.sidebarblock>.content>.title{font-size:1.6875em}
+h4{font-size:1.4375em}}
+table{background:#fff;margin-bottom:1.25em;border:1px solid #dedede;word-wrap:normal}
+table thead,table tfoot{background:#f7f8f7}
+table thead tr th,table thead tr td,table tfoot tr th,table tfoot tr td{padding:.5em .625em .625em;font-size:inherit;color:rgba(0,0,0,.8);text-align:left}
+table tr th,table tr td{padding:.5625em .625em;font-size:inherit;color:rgba(0,0,0,.8)}
+table tr.even,table tr.alt{background:#f8f8f7}
+table thead tr th,table tfoot tr th,table tbody tr td,table tr td,table tfoot tr td{line-height:1.6}
+h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{line-height:1.2;word-spacing:-.05em}
+h1 strong,h2 strong,h3 strong,#toctitle strong,.sidebarblock>.content>.title strong,h4 strong,h5 strong,h6 strong{font-weight:400}
+.center{margin-left:auto;margin-right:auto}
+.stretch{width:100%}
+.clearfix::before,.clearfix::after,.float-group::before,.float-group::after{content:" ";display:table}
+.clearfix::after,.float-group::after{clear:both}
+:not(pre).nobreak{word-wrap:normal}
+:not(pre).nowrap{white-space:nowrap}
+:not(pre).pre-wrap{white-space:pre-wrap}
+:not(pre):not([class^=L])>code{font-size:.9375em;font-style:normal!important;letter-spacing:0;padding:.1em .5ex;word-spacing:-.15em;background:#f7f7f8;border-radius:4px;line-height:1.45;text-rendering:optimizeSpeed}
+pre{color:rgba(0,0,0,.9);font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;line-height:1.45;text-rendering:optimizeSpeed}
+pre code,pre pre{color:inherit;font-size:inherit;line-height:inherit}
+pre>code{display:block}
+pre.nowrap,pre.nowrap pre{white-space:pre;word-wrap:normal}
+em em{font-style:normal}
+strong strong{font-weight:400}
+.keyseq{color:rgba(51,51,51,.8)}
+kbd{font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;display:inline-block;color:rgba(0,0,0,.8);font-size:.65em;line-height:1.45;background:#f7f7f7;border:1px solid #ccc;border-radius:3px;box-shadow:0 1px 0 rgba(0,0,0,.2),inset 0 0 0 .1em #fff;margin:0 .15em;padding:.2em .5em;vertical-align:middle;position:relative;top:-.1em;white-space:nowrap}
+.keyseq kbd:first-child{margin-left:0}
+.keyseq kbd:last-child{margin-right:0}
+.menuseq,.menuref{color:#000}
+.menuseq b:not(.caret),.menuref{font-weight:inherit}
+.menuseq{word-spacing:-.02em}
+.menuseq b.caret{font-size:1.25em;line-height:.8}
+.menuseq i.caret{font-weight:bold;text-align:center;width:.45em}
+b.button::before,b.button::after{position:relative;top:-1px;font-weight:400}
+b.button::before{content:"[";padding:0 3px 0 2px}
+b.button::after{content:"]";padding:0 2px 0 3px}
+p a>code:hover{color:rgba(0,0,0,.9)}
+#header,#content,#footnotes,#footer{width:100%;margin:0 auto;max-width:62.5em;*zoom:1;position:relative;padding-left:.9375em;padding-right:.9375em}
+#header::before,#header::after,#content::before,#content::after,#footnotes::before,#footnotes::after,#footer::before,#footer::after{content:" ";display:table}
+#header::after,#content::after,#footnotes::after,#footer::after{clear:both}
+#content{margin-top:1.25em}
+#content::before{content:none}
+#header>h1:first-child{color:rgba(0,0,0,.85);margin-top:2.25rem;margin-bottom:0}
+#header>h1:first-child+#toc{margin-top:8px;border-top:1px solid #dddddf}
+#header>h1:only-child{border-bottom:1px solid #dddddf;padding-bottom:8px}
+#header .details{border-bottom:1px solid #dddddf;line-height:1.45;padding-top:.25em;padding-bottom:.25em;padding-left:.25em;color:rgba(0,0,0,.6);display:flex;flex-flow:row wrap}
+#header .details span:first-child{margin-left:-.125em}
+#header .details span.email a{color:rgba(0,0,0,.85)}
+#header .details br{display:none}
+#header .details br+span::before{content:"\00a0\2013\00a0"}
+#header .details br+span.author::before{content:"\00a0\22c5\00a0";color:rgba(0,0,0,.85)}
+#header .details br+span#revremark::before{content:"\00a0|\00a0"}
+#header #revnumber{text-transform:capitalize}
+#header #revnumber::after{content:"\00a0"}
+#content>h1:first-child:not([class]){color:rgba(0,0,0,.85);border-bottom:1px solid #dddddf;padding-bottom:8px;margin-top:0;padding-top:1rem;margin-bottom:1.25rem}
+#toc{border-bottom:1px solid #e7e7e9;padding-bottom:.5em}
+#toc>ul{margin-left:.125em}
+#toc ul.sectlevel0>li>a{font-style:italic}
+#toc ul.sectlevel0 ul.sectlevel1{margin:.5em 0}
+#toc ul{font-family:"Open Sans","DejaVu Sans",sans-serif;list-style-type:none}
+#toc li{line-height:1.3334;margin-top:.3334em}
+#toc a{text-decoration:none}
+#toc a:active{text-decoration:underline}
+#toctitle{color:#7a2518;font-size:1.2em}
+@media screen and (min-width:768px){#toctitle{font-size:1.375em}
+body.toc2{padding-left:15em;padding-right:0}
+body.toc2 #header>h1:nth-last-child(2){border-bottom:1px solid #dddddf;padding-bottom:8px}
+#toc.toc2{margin-top:0!important;background:#f8f8f7;position:fixed;width:15em;left:0;top:0;border-right:1px solid #e7e7e9;border-top-width:0!important;border-bottom-width:0!important;z-index:1000;padding:1.25em 1em;height:100%;overflow:auto}
+#toc.toc2 #toctitle{margin-top:0;margin-bottom:.8rem;font-size:1.2em}
+#toc.toc2>ul{font-size:.9em;margin-bottom:0}
+#toc.toc2 ul ul{margin-left:0;padding-left:1em}
+#toc.toc2 ul.sectlevel0 ul.sectlevel1{padding-left:0;margin-top:.5em;margin-bottom:.5em}
+body.toc2.toc-right{padding-left:0;padding-right:15em}
+body.toc2.toc-right #toc.toc2{border-right-width:0;border-left:1px solid #e7e7e9;left:auto;right:0}}
+@media screen and (min-width:1280px){body.toc2{padding-left:20em;padding-right:0}
+#toc.toc2{width:20em}
+#toc.toc2 #toctitle{font-size:1.375em}
+#toc.toc2>ul{font-size:.95em}
+#toc.toc2 ul ul{padding-left:1.25em}
+body.toc2.toc-right{padding-left:0;padding-right:20em}}
+#content #toc{border:1px solid #e0e0dc;margin-bottom:1.25em;padding:1.25em;background:#f8f8f7;border-radius:4px}
+#content #toc>:first-child{margin-top:0}
+#content #toc>:last-child{margin-bottom:0}
+#footer{max-width:none;background:rgba(0,0,0,.8);padding:1.25em}
+#footer-text{color:hsla(0,0%,100%,.8);line-height:1.44}
+#content{margin-bottom:.625em}
+.sect1{padding-bottom:.625em}
+@media screen and (min-width:768px){#content{margin-bottom:1.25em}
+.sect1{padding-bottom:1.25em}}
+.sect1:last-child{padding-bottom:0}
+.sect1+.sect1{border-top:1px solid #e7e7e9}
+#content h1>a.anchor,h2>a.anchor,h3>a.anchor,#toctitle>a.anchor,.sidebarblock>.content>.title>a.anchor,h4>a.anchor,h5>a.anchor,h6>a.anchor{position:absolute;z-index:1001;width:1.5ex;margin-left:-1.5ex;display:block;text-decoration:none!important;visibility:hidden;text-align:center;font-weight:400}
+#content h1>a.anchor::before,h2>a.anchor::before,h3>a.anchor::before,#toctitle>a.anchor::before,.sidebarblock>.content>.title>a.anchor::before,h4>a.anchor::before,h5>a.anchor::before,h6>a.anchor::before{content:"\00A7";font-size:.85em;display:block;padding-top:.1em}
+#content h1:hover>a.anchor,#content h1>a.anchor:hover,h2:hover>a.anchor,h2>a.anchor:hover,h3:hover>a.anchor,#toctitle:hover>a.anchor,.sidebarblock>.content>.title:hover>a.anchor,h3>a.anchor:hover,#toctitle>a.anchor:hover,.sidebarblock>.content>.title>a.anchor:hover,h4:hover>a.anchor,h4>a.anchor:hover,h5:hover>a.anchor,h5>a.anchor:hover,h6:hover>a.anchor,h6>a.anchor:hover{visibility:visible}
+#content h1>a.link,h2>a.link,h3>a.link,#toctitle>a.link,.sidebarblock>.content>.title>a.link,h4>a.link,h5>a.link,h6>a.link{color:#ba3925;text-decoration:none}
+#content h1>a.link:hover,h2>a.link:hover,h3>a.link:hover,#toctitle>a.link:hover,.sidebarblock>.content>.title>a.link:hover,h4>a.link:hover,h5>a.link:hover,h6>a.link:hover{color:#a53221}
+details,.audioblock,.imageblock,.literalblock,.listingblock,.stemblock,.videoblock{margin-bottom:1.25em}
+details{margin-left:1.25rem}
+details>summary{cursor:pointer;display:block;position:relative;line-height:1.6;margin-bottom:.625rem;outline:none;-webkit-tap-highlight-color:transparent}
+details>summary::-webkit-details-marker{display:none}
+details>summary::before{content:"";border:solid transparent;border-left:solid;border-width:.3em 0 .3em .5em;position:absolute;top:.5em;left:-1.25rem;transform:translateX(15%)}
+details[open]>summary::before{border:solid transparent;border-top:solid;border-width:.5em .3em 0;transform:translateY(15%)}
+details>summary::after{content:"";width:1.25rem;height:1em;position:absolute;top:.3em;left:-1.25rem}
+.admonitionblock td.content>.title,.audioblock>.title,.exampleblock>.title,.imageblock>.title,.listingblock>.title,.literalblock>.title,.stemblock>.title,.openblock>.title,.paragraph>.title,.quoteblock>.title,table.tableblock>.title,.verseblock>.title,.videoblock>.title,.dlist>.title,.olist>.title,.ulist>.title,.qlist>.title,.hdlist>.title{text-rendering:optimizeLegibility;text-align:left;font-family:"Noto Serif","DejaVu Serif",serif;font-size:1rem;font-style:italic}
+table.tableblock.fit-content>caption.title{white-space:nowrap;width:0}
+.paragraph.lead>p,#preamble>.sectionbody>[class=paragraph]:first-of-type p{font-size:1.21875em;line-height:1.6;color:rgba(0,0,0,.85)}
+.admonitionblock>table{border-collapse:separate;border:0;background:none;width:100%}
+.admonitionblock>table td.icon{text-align:center;width:80px}
+.admonitionblock>table td.icon img{max-width:none}
+.admonitionblock>table td.icon .title{font-weight:bold;font-family:"Open Sans","DejaVu Sans",sans-serif;text-transform:uppercase}
+.admonitionblock>table td.content{padding-left:1.125em;padding-right:1.25em;border-left:1px solid #dddddf;color:rgba(0,0,0,.6);word-wrap:anywhere}
+.admonitionblock>table td.content>:last-child>:last-child{margin-bottom:0}
+.exampleblock>.content{border:1px solid #e6e6e6;margin-bottom:1.25em;padding:1.25em;background:#fff;border-radius:4px}
+.sidebarblock{border:1px solid #dbdbd6;margin-bottom:1.25em;padding:1.25em;background:#f3f3f2;border-radius:4px}
+.sidebarblock>.content>.title{color:#7a2518;margin-top:0;text-align:center}
+.exampleblock>.content>:first-child,.sidebarblock>.content>:first-child{margin-top:0}
+.exampleblock>.content>:last-child,.exampleblock>.content>:last-child>:last-child,.exampleblock>.content .olist>ol>li:last-child>:last-child,.exampleblock>.content .ulist>ul>li:last-child>:last-child,.exampleblock>.content .qlist>ol>li:last-child>:last-child,.sidebarblock>.content>:last-child,.sidebarblock>.content>:last-child>:last-child,.sidebarblock>.content .olist>ol>li:last-child>:last-child,.sidebarblock>.content .ulist>ul>li:last-child>:last-child,.sidebarblock>.content .qlist>ol>li:last-child>:last-child{margin-bottom:0}
+.literalblock pre,.listingblock>.content>pre{border-radius:4px;overflow-x:auto;padding:1em;font-size:.8125em}
+@media screen and (min-width:768px){.literalblock pre,.listingblock>.content>pre{font-size:.90625em}}
+@media screen and (min-width:1280px){.literalblock pre,.listingblock>.content>pre{font-size:1em}}
+.literalblock pre,.listingblock>.content>pre:not(.highlight),.listingblock>.content>pre[class=highlight],.listingblock>.content>pre[class^="highlight "]{background:#f7f7f8}
+.literalblock.output pre{color:#f7f7f8;background:rgba(0,0,0,.9)}
+.listingblock>.content{position:relative}
+.listingblock code[data-lang]::before{display:none;content:attr(data-lang);position:absolute;font-size:.75em;top:.425rem;right:.5rem;line-height:1;text-transform:uppercase;color:inherit;opacity:.5}
+.listingblock:hover code[data-lang]::before{display:block}
+.listingblock.terminal pre .command::before{content:attr(data-prompt);padding-right:.5em;color:inherit;opacity:.5}
+.listingblock.terminal pre .command:not([data-prompt])::before{content:"$"}
+.listingblock pre.highlightjs{padding:0}
+.listingblock pre.highlightjs>code{padding:1em;border-radius:4px}
+.listingblock pre.prettyprint{border-width:0}
+.prettyprint{background:#f7f7f8}
+pre.prettyprint .linenums{line-height:1.45;margin-left:2em}
+pre.prettyprint li{background:none;list-style-type:inherit;padding-left:0}
+pre.prettyprint li code[data-lang]::before{opacity:1}
+pre.prettyprint li:not(:first-child) code[data-lang]::before{display:none}
+table.linenotable{border-collapse:separate;border:0;margin-bottom:0;background:none}
+table.linenotable td[class]{color:inherit;vertical-align:top;padding:0;line-height:inherit;white-space:normal}
+table.linenotable td.code{padding-left:.75em}
+table.linenotable td.linenos,pre.pygments .linenos{border-right:1px solid;opacity:.35;padding-right:.5em;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}
+pre.pygments span.linenos{display:inline-block;margin-right:.75em}
+.quoteblock{margin:0 1em 1.25em 1.5em;display:table}
+.quoteblock:not(.excerpt)>.title{margin-left:-1.5em;margin-bottom:.75em}
+.quoteblock blockquote,.quoteblock p{color:rgba(0,0,0,.85);font-size:1.15rem;line-height:1.75;word-spacing:.1em;letter-spacing:0;font-style:italic;text-align:justify}
+.quoteblock blockquote{margin:0;padding:0;border:0}
+.quoteblock blockquote::before{content:"\201c";float:left;font-size:2.75em;font-weight:bold;line-height:.6em;margin-left:-.6em;color:#7a2518;text-shadow:0 1px 2px rgba(0,0,0,.1)}
+.quoteblock blockquote>.paragraph:last-child p{margin-bottom:0}
+.quoteblock .attribution{margin-top:.75em;margin-right:.5ex;text-align:right}
+.verseblock{margin:0 1em 1.25em}
+.verseblock pre{font-family:"Open Sans","DejaVu Sans",sans-serif;font-size:1.15rem;color:rgba(0,0,0,.85);font-weight:300;text-rendering:optimizeLegibility}
+.verseblock pre strong{font-weight:400}
+.verseblock .attribution{margin-top:1.25rem;margin-left:.5ex}
+.quoteblock .attribution,.verseblock .attribution{font-size:.9375em;line-height:1.45;font-style:italic}
+.quoteblock .attribution br,.verseblock .attribution br{display:none}
+.quoteblock .attribution cite,.verseblock .attribution cite{display:block;letter-spacing:-.025em;color:rgba(0,0,0,.6)}
+.quoteblock.abstract blockquote::before,.quoteblock.excerpt blockquote::before,.quoteblock .quoteblock blockquote::before{display:none}
+.quoteblock.abstract blockquote,.quoteblock.abstract p,.quoteblock.excerpt blockquote,.quoteblock.excerpt p,.quoteblock .quoteblock blockquote,.quoteblock .quoteblock p{line-height:1.6;word-spacing:0}
+.quoteblock.abstract{margin:0 1em 1.25em;display:block}
+.quoteblock.abstract>.title{margin:0 0 .375em;font-size:1.15em;text-align:center}
+.quoteblock.excerpt>blockquote,.quoteblock .quoteblock{padding:0 0 .25em 1em;border-left:.25em solid #dddddf}
+.quoteblock.excerpt,.quoteblock .quoteblock{margin-left:0}
+.quoteblock.excerpt blockquote,.quoteblock.excerpt p,.quoteblock .quoteblock blockquote,.quoteblock .quoteblock p{color:inherit;font-size:1.0625rem}
+.quoteblock.excerpt .attribution,.quoteblock .quoteblock .attribution{color:inherit;font-size:.85rem;text-align:left;margin-right:0}
+p.tableblock:last-child{margin-bottom:0}
+td.tableblock>.content{margin-bottom:1.25em;word-wrap:anywhere}
+td.tableblock>.content>:last-child{margin-bottom:-1.25em}
+table.tableblock,th.tableblock,td.tableblock{border:0 solid #dedede}
+table.grid-all>*>tr>*{border-width:1px}
+table.grid-cols>*>tr>*{border-width:0 1px}
+table.grid-rows>*>tr>*{border-width:1px 0}
+table.frame-all{border-width:1px}
+table.frame-ends{border-width:1px 0}
+table.frame-sides{border-width:0 1px}
+table.frame-none>colgroup+*>:first-child>*,table.frame-sides>colgroup+*>:first-child>*{border-top-width:0}
+table.frame-none>:last-child>:last-child>*,table.frame-sides>:last-child>:last-child>*{border-bottom-width:0}
+table.frame-none>*>tr>:first-child,table.frame-ends>*>tr>:first-child{border-left-width:0}
+table.frame-none>*>tr>:last-child,table.frame-ends>*>tr>:last-child{border-right-width:0}
+table.stripes-all>*>tr,table.stripes-odd>*>tr:nth-of-type(odd),table.stripes-even>*>tr:nth-of-type(even),table.stripes-hover>*>tr:hover{background:#f8f8f7}
+th.halign-left,td.halign-left{text-align:left}
+th.halign-right,td.halign-right{text-align:right}
+th.halign-center,td.halign-center{text-align:center}
+th.valign-top,td.valign-top{vertical-align:top}
+th.valign-bottom,td.valign-bottom{vertical-align:bottom}
+th.valign-middle,td.valign-middle{vertical-align:middle}
+table thead th,table tfoot th{font-weight:bold}
+tbody tr th{background:#f7f8f7}
+tbody tr th,tbody tr th p,tfoot tr th,tfoot tr th p{color:rgba(0,0,0,.8);font-weight:bold}
+p.tableblock>code:only-child{background:none;padding:0}
+p.tableblock{font-size:1em}
+ol{margin-left:1.75em}
+ul li ol{margin-left:1.5em}
+dl dd{margin-left:1.125em}
+dl dd:last-child,dl dd:last-child>:last-child{margin-bottom:0}
+li p,ul dd,ol dd,.olist .olist,.ulist .ulist,.ulist .olist,.olist .ulist{margin-bottom:.625em}
+ul.checklist,ul.none,ol.none,ul.no-bullet,ol.no-bullet,ol.unnumbered,ul.unstyled,ol.unstyled{list-style-type:none}
+ul.no-bullet,ol.no-bullet,ol.unnumbered{margin-left:.625em}
+ul.unstyled,ol.unstyled{margin-left:0}
+li>p:empty:only-child::before{content:"";display:inline-block}
+ul.checklist>li>p:first-child{margin-left:-1em}
+ul.checklist>li>p:first-child>.fa-square-o:first-child,ul.checklist>li>p:first-child>.fa-check-square-o:first-child{width:1.25em;font-size:.8em;position:relative;bottom:.125em}
+ul.checklist>li>p:first-child>input[type=checkbox]:first-child{margin-right:.25em}
+ul.inline{display:flex;flex-flow:row wrap;list-style:none;margin:0 0 .625em -1.25em}
+ul.inline>li{margin-left:1.25em}
+.unstyled dl dt{font-weight:400;font-style:normal}
+ol.arabic{list-style-type:decimal}
+ol.decimal{list-style-type:decimal-leading-zero}
+ol.loweralpha{list-style-type:lower-alpha}
+ol.upperalpha{list-style-type:upper-alpha}
+ol.lowerroman{list-style-type:lower-roman}
+ol.upperroman{list-style-type:upper-roman}
+ol.lowergreek{list-style-type:lower-greek}
+.hdlist>table,.colist>table{border:0;background:none}
+.hdlist>table>tbody>tr,.colist>table>tbody>tr{background:none}
+td.hdlist1,td.hdlist2{vertical-align:top;padding:0 .625em}
+td.hdlist1{font-weight:bold;padding-bottom:1.25em}
+td.hdlist2{word-wrap:anywhere}
+.literalblock+.colist,.listingblock+.colist{margin-top:-.5em}
+.colist td:not([class]):first-child{padding:.4em .75em 0;line-height:1;vertical-align:top}
+.colist td:not([class]):first-child img{max-width:none}
+.colist td:not([class]):last-child{padding:.25em 0}
+.thumb,.th{line-height:0;display:inline-block;border:4px solid #fff;box-shadow:0 0 0 1px #ddd}
+.imageblock.left{margin:.25em .625em 1.25em 0}
+.imageblock.right{margin:.25em 0 1.25em .625em}
+.imageblock>.title{margin-bottom:0}
+.imageblock.thumb,.imageblock.th{border-width:6px}
+.imageblock.thumb>.title,.imageblock.th>.title{padding:0 .125em}
+.image.left,.image.right{margin-top:.25em;margin-bottom:.25em;display:inline-block;line-height:0}
+.image.left{margin-right:.625em}
+.image.right{margin-left:.625em}
+a.image{text-decoration:none;display:inline-block}
+a.image object{pointer-events:none}
+sup.footnote,sup.footnoteref{font-size:.875em;position:static;vertical-align:super}
+sup.footnote a,sup.footnoteref a{text-decoration:none}
+sup.footnote a:active,sup.footnoteref a:active,#footnotes .footnote a:first-of-type:active{text-decoration:underline}
+#footnotes{padding-top:.75em;padding-bottom:.75em;margin-bottom:.625em}
+#footnotes hr{width:20%;min-width:6.25em;margin:-.25em 0 .75em;border-width:1px 0 0}
+#footnotes .footnote{padding:0 .375em 0 .225em;line-height:1.3334;font-size:.875em;margin-left:1.2em;margin-bottom:.2em}
+#footnotes .footnote a:first-of-type{font-weight:bold;text-decoration:none;margin-left:-1.05em}
+#footnotes .footnote:last-of-type{margin-bottom:0}
+#content #footnotes{margin-top:-.625em;margin-bottom:0;padding:.75em 0}
+div.unbreakable{page-break-inside:avoid}
+.big{font-size:larger}
+.small{font-size:smaller}
+.underline{text-decoration:underline}
+.overline{text-decoration:overline}
+.line-through{text-decoration:line-through}
+.aqua{color:#00bfbf}
+.aqua-background{background:#00fafa}
+.black{color:#000}
+.black-background{background:#000}
+.blue{color:#0000bf}
+.blue-background{background:#0000fa}
+.fuchsia{color:#bf00bf}
+.fuchsia-background{background:#fa00fa}
+.gray{color:#606060}
+.gray-background{background:#7d7d7d}
+.green{color:#006000}
+.green-background{background:#007d00}
+.lime{color:#00bf00}
+.lime-background{background:#00fa00}
+.maroon{color:#600000}
+.maroon-background{background:#7d0000}
+.navy{color:#000060}
+.navy-background{background:#00007d}
+.olive{color:#606000}
+.olive-background{background:#7d7d00}
+.purple{color:#600060}
+.purple-background{background:#7d007d}
+.red{color:#bf0000}
+.red-background{background:#fa0000}
+.silver{color:#909090}
+.silver-background{background:#bcbcbc}
+.teal{color:#006060}
+.teal-background{background:#007d7d}
+.white{color:#bfbfbf}
+.white-background{background:#fafafa}
+.yellow{color:#bfbf00}
+.yellow-background{background:#fafa00}
+span.icon>.fa{cursor:default}
+a span.icon>.fa{cursor:inherit}
+.admonitionblock td.icon [class^="fa icon-"]{font-size:2.5em;text-shadow:1px 1px 2px rgba(0,0,0,.5);cursor:default}
+.admonitionblock td.icon .icon-note::before{content:"\f05a";color:#19407c}
+.admonitionblock td.icon .icon-tip::before{content:"\f0eb";text-shadow:1px 1px 2px rgba(155,155,0,.8);color:#111}
+.admonitionblock td.icon .icon-warning::before{content:"\f071";color:#bf6900}
+.admonitionblock td.icon .icon-caution::before{content:"\f06d";color:#bf3400}
+.admonitionblock td.icon .icon-important::before{content:"\f06a";color:#bf0000}
+.conum[data-value]{display:inline-block;color:#fff!important;background:rgba(0,0,0,.8);border-radius:50%;text-align:center;font-size:.75em;width:1.67em;height:1.67em;line-height:1.67em;font-family:"Open Sans","DejaVu Sans",sans-serif;font-style:normal;font-weight:bold}
+.conum[data-value] *{color:#fff!important}
+.conum[data-value]+b{display:none}
+.conum[data-value]::after{content:attr(data-value)}
+pre .conum[data-value]{position:relative;top:-.125em}
+b.conum *{color:inherit!important}
+.conum:not([data-value]):empty{display:none}
+dt,th.tableblock,td.content,div.footnote{text-rendering:optimizeLegibility}
+h1,h2,p,td.content,span.alt,summary{letter-spacing:-.01em}
+p strong,td.content strong,div.footnote strong{letter-spacing:-.005em}
+p,blockquote,dt,td.content,td.hdlist1,span.alt,summary{font-size:1.0625rem}
+p{margin-bottom:1.25rem}
+.sidebarblock p,.sidebarblock dt,.sidebarblock td.content,p.tableblock{font-size:1em}
+.exampleblock>.content{background:#fffef7;border-color:#e0e0dc;box-shadow:0 1px 4px #e0e0dc}
+.print-only{display:none!important}
+@page{margin:1.25cm .75cm}
+@media print{*{box-shadow:none!important;text-shadow:none!important}
+html{font-size:80%}
+a{color:inherit!important;text-decoration:underline!important}
+a.bare,a[href^="#"],a[href^="mailto:"]{text-decoration:none!important}
+a[href^="http:"]:not(.bare)::after,a[href^="https:"]:not(.bare)::after{content:"(" attr(href) ")";display:inline-block;font-size:.875em;padding-left:.25em}
+abbr[title]{border-bottom:1px dotted}
+abbr[title]::after{content:" (" attr(title) ")"}
+pre,blockquote,tr,img,object,svg{page-break-inside:avoid}
+thead{display:table-header-group}
+svg{max-width:100%}
+p,blockquote,dt,td.content{font-size:1em;orphans:3;widows:3}
+h2,h3,#toctitle,.sidebarblock>.content>.title{page-break-after:avoid}
+#header,#content,#footnotes,#footer{max-width:none}
+#toc,.sidebarblock,.exampleblock>.content{background:none!important}
+#toc{border-bottom:1px solid #dddddf!important;padding-bottom:0!important}
+body.book #header{text-align:center}
+body.book #header>h1:first-child{border:0!important;margin:2.5em 0 1em}
+body.book #header .details{border:0!important;display:block;padding:0!important}
+body.book #header .details span:first-child{margin-left:0!important}
+body.book #header .details br{display:block}
+body.book #header .details br+span::before{content:none!important}
+body.book #toc{border:0!important;text-align:left!important;padding:0!important;margin:0!important}
+body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-break-before:always}
+.listingblock code[data-lang]::before{display:block}
+#footer{padding:0 .9375em}
+.hide-on-print{display:none!important}
+.print-only{display:block!important}
+.hide-for-print{display:none!important}
+.show-for-print{display:inherit!important}}
+@media amzn-kf8,print{#header>h1:first-child{margin-top:1.25rem}
+.sect1{padding:0!important}
+.sect1+.sect1{border:0}
+#footer{background:none}
+#footer-text{color:rgba(0,0,0,.6);font-size:.9em}}
+@media amzn-kf8{#header,#content,#footnotes,#footer{padding:0}}
+</style>
+</head>
+<body class="article">
+<div id="header">
+</div>
+<div id="content">
+<div class="sect1">
+<h2 id="nasops">NAS-Operationen</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Die NAS ist vom Grundsatz her zunächst für die Kommunikation nach "außen", d.h. für die Nutzer der AAA-Daten konzipiert. Darüber hinaus kann sie, je nach Implementierungskonzept, auch für die interne Kommunikation zwischen Erfassungs- bzw. Qualifizierungssystemen und Führungssystemen verwendet werden. In den folgenden Kapiteln sind die letztgenannten Funktionalitäten mit berücksichtigt. Eine Implementierung, die die interne Kommunikation mit systemspezifischen Funktionen ermöglicht, muss aus der Palette der beschriebenen Operationen der NAS nur diejenigen bereitstellen, die für die Abgabe von Daten an Dritte relevant sind. Dazu gehören insbesondere die Abgabe von Benutzungsdaten und die Führung von Sekundärnachweisen. Im Zuge der Realisierung einer netzbasierten Geodateninfrastruktur kann es darüber hinaus notwendig werden, weitere Funktionen als NAS-Operationen zur Verfügung zu stellen.</p>
+</div>
+<div class="paragraph">
+<p>Eine einheitliche und standardisierte Festlegung zur Datenübermittlung zwischen den Systemen verschiedener AAA-Softwareanbieter ist länderspezifisch zu realisieren. Aufgrund der unterschiedlichen Länderlösungen ist eine einheitliche Regelung in der GeoInfoDok zur automatisierten Kommunikation zwischen Primär- und Sekundärdatenhaltung nicht möglich.</p>
+</div>
+<div class="paragraph">
+<p>Für die Verwendung in Fachinformationssystemen sind drei allgemeine Operationen zur Fortführung von Bestandsdaten, zur Abfrage von Auszügen aus den Bestandsdaten und zur generellen Auskunft über die Eigenschaften der Bestandsdatenhaltung spezifiziert.</p>
+</div>
+<div class="sect2">
+<h3 id="nasops_funktionsumfang">Funktionsumfang</h3>
+<div class="paragraph">
+<p>Die NAS soll verschiedene Operationen unterstützen. Folgender Bedarf wird z.Zt. gesehen:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Einrichten und Fortführen von Primärnachweisen</p>
+</li>
+<li>
+<p>Anfordern von Ausgaben</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Ausgabe von Benutzungsdaten (Auszüge)</p>
+</li>
+<li>
+<p>Führen von Sekundärnachweisen (Erstausstattung und Fortführung)</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Sperren und Entsperren von Objekten</p>
+</li>
+<li>
+<p>Reservieren (von Punktnummer u.a.)</p>
+</li>
+<li>
+<p>Übermittlung von Protokollinformationen (z.B. Verarbeitungsprotokolle, Fehlerprotokolle)</p>
+</li>
+<li>
+<p>Ermitteln der Eigenschaften einer Bestandsdatenhaltung</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Zu jeder NAS-Operation gehören zwei XML-Schema-Definitionen, eine für den Aufruf der Operation (<em>Request</em>) und eine für das Ergebnis (<em>Response</em>):</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Aufruf (<em>Request</em>)<br>
+z.B. Fortführungsauftrag, Benutzungsauftrag</p>
+</li>
+<li>
+<p>Ergebnis (<em>Response</em>)<br>
+z.B. Fortführungsprotokoll, Benutzungsergebnis</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Hierbei ist durchaus die Mehrfachverwendung einer XML-Schema-Definition für mehrere Operationen möglich. Soweit standardisierte XML-Schemata für die genannten Zwecke vorliegen, werden diese verwendet, im anderen Fall werden die Definitionen selbst erstellt. Die XML-Schema-Definitionen für NAS-Operationen werden, wie alle anderen Inhalte der NAS, automatisch aus UML-Modellen abgeleitet werden. Für die Anwendungsbereiche AFIS und ALKIS wurden die UML-Modelle dazu bereits erstellt. Sollte es sich herausstellen, dass die dort vorgenommenen Definitionen auch für andere Anwendungen verwendet werden sollen, so sind jene an dieser Stelle aufzunehmen.</p>
+</div>
+<div class="paragraph">
+<p>Alle XML-Schemata für die NAS-Operationen sind in der Datei NAS-Operationen.xsd zusammengefasst. Die allgemein verwendbaren Basisoperationen sind in der Datei AAA-Bassisschema.xsd enthalten.</p>
+</div>
+<div class="paragraph">
+<p>Den Operationen liegt die OGC Web Services Common Specification 1.1 zugrunde, die einzuhalten ist. Insbesondere sollte jede NAS-Implementierung die GetCapabilities-Operation zu unterstützen.</p>
+</div>
+<div id="img_55" class="imageblock">
+<div class="content">
+<img src="media/image55.png" alt="media/image55" width="585" height="215">
+</div>
+<div class="title">Figure 1. Das UML-Paket "NAS-Operationen" im Kontext der Bestandteile des Anwendungsschemas</div>
+</div>
+<div class="sect3">
+<h4 id="nasops_funktionsumfang_primaernachweise">Einrichten und Fortführen von Primärnachweisen</h4>
+<div class="paragraph">
+<p>Da GML selbst keine Elemente für Fortführungsoperationen anbietet, werden zu diesem Zweck die Festlegungen des <em>Web Feature Service</em> (WFS) von OGC verwendet. In der WFS-Spezifikation sind neben dem Transaktionsmechanismus 4 Änderungsfunktionen definiert: &lt;Insert&gt; (neues Objekt einfügen), &lt;Update&gt; (Objekt ändern), &lt;Replace&gt; (Objekt überschreiben) und &lt;Delete&gt; (Objekt löschen). In der NAS wird bei der Fortführung von Primärnachweisen &lt;Update&gt; nicht verwendet. Welche Änderungen zu &lt;Replace&gt; oder zu &lt;Delete&gt; mit anschließendem &lt;Insert&gt; führen, ist in den Objektartenkatalogen fachlich festzulegen. Dies gilt sowohl für Änderungen in den Attributwerten und Relationen als auch für geometrische Änderungen. Bei letzteren muss ggf. der Bearbeiter im Erhebungsprozess entscheiden, welche Fortführungsart zu verwenden ist.</p>
+</div>
+<div class="paragraph">
+<p>Beispiel:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;wfs:Transaction&gt;
+  &lt;wfs:Insert&gt;
+    &lt;AX_Flurstueck gml:id="DEBY0000F0000001"&gt;
+      &lt;!-- ... --&gt;
+    &lt;/AX_Flurstueck&gt;
+    &lt;AX_Gebaeude gml:id="DEBY0000G0000001"&gt;
+      &lt;!-- ... --&gt;
+    &lt;/AX_Gebaeude&gt;
+  &lt;/wfs:Insert&gt;
+  &lt;wfs:Replace&gt;
+    &lt;AX_Flurstueck gml:id="DEBY0000F0000002"&gt;
+      &lt;!-- ... --&gt;
+    &lt;/AX_Flurstueck&gt;
+    &lt;fes:Filter&gt;
+      &lt;fes:ResourceId rid="DEBY0000F000000220010101T000000Z"/&gt;
+    &lt;/fes:Filter&gt;
+  &lt;/wfs:Replace&gt;
+  &lt;wfs:Delete typeName=AX_Buchungsstelle"&gt;
+    &lt;fes:Filter&gt;
+      &lt;fes:ResourceId rid="DEBY0000B000000320010101T000000Z"/&gt;
+      &lt;fes:ResourceId rid="DEBY0000B000000420010101T000000Z"/&gt;
+    &lt;/fes:Filter&gt;
+  &lt;/wfs:Delete&gt;
+&lt;/wfs:Transaction&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Folgendes ist zu beachten:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Die Filter-Ausdrücke bei &lt;Delete&gt;- und &lt;Replace&gt;-Operationen dürfen nur ResourceId-Elemente beinhalten. Komplexere Filterkriterien sind nicht erlaubt.</p>
+</li>
+<li>
+<p>Bei ResourceId-Bedingungen in "&lt;Replace&gt;"- und "&lt;Delete&gt;"-Operationen wird der Identifikator zusätzlich um Entstehungsdatum/-zeit ergänzt, damit eine Prüfung auf Aktualität erfolgen kann. Datum und Uhrzeit werden ohne Trennzeichen kodiert, damit sie den Bedingungen einer XML ID genügen, also in der folgenden Form: CCYYMMDDThhmmssZ. Bezüglich der Ergänzung um Entstehungsdatum/-zeit gilt folgende Ausnahme: Innerhalb von Fortführungsaufträgen mit mehreren Fortführungsfällen kann bei &lt;Replace&gt; bzw. &lt;Delete&gt;-Anweisungen von mehrfach fortzuführenden Objekten ab dem 2. Fortführungsfall die Angabe von Entstehungsdatum/-zeit innerhalb der OID entfallen. Nur in diesem speziellen Fall erfolgt keine Prüfung der Aktualität und es wird die - soeben erzeugte - aktuelle Version genutzt.</p>
+</li>
+<li>
+<p>In &lt;Delete&gt;-Operationen dürfen nur mehrere AAA-Objekte behandelt werden, wenn sie dieselbe Objektart haben; innerhalb von &lt;Insert&gt;-Operationen können unterschiedliche Objektarten vorkommen. &lt;Replace&gt;-Operationen behandeln immer nur ein Objekt.</p>
+</li>
+<li>
+<p>Bei &lt;Replace&gt;-Operationen sind stets alle Eigenschaften des AAA-Objekts als "Properties" zu übergeben, also auch die unveränderten. Dies stellt eine Verschärfung der WFS-Spezifikation von OGC für die &lt;Update&gt;-Operation dar, in der gefordert wird, dass mindestens alle geänderten Eigenschaften übermittelt werden. Grund für diese Verschärfung war die Forderung, dass Datenhaltungskomponenten sich nicht merken müssen, welche Eigenschaften eines Objekts geändert wurden, sondern lediglich die Tatsache, dass ein Objekt geändert wurde.</p>
+</li>
+<li>
+<p>In Analogie zu den ResourceId-Bedingungen müssen die OID bei Vorkommen mehrerer Versionen eines Objekts beim Objekt eindeutig sein. Dies wird durch Ergänzung der OID beim Objekt um Entstehungsdatum/-zeit ohne Trennzeichen erreicht.</p>
+</li>
+<li>
+<p>Alle durchgeführten Änderungen innerhalb eines Fortführungsfalls werden zeitgleich gültig. In das Attribut "lebenszeitintervall" der Objekte wird die Systemzeit (umgerechnet in UTC) zum Beginn der Transaktion eingetragen. Dabei ist fallweise der Beginn- oder Endezeitpunkt zu belegen. Die angelieferten Angaben bei den einzelnen Fachobjekten sind unerheblich und werden überschrieben. Letzeres gilt nicht für die Ersteinrichtung eines Datenbestandes durch Übernahme von Objekten aus einem Vorgängerdatenbestand (Einrichtungsauftrag). Um hierbei ein Eintragen von historischen Informationen zu ermöglichen, wird dort die angelieferte Zeit übernommen. Wird als Datum/Zeit "9999-01-01T00:00:00Z" (Dummy-Datum/Zeit) angeliefert, so wird dies wie bei Fortführungsaufträgen mit der Systemzeit überschrieben. Zeitangaben werden immer in UTC-Zeit (Universal Time Coordinated, Greenwich Mean Time) gemacht. Die Zeiteinheit für die Einträge ins Lebenszeitintervall (Datentyp: DateTime) ist die volle Sekunde einschließlich der obligatorischen Kennung "Z" für UTC (CCYY-MM-DDTHH:MM:SSZ). Das Führungssystem stellt bei der Übernahme sicher, dass nicht 2 Versionen desselben Objekts mit identischem Lebenszeitintervall entstehen. Dies kann dann auftreten, wenn ein Objekt innerhalb eines Fortführungsauftrags in mehreren Fortführungsfällen verändert wird und diese aufgrund der Systemgeschwindigkeit in der gleichen Sekunde abgearbeitet werden.</p>
+</li>
+<li>
+<p>Auf Objektarten, die den Stereotyp und den Tagged Value "retired" tragen, dürfen lediglich &lt;Insert&gt;- und &lt;Delete&gt;-Operationen angewendet werden, da im Rahmen der Einführung von neuen Referenzversionen der GeoInfoDok deren Migration und insgesamt auch deren Löschung vorgesehen sind. Fortführungen dieser Objekte in Primärnachweisen sind nicht erlaubt.</p>
+</li>
+<li>
+<p>Attribute, Relationen und Wertearten mit dem Stereotyp und den Tagged Value "retired" dürfen keine Modifikationen erfahren. &lt;Replace&gt;-Operationen, welche die vorgenannten Dinge verändernd betreffen, sind daher unzulässig.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Die XML-Schemata für einen Fortführungsauftrag und sein Ergebnis sind wie alle anderen NAS-Operationen in der Datei NAS-Operationen.xsd enthalten. Einrichtungsaufträge und deren Ergebnisse sind Unterklassen von Fortführungsaufträgen.</p>
+</div>
+<div class="paragraph">
+<p>Die Funktionen zur Fortführung werden in Systemen mit vollständigem Nachweis der Historie und in Systemen ohne vollständige Historie unterschiedlich ausgeführt:</p>
+</div>
+<div class="paragraph">
+<p><strong>Systeme ohne vollständigen Historiennachweis</strong></p>
+</div>
+<div class="paragraph">
+<p><em>&lt;Insert&gt;</em>:<br>
+Die übermittelten Fachobjekte werden als neue Informationen eingetragen.</p>
+</div>
+<div class="paragraph">
+<p><em>&lt;Replace&gt;</em>:<br>
+Die übermittelten Fachobjekte ersetzen die Fachobjekte, die denselben Identifikator haben. Zur eindeutigen Bezeichnung der zu überschreibenden bzw. zu versionierenden Version wird der Identifikator (XML-Attribut <em>rid</em>) des neuen Fachobjekts im Filterausdruck um die Angabe des Entstehungsdatums/-zeit der zu überschreibenden Objektversion ergänzt. Damit sollen Fehler aufgedeckt werden, die durch Fortführungsaufträge entstehen könnten, die nicht zum gespeicherten Datenbestand passen. Im aufnehmenden System wird das Fachobjekt wieder mit dem originalen (nicht um Entstehungsdatum/-zeit ergänzten) Identifikator gespeichert. Es ist nicht zulässig, die Operation <em>&lt;Replace&gt;</em> durch <em>&lt;Delete&gt;</em> und nachfolgendes <em>&lt;Insert&gt;</em> mit demselben Identifikator zu ersetzen.</p>
+</div>
+<div class="paragraph">
+<p><em>&lt;Delete&gt;</em>:<br>
+Das Attribut <em>rid</em> des Filterausdrucks im WFS-&lt;Delete&gt;-Element bezeichnet das zu löschende Fachobjekt. Zur eindeutigen Bezeichnung der zu löschenden Version wird der Identifikator in der Austauschdatei um die Angabe des Entstehungsdatums/-zeit der zu löschenden Version ergänzt. Damit sollen Fehler aufgedeckt werden, die durch Fortführungsaufträge entstehen könnten, die nicht zum gespeicherten Datenbestand passen. Das so bezeichnete Objekt wird im aufnehmenden System mit allen selbstbezogenen Eigenschaften und referenzierten Raumbezugsgrundformen gelöscht. Raumbezugsgrundformen werden nur dann gelöscht, wenn sie von keinem weiteren Objekt referenziert werden.</p>
+</div>
+<div class="paragraph">
+<p>Diese Funktionalität wird vor allem von Datenhaltungssystemen genutzt, die Sekundärdatenbestände halten.</p>
+</div>
+<div class="paragraph">
+<p><strong>Systeme mit vollständigem Historiennachweis</strong></p>
+</div>
+<div class="paragraph">
+<p>Ist das aufnehmende System zur Führung eines vollständigen Historiennachweises konfiguriert, reagiert es auf</p>
+</div>
+<div class="paragraph">
+<p><em>&lt;Insert&gt;</em><br>
+mit der Erzeugung einer neuen Instanz eines Objektbehälters und fügt in den Behälter eine erste Version des übermittelten Fachobjekts ein.</p>
+</div>
+<div class="paragraph">
+<p><em>&lt;Replace&gt;</em><br>
+Die übermittelten Fachobjekte werden als neue Version in den durch den Identifikator bezeichneten Objektbehälter eingetragen. Zur eindeutigen Bezeichnung der Vorgängerversion wird der Identifikator im Filterausdruck (XML-Attribut <em>rid</em>) des neuen Fachobjekts in der Austauschdatei um die Angabe des Entstehungsdatums/-zeit der zu überschreibenden Objektversion ergänzt. Damit sollen Fehler aufgedeckt werden, die durch Fortführungsaufträge entstehen könnten, die nicht zum gespeicherten Datenbestand passen. Im aufnehmenden System bleibt das überschriebene Fachobjekt als historische Version bestehen.</p>
+</div>
+<div class="paragraph">
+<p><em>&lt;Delete&gt;</em><br>
+Die im Filterausdruck durch den um Entstehungsdatum/-zeit erweiterten Identifikator (XML-Attribut <em>rid</em>) bezeichnete Version des Fachobjekts wird mit dem aktuellen Untergangsdatum/-zeit (aus der Systemzeit abgeleitet) versehen und dadurch historisiert. Das System stellt sicher, dass keine weiteren Versionen angelegt werden können.</p>
+</div>
+<div class="paragraph">
+<p>Diese Funktionalität wird auch von den Datenhaltungssystemen genutzt, die die Versionierung nur befristet zur Bereitstellung von Fortführungsinformationen für Dritte im Rahmen des NBA-Verfahrens (s.u.) verwenden.</p>
+</div>
+<div class="paragraph">
+<p>Das konzeptuelle Fachmodell für die Fortführung von ALKIS sowie die Abläufe bei dessen Fortführungsverarbeitung sind im Abschnitt "Erläuterungen zu ALKIS" <mark><strong>TBD:</strong> Genaue Referenz?</mark> beschrieben.</p>
+</div>
+<div class="paragraph">
+<p>Hinweis: Das Fortführungsergebnis liefert derzeit nur minimale Informationen zurück. Grundsätzlich sinnvoll wären eine Gegenüberstellung von temporären und endgültigen Identifikatoren sowie eine Rückgabe von Entstehungsdatum/-zeit pro Fortführungsfall. Da dies in der aktuellen Version nicht erfolgt, müssen diese Informationen bei Bedarf, z.B. zur Codierung von Folgefortführungen, über einen nachfolgenden Bestandsdatenauszug aus der DHK erfragt werden.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="nasops_funktionsumfang_ausgabeanforderung">Anfordern von Ausgaben</h4>
+<div class="paragraph">
+<p>Die aus einem Datenhaltungssystem auszugebenden Daten (Benutzungsdaten oder Daten zur Führung von Sekundärnachweisen) werden hinsichtlich des auszugebenden Informationsumfangs durch Kriterien zur Selektion und Filterung bestimmt. Ein Datenhaltungssystem muss deshalb in der Lage sein, komplexe Selektions- und Filterausdrücke auszuwerten und die sich damit qualifizierenden Daten auszugeben. Die <strong>Selektion</strong> erfolgt durch räumliche, fachliche (Objektart, Attribut, Relation) und zeitliche Kriterien. Diese Kriterien können auch geschachtelt und miteinander verbunden werden, so dass ganze Selektionsketten entstehen. Damit kann auch formuliert werden, welche Elemente weitere Elemente über Referenzen zur Ausgabe nachziehen. In der NAS wird stets nur die im Anwendungsschema als navigierbare Richtung gekennzeichnete Rolle der Assoziation angegeben. Gegenrelationen sind in der NAS nicht zulässig. Gleichwohl ist es zur Vereinfachung von Filterausdrücken möglich, Objekte anzufordern, die per Gegenrelation mit einem Objekt verbunden sind. Hierbei ist - soweit vorhanden - der explizit im Modell benannte Rollenname der Gegenrelation zu verwenden, in Ermangelung eines solchen der um "inversZu_" ergänzte Rollenname der als navigierbare Richtung gekennzeichneten Rolle.</p>
+</div>
+<div class="paragraph">
+<p>Kriterien der <strong>Filterung</strong> bestimmen, welche Elemente der Selektionskette ausgegeben werden sollen und welche Attribute und Verweise mit diesen Elementen ausgegeben werden.</p>
+</div>
+<div class="paragraph">
+<p>Die Selektions- und Filterungskriterien werden als Bestandteil der Benutzungsanforderung an das datenführende System übermittelt oder dort in Benutzerprofilen hinterlegt. Für die Definition einheitlicher Produkte der AdV werden einheitliche Selektions- und Filterkriterien definiert. Als formale Sprache zur Definition der Selektionsketten wird die <em>Filter Encoding Specification</em> von OGC verwendet.</p>
+</div>
+<div class="paragraph">
+<p>Das XML-Schema für einen Benutzungsauftrag ist in der Datei NAS-Operationen.xsd enthalten. Es nutzt das Schema filter.xsd von OGC.</p>
+</div>
+<div class="paragraph">
+<p><strong>Grundsätze für die Selektion von Objekten (Filter Encoding)</strong></p>
+</div>
+<div class="paragraph">
+<p>Zum Codieren einer Selektion wird das &lt;wfs:Query&gt;-Element aus der "Web Feature Service"-Spezifikation (WFS) des Open Geospatial Consortiums in der Version 2.0 verwendet. In einer Selektion können mehrere Queries vorkommen, wobei sich jede Query auf eine instanziierbare Objektart bezieht. Die unterschiedlichen Queries wirken ergänzend.</p>
+</div>
+<div class="paragraph">
+<p>Die aktuelle Filter-Encoding-Spezifikation unterstützt bei Ad-Hoc-Queries und den geforderten Konformitätsklassen nur die Angabe der konkreten, instanziierten Objektarten, d.h. die im AAA-Anwendungsschema modellierte Vererbungshierarchie wird nicht unterstützt. Es ist also z.B. nicht möglich, eine einzige Query für "AX_TatsaechlicheNutzung" abzusetzen, um alle TN-Objekte zu erfragen, sondern es muss ein &lt;wfs:Query&gt;-Element pro Objektart angegeben werden. Hierfür wäre eine Unterstützung der Konformitätsklasse "Schema Element Function" erforderlich. Queries auf Modellelemente mit Stereotype und Tagged Value "retired" sind ohne Einschränkungen möglich.</p>
+</div>
+<div class="paragraph">
+<p>In eine &lt;wfs:Query&gt; eingebettet ist u.a. ein &lt;fes:Filter&gt;-Element zur Filterung der Objekte aus dem Gesamtumfang der Objektart. Ein &lt;fes:Filter&gt;-Ausdruck besteht aus einem Prädikat, das für jedes Objekt der Objektart in der Datenbasis, auf der die Suche ausgeführt werden soll, angewendet wird. Erfüllt das Objekt das Prädikat, ist es Teil der Selektion, ansonsten nicht. Die Prädikate sind entsprechend so zu verstehen, dass sie grundsätzlich auf den XML-Instanzen wirken, die diese Objekte repräsentieren.</p>
+</div>
+<div class="paragraph">
+<p>Entsprechend besteht das Prädikat aus einem booleschen Ausdruck, der aus beliebig vielen atomaren Operatoren besteht, die über</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>die logischen Operatoren</p>
+<div class="paragraph">
+<p>&lt;fes:And&gt;</p>
+</div>
+<div class="paragraph">
+<p>&lt;fes:Or&gt;</p>
+</div>
+<div class="paragraph">
+<p>&lt;fes:Not&gt;</p>
+</div>
+<div class="paragraph">
+<p>verbunden werden.</p>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Bei den atomaren Operatoren werden</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>räumliche Operatoren</p>
+<div class="paragraph">
+<p>&lt;fes:Equals&gt;</p>
+</div>
+<div class="paragraph">
+<p>&lt;fes:Disjoint&gt;</p>
+</div>
+<div class="paragraph">
+<p>&lt;fes:Touches&gt;</p>
+</div>
+<div class="paragraph">
+<p>&lt;fes:Within&gt;</p>
+</div>
+<div class="paragraph">
+<p>&lt;fes:Overlaps&gt;</p>
+</div>
+<div class="paragraph">
+<p>&lt;fes:Crosses&gt;</p>
+</div>
+<div class="paragraph">
+<p>&lt;fes:Intersects&gt;</p>
+</div>
+<div class="paragraph">
+<p>&lt;fes:Contains&gt;</p>
+</div>
+<div class="paragraph">
+<p>&lt;fes:DWithin&gt;</p>
+</div>
+<div class="paragraph">
+<p>&lt;fes:Beyond&gt;</p>
+</div>
+<div class="paragraph">
+<p>&lt;fes:BBOX&gt;</p>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>und</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Vergleichsoperatoren</p>
+<div class="paragraph">
+<p>&lt;fes:PropertyIsEqualTo&gt; (=)</p>
+</div>
+<div class="paragraph">
+<p>&lt;fes:PropertyIsNotEqualTo&gt; (&lt;&gt;)</p>
+</div>
+<div class="paragraph">
+<p>&lt;fes:PropertyIsLessThan&gt; (&lt;)</p>
+</div>
+<div class="paragraph">
+<p>&lt;fes:PropertyIsGreaterThan&gt; (&gt;)</p>
+</div>
+<div class="paragraph">
+<p>&lt;fes:PropertyIsLessThanOrEqualTo&gt; (=&lt;)</p>
+</div>
+<div class="paragraph">
+<p>&lt;fes:PropertyIsGreaterThanOrEqualTo&gt; (&gt;=)</p>
+</div>
+<div class="paragraph">
+<p>&lt;fes:PropertyIsLike&gt; (Textvergleich mit Wildcards für ein oder mehrere
+Zeichen)</p>
+</div>
+<div class="paragraph">
+<p>&lt;fes:PropertyIsNull&gt; (Prüfung auf fehlenden Wert)</p>
+</div>
+<div class="paragraph">
+<p>&lt;fes:PropertyIsBetween&gt; (Kombination von &gt;= und &lt;=)</p>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>unterstützt. Die Bedeutung der logischen Operatoren und der Vergleichsoperatoren ergibt sich aus der in SQL verwendeten bzw. der direkt mit dem Namen ausgedrückten Bedeutung.</p>
+</div>
+<div class="paragraph">
+<p>Die Bedeutung der räumlichen Operatoren ist i.d.R. in der OpenGIS Simple Features Spezifikation definiert und in das Filter Encoding übernommen worden. Vermutlich ist &lt;fes:Intersects&gt; der wichtigste Operator, der "true" ergibt, wenn zwei Geometrien nicht überschneidungsfrei sind. &lt;fes:BBOX&gt; ist eine vereinfachte Form, die als Testgeometrie nur eine Bounding Box erlaubt. &lt;fes:Disjoint&gt; ist die Umkehrung zu &lt;fes:Intersects&gt;. &lt;fes:Contains&gt; oder &lt;fes:Within&gt; sind zu verwenden, wenn es nicht um Überlappung geht, sondern um echtes Enthaltensein. Für weitergehende Fragen, siehe die OpenGIS Spezifikationen Filter Encoding und Simple Features for SQL.</p>
+</div>
+<div class="paragraph">
+<p>Bei räumlichen Operatoren und den Vergleichsoperatoren wird i.d.R. eine Eigenschaft des Objekts angegeben, für die der Vergleich durchgeführt werden soll.</p>
+</div>
+<div class="paragraph">
+<p>Dies geschieht unter Verwendung von Xpath, dabei beschränkt man sich auf die Kurzschreibweise. Dies bedeutet:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Ein Attribut att der Query-Objektart wird wie folgt referenziert:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;fes:ValueReference&gt;att&lt;/fes:ValueReference&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Oder mit einem konkreten Beispiel aus dem AAA-Anwendungsschema:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;fes:ValueReference&gt;flurstueckskennzeichen&lt;/fes:ValueReference&gt;</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Sofern att ein Attribut der Query-Objektart ist und der Wert des
+Attributs vom Datentyp AX_DT ist und darin das Attribut att2
+referenziert werden soll, dann geschieht dies wie folgt:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;fes:ValueReference&gt;att/AX_DT/att2&lt;/fes:ValueReference&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Oder mit einem konkreten Beispiel aus dem AAA-Anwendungsschema:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;fes:ValueReference&gt;lebenszeitintervall/AA_Lebenszeitintervall/endet&lt;/fes:ValueReference&gt;</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Eine Relation (genauer gesagt die Rolle in der Definitionsrichtung einer
+Relation) rel der Query-Objektart wird wie folgt referenziert:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;fes:ValueReference&gt;rel&lt;/fes:ValueReference&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Handelt es sich dabei um die Objektart AX_OA als Relationspartner und
+besitzt dieses ein Attribut att3, dann wird dieses wie folgt
+referenziert:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;fes:ValueReference&gt;rel/AX_OA/att3&lt;/fes:ValueReference&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Oder mit einem konkreten Beispiel aus dem AAA-Anwendungsschema (über
+zwei Relationen):</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;fes:ValueReference&gt;istGebucht/AX_Buchungsstelle/zu/AX_Buchungsstelle/laufendeNummer&lt;/fes:ValueReference&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In Fällen wo ein Relationspartner im Schema eine abstrakte Objektart ist
+(z.B. AA_ZUSO), muss in dem Xpath-Ausdruck eine instanziierbare
+Objektart genannt werden, wie in dem folgenden Beispiel:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;fes:ValueReference&gt;istTeilVon/AX_Schwerefestpunkt/bestehtAus/AX_Schwere/schweresystem&lt;/fes:ValueReference&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In diesem Fall werden alle Eigenschaftspfade, die nicht dem Xpath-Ausdruck genügen, nicht beachtet. Ist das in der Selektion zu prüfende Objekt gleichzeitig Teil von einem Schwerefestpunkt und einem anderen ZUSO werden keine Eigenschaften des anderen ZUSO in der Selektion berücksichtigt; ebenso werden keine anderen Objekte, aus denen der Schwerefestpunkt neben AX_Schwere-Objekten besteht, berücksichtigt.</p>
+</div>
+</li>
+<li>
+<p>Für den Fall, dass ein XML-Attribut konkret referenziert und ausgewertet
+werden muss (z.B. "uom" oder "srsName"), so geschieht dies wie folgt:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;fes:ValueReference&gt;att/@xmlatt&lt;/fes:ValueReference&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Oder mit zwei konkreten Beispielen aus dem AAA-Anwendungsschema:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;fes:ValueReference&gt;amtlicheFlaeche/@uom&lt;/fes:ValueReference&gt;</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;fes:ValueReference&gt;bestehtAus/AX_PunktortAU/@srsName&lt;/fes:ValueReference&gt;</code></pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Hierbei wird davon ausgegangen, dass der Default-Namespace des XML-Dokuments "http://www.adv-online.de/namespaces/adv/gid/<em>version</em>" ist. Ansonsten sind alle Bezeichner durch das Namespacekürzel zu qualifizieren (wie dies im Beispiel von xlink:href oben bereits erfolgt ist), also in der Regel</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;fes:ValueReference&gt;adv:att&lt;/fes:ValueReference&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>statt</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;fes:ValueReference&gt;att&lt;/fes:ValueReference&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Im Fall von einfachen Attributen wird i.d.R. der Vergleichsoperator den Attributwert mit einem festen Wert vergleichen (Element &lt;fes:Literal&gt;), z.B.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;fes:PropertyIsEqualTo&gt;
+  &lt;fes:ValueReference&gt;stellenart&lt;/fes:ValueReference&gt;
+  &lt;fes:Literal&gt;1100&lt;/fes:Literal&gt;
+&lt;/fes:PropertyIsEqualTo&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>was für alle Objekte in der Datenbasis erfüllt ist, bei denen das Stellenart-Attribut einen entsprechenden Wert (Werteart 1100) aufweist, oder</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;fes:PropertyIsGreaterThanOrEqualTo&gt;
+  &lt;fes:ValueReference&gt;lebenszeitintervall/AA_Lebenszeitintervall/beginnt&lt;/fes:ValueReference&gt;
+  &lt;fes:Literal&gt;2003-05-20T00:00:00Z&lt;/fes:Literal&gt;
+&lt;/fes:PropertyIsGreaterThanOrEqualTo&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>oder</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;fes:PropertyIsLessThan&gt;
+  &lt;fes:ValueReference&gt;lebenszeitintervall/AA_Lebenszeitintervall/endet&lt;/fes:ValueReference&gt;
+  &lt;fes:Literal&gt;2003-05-20T00:00:00Z&lt;/fes:Literal&gt;
+&lt;/fes:PropertyIsGreaterThanOrEqualTo&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>oder im Fall der Prüfung auf einen nicht vorhandenen Wert</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;fes:PropertyIsNull&gt;
+  &lt;fes:ValueReference&gt;lebenszeitintervall/AA_Lebenszeitintervall/endet&lt;/fes:ValueReference&gt;
+&lt;/fes:PropertyIsNull&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Für den Operator &lt;PropertyIsNotEqualTo&gt; des OGC-Filter Encodings gehören keine NULL-Werte zur Ergebnismenge. &lt;PropertyIsNotEqualTo&gt; liefert somit zu &lt;PropertyIsEqualTo&gt; keine komplementären Mengen zurück, sodass eine zusätzliche &lt;PropertyIsNull&gt;-Abfrage hinzugenommen werden muss.</p>
+</div>
+<div class="paragraph">
+<p>Dies ist beispielsweise bei einer Abfrage nach allen Flustücksnennern ungleich 3 bezogen auf folgenden Gesamtbestand der Fall: Flurstück 100/1, 100/2, 100/3, 111. &lt;PropertyIsNotEqualTo&gt; 3 &lt;/PropertyIsNotEqualTo&gt; würde liefern: Flurstücke 100/1, 100/2, <strong>nicht aber</strong> 111.</p>
+</div>
+<div class="paragraph">
+<p>Für die Prüfung auf Werte in einem Bereich, z.B. für die Prüfung ob die Stellenart ein Wert im 1xxx-Bereich ist, würde folgender Vergleich verwendet:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;fes:PropertyIsBetween&gt;
+  &lt;fes:ValueReference&gt;stellenart&lt;/fes:ValueReference&gt;
+  &lt;fes:LowerBoundary&gt;
+    &lt;fes:Literal&gt;1000&lt;/fes:Literal&gt;
+  &lt;/fes:LowerBoundary&gt;
+  &lt;fes:UpperBoundary&gt;
+    &lt;fes:Literal&gt;1999&lt;/fes:Literal&gt;
+  &lt;/fes:UpperBoundary&gt;
+&lt;/fes:PropertyIsBetween&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Analog ein Prädikat für Flurstücke mit einer amtlichen Fläche von mindestens 1000qm aber maximal 2000qm:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;fes:PropertyIsBetween&gt;
+  &lt;fes:ValueReference&gt;amtlicheFlaeche&lt;/fes:ValueReference&gt;
+  &lt;fes:LowerBoundary&gt;
+    &lt;fes:Literal&gt;1000&lt;/fes:Literal&gt;
+  &lt;/fes:LowerBoundary&gt;
+  &lt;fes:UpperBoundary&gt;
+    &lt;fes:Literal&gt;2000&lt;/fes:Literal&gt;
+  &lt;/fes:UpperBoundary&gt;
+&lt;/fes:PropertyIsBetween&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Der LIKE-Vergleich ist für flexible Textvergleiche hilfreich. So filtert das folgende Prädikat alle Anschriften heraus, deren Telefonnummer mit 0228 beginnt</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;fes:PropertyIsLike wildCard="*" singleChar="?" escapeChar="\"&gt;
+  &lt;fes:ValueReference&gt;telefon&lt;/fes:ValueReference&gt;
+  &lt;fes:Literal&gt;0228*&lt;/fes:Literal&gt;
+&lt;/fes:PropertyIsLike&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>während das folgende Prädikat die Personen filtert, bei denen der Geburtsname gesetzt ist, mit einem "M" beginnt und als dritten und vierten Buchstaben ein "t" hat:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;fes:PropertyIsLike wildCard="*" singleChar="?" escapeChar="\"&gt;
+  &lt;fes:ValueReference&gt;geburtsname&lt;/fes:ValueReference&gt;
+  &lt;fes:Literal&gt;M?tt*&lt;/fes:Literal&gt;
+&lt;/fes:PropertyIsLike&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Bei räumlichen Operatoren erfolgt ein Vergleich einer Eigenschaft (der Name der geometrischen Attributart) mit einer festen Geometrie analog zu den Vergleichen einer textlichen oder numerischen Eigenschaft mit einem festen Wert. Bei den räumlichen Operatoren wird der feste Wert statt durch ein &lt;fes:Literal&gt;-Element durch das jeweilige GML-Geometrieelement ausgedrückt, zum Beispiel</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;fes:Intersects&gt;
+  &lt;fes:ValueReference&gt;position&lt;/fes:ValueReference&gt;
+  &lt;gml:Polygon gml:id="_1"&gt;
+    &lt;gml:exterior&gt;
+      &lt;gml:Ring&gt;
+        &lt;!-- hier steht der Umring der Suchfläche --&gt;
+      &lt;/gml:Ring&gt;
+    &lt;/gml:exterior&gt;
+  &lt;/gml:Polygon&gt;
+&lt;/fes:Intersects&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Sofern der Gesamtschlüssel eines Katalogeintrags bekannt ist, kann der entsprechende Katalogeintrag z.B. mit einer Query der folgenden Art erfragt werden (hier die Gemarkung mit der Kennung "071234"):</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;wfs:Query typeNames="AX_Gemarkung"&gt;
+  &lt;fes:Filter&gt;
+    &lt;fes:PropertyIsEqualTo&gt;
+      &lt;fes:ValueReference&gt;schluesselGesamt&lt;/fes:ValueReference&gt;
+      &lt;fes:Literal&gt;071234&lt;/fes:Literal&gt;
+    &lt;/fes:PropertyIsEqualTo&gt;
+  &lt;/fes:Filter&gt;
+&lt;/wfs:Query&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Sollen alle Katalogeinträge mit einem bestimmten Teilschlüssel erfragt werden, dann kann entweder mit &lt;fes:PropertyIsLike&gt; oder mit Vergleichsoperatoren für die einzelnen Attribute des Schlüssel-Datentyps gesucht werden. Alle Gemarkungen im Land findet man z.B. mit:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;wfs:Query typeNames="AX_Gemarkung"&gt;
+  &lt;fes:Filter&gt;
+    &lt;fes:PropertyIsLike wildCard="*" singleChar="?" escapeChar="\"&gt;
+      &lt;fes:ValueReference&gt;schluesselGesamt&lt;/fes:ValueReference&gt;
+      &lt;fes:Literal&gt;07*&lt;/fes:Literal&gt;
+    &lt;/fes:PropertyIsLike&gt;
+  &lt;/fes:Filter&gt;
+&lt;/wfs:Query&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>oder</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;wfs:Query typeNames="AX_Gemarkung"&gt;
+  &lt;fes:Filter&gt;
+    &lt;fes:PropertyIsEqualTo&gt;
+      &lt;fes:ValueReference&gt;schluessel/AX_Gemarkung_Schluessel/land&lt;/fes:ValueReference&gt;
+      &lt;fes:Literal&gt;07&lt;/fes:Literal&gt;
+    &lt;/fes:PropertyIsEqualTo&gt;
+  &lt;/fes:Filter&gt;
+&lt;/wfs:Query&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Neben der Filter-Bedingung können in das &lt;wfs:Query&gt;-Element noch weitere Elemente eingebettet sein. Das Element &lt;wfs:PropertyName&gt; mit dem Attribut resolve="local" kann dazu genutzt werden, mit einer Query auf einen Schlag auch noch weitere Objekte in die Ergebnismenge aufzunehmen. Auf diese Weise kann die Anzahl der Queries - und damit auch der Benutzungsaufträge - häufig deutlich reduziert werden.</p>
+</div>
+<div class="paragraph">
+<p>Das Element</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;wfs:PropertyName resolve="local" resolveDepth="1"&gt;
+gehoertAnteiligZu
+&lt;/wfs:PropertyName&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>in einer AX_Flurstueck-Query führt dazu, dass entlang der Relation gehoertAnteiligZu alle Relationspartner bis zu einer Tiefe von 1 (also die direkten Relationspartner, in diesem Fall die betroffenen Flurstücke) in die Ergebnismenge aufgenommen werden.</p>
+</div>
+<div class="paragraph">
+<p>Ein anderes Beispiel, dass alle Punktorte mit unanhängiger Geometrie sowie alle ihre ZUSOs zurückliefert:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;wfs:Query typeNames="AX_Punktort_AU"&gt;
+  &lt;wfs:PropertyName resolve="local" resolveDepth="1"&gt;istTeilVon&lt;/wfs:PropertyName&gt;
+&lt;/wfs:Query&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Eine weitere Präzisierung der Abfrage wird durch das Attribut resolvePath unterstützt, das dazu führt, dass nicht in der Breite, sondern genau die Objekte entlang des Pfades in die Ergebnismenge aufgenommen werden.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;wfs:Query typeNames="AX_Flurstueck"&gt;
+  &lt;wfs:PropertyName resolve="local" resolvePath="istBestandteilVon/AX_Buchungsblatt"&gt;
+istGebucht
+  &lt;/wfs:PropertyName&gt;
+&lt;/wfs:Query&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Das Element &lt;wfsext:PropertyName&gt; aus dem Schema "WFS-Erweiterungen" hat die- selbe Semantik wie das Element &lt;wfs:PropertyName&gt; aus dem WFS-Schema ohne das Attribut resolveDepth und erweitert dieses um zwei zusätzliche Fähigkeiten. Wird das Elemente mit dem Attribut resolvePath und 'this' als als Name der Eigenschaft verwendet, dann stelllt das Schlüsselwort 'this' eine Relation auf das Ausgangsobjekt selbst dar, so dass - anders als bei &lt;wfs:PropertyName&gt; aus dem WFS 2.0 Standard - der vollständige Relationspfad ausgehend von der Objektart der Query in resolvePath angegeben wird. Dies ermöglicht, dass alle darin enthaltenen Objektarten auf der Ebene instanziierbarer Objektarten angegeben werden können.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;wfs:Query typeNames="AX_Punktort_AU"&gt;
+  &lt;wfsext:PropertyName resolve="local" resolvePath="istTeilVon/AX_Aufnahmepunkt/hat/AX_Sicherungspunkt"&gt;this&lt;/wfsext:PropertyName&gt;
+&lt;/wfs:Query&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Bei Verwendung des Elements &lt;wfsext:PropertyName&gt; ist die Angabe der letzten Zielobjektart im Relationspfad optional, d. h. sie kann weggelassen werden, damit sich im Falle einer abstrakten Zielobjektart alle abgeleiteten instanziierbaren Objektarten qualifizieren. Die folgende Query liefert alle neben allen Punktorten mit unabhängiger Geometrie auch alle zugehörigen Schwerefestpunkte sowie alle übrigen REOs und NREOs der Schwerefestpunkte zurück.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;wfs:Query typeNames="AX_Punktort_AU"&gt;
+  &lt;wfsext:PropertyName resolve="local" resolvePath="istTeilVon/AX_Schwerefestpunkt/bestehtAus"&gt;this&lt;/wfsext:PropertyName&gt;
+&lt;/wfs:Query&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Des Weiteren kann durch die Angabe des Attributs 'leafOnly' mit dem Wert 'true' die Erweiterung der Ergebnismenge auf die Objekte am Ende des Pfads in resolvePath eingeschränkt werden. Die übrigen Objekte entlang des Pfads werden nicht zurückgeliefert. Die folgende Query hat dieselbe Wirkung wie die vorherige Query mit der Änderung, dass keine Schwerefestpunkte zurückgeliefert werden.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;wfs:Query typeNames="AX_Punktort_AU"&gt;
+  &lt;wfsext:PropertyName resolve="local" leafOnly="true" resolvePath="istTeilVon/AX_Schwerefestpunkt/bestehtAus"&gt;this&lt;/wfsext:PropertyName&gt;
+&lt;/wfs:Query&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Sofern nur einzelne, ganz bestimmte nachgeordnete Objekte benötigt werden (in den Beispielen nur für wenige Punktorte die Punkte oder weitere Bestandteile der Punkte), dann bietet es sich i.d.R. an, die Selektion in zwei Abfragen aufzuteilen. Die erste Abfrage zur Selektion der Punktorte und anschließend die gezielte Selektion der benötigten Punkte.</p>
+</div>
+<div class="paragraph">
+<p>Die nachfolgenden Tabellen geben einen Überblick, wie die Attribute resolve, resolveDepth und resolvePath das Ergebnis einer Flurstücks-Query beeinflussen können.</p>
+</div>
+<div class="paragraph">
+<p>Die erste Tabelle verwendet dabei die Query nach dem Muster:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;wfs:Query typeNames="AX_Flurstueck"&gt;
+  &lt;wfs:PropertyName resolve=[X1] resolveDepth=[X2] resolvePath=[X3]&gt;istGebucht&lt;/wfs:PropertyName&gt;
+&lt;/wfs:Query&gt;</code></pre>
+</div>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 16%;">
+<col style="width: 16%;">
+<col style="width: 21%;">
+<col style="width: 47%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top"><strong>Wert</strong> [X1] <strong>von resolve</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Wert</strong> [X2] <strong>von resolveDepth</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Wert</strong> [X3]
+<strong>von resolvePath</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Ergebnis</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">(ohne Wert)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">(ohne Wert)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">(ohne Wert)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">AX_Flurstueck, eingeschränkt auf
+alle Pflichteigenschaften einschließlich &lt;istGebucht
+xlink:href=urn:adv:oid:DE&#8230;&#8203;/&gt; mit Verweis auf die AX_Buchungsstelle.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">local</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">(ohne Wert)</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>AX_Flurstueck, eingeschränkt auf alle Pflichteigenschaften
+einschließlich &lt;istGebucht xlink:href=urn:adv:oid:DE../&gt; mit Verweis
+auf die AX_Buchungsstelle.</p>
+</div>
+<div class="paragraph">
+<p>Die AX_Buchungsstelle ist im Benutzungsergebnis enthalten.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">local</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">(ohne Wert)</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>AX_Flurstueck, eingeschränkt auf alle Pflichteigenschaften
+einschließlich &lt;istGebucht xlink:href=urn:adv:oid:DE../&gt; mit Verweis
+auf die AX_Buchungsstelle.</p>
+</div>
+<div class="paragraph">
+<p>Die AX_Buchungsstelle und alle damit direkt verbundenen Objekte, d.h. Objekte der Objektarten AX_Buchungsblatt (beziehtSichauf, istBestandteilVon), AX_Flurstueck (verweistAuf), AX_Buchungsstelle (zu, an, durch, hatVorgaenger), AX_Verwaltung, (wirdVerwaltetVon), usw. sind im Benutzungsergebnis enthalten.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">local</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">(ohne Wert)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">istBestandteilVon/ AX_Buchungsblatt</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>AX_Flurstueck, eingeschränkt auf alle Pflichteigenschaften
+einschließlich &lt;istGebucht xlink:href=urn:adv:oid:DE../&gt; mit Verweis
+auf die AX_Buchungsstelle.</p>
+</div>
+<div class="paragraph">
+<p>Die AX_Buchungsstelle und alle damit über die Eigenschaft
+istBestandteilVon direkt verbundenen AX_Buchungsblatt-Objekte sind im
+Ergebnis in feature collection enthalten.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">local</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">(ohne Wert)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">(ohne Wert)</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Es gilt der Default resolveDepth=*, d.h. zurückgeliefert würde
+AX_Flurstueck, eingeschränkt auf alle Pflichteigenschaften
+einschließlich &lt;istGebucht xlink:href=urn:adv:oid:DE../&gt; mit Verweis
+auf die AX_Buchungsstelle.</p>
+</div>
+<div class="paragraph">
+<p>Die AX_Buchungsstelle und alle damit direkt oder indirekt verbundenen
+Objekte sind im Benutzungsergebnis enthalten. Achtung: Aufgrund der
+weitreichenden Verwendung von Relationen im AAA-Anwendungsschema kann
+der zurückgelieferte Datenumfang erheblich sein, bis hin zum gesamten
+Datenbestand.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Es kann somit entweder nur 'resolvePath' oder nur 'resolveDepth' in einer Query verwendet werden, aber nicht beide gleichzeitig. Bei gleichzeitiger Angabe von 'resolvePath' und 'resolveDepth' ist letzterer Parameter zu ignorieren.</p>
+</div>
+<div class="paragraph">
+<p>Die zweite Tabelle verwendet die Query nach dem Muster:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;wfs:Query typeNames="AX_Flurstueck"&gt;
+  &lt;wfsext:PropertyName resolve=[X1] resolvePath=[X3] leafOnly=[X4]&gt;this&lt;/wfsext:PropertyName&gt;
+&lt;/wfs:Query&gt;</code></pre>
+</div>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 16%;">
+<col style="width: 23%;">
+<col style="width: 18%;">
+<col style="width: 43%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top"><strong>Wert</strong> [X1] <strong>von resolve</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Wert</strong> [X3] <strong>von resolvePath</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Wert</strong> [X4]
+<strong>von leafOnly</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Ergebnis</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">local</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">istGebucht/AX_Buchungsstelle</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">(ohne Wert), true false</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>AX_Flurstueck, eingeschränkt auf alle Pflichteigenschaften einschließlich &lt;istGebucht xlink:href="urn:adv:oid:DE&#8230;&#8203;"/&gt; mit Verweis auf die AX_Buchungsstelle.</p>
+</div>
+<div class="paragraph">
+<p>Die AX_Buchungsstelle ist im Benutzungsergebnis enthalten.</p>
+</div>
+<div class="paragraph">
+<p>'leafOnly' hat keine Auswirkungen.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">local</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">istGebucht</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">(ohne Wert), true, false</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Gleiches Ergebnis, alle Werte von 'istGebucht' sind Buchungsstellen.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">local</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">istGebucht/AX_Buchungsstelle/istBestandteilVon/AX_Buchungsblatt</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">(ohne Wert), false</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>AX_Flurstueck, eingeschränkt auf alle Pflichteigenschaften einschließlich &lt;istGebucht xlink:href="urn:adv:oid:DE…"/&gt; mit Verweis auf die AX_Buchungsstelle.</p>
+</div>
+<div class="paragraph">
+<p>Die AX_Buchungsstelle und alle damit über die Eigenschaft 'istBestandteilVon' direkt verbundenen AX_Buchungsblatt-Objekte sind im Ergebnis in enthalten.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">local</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">istGebucht/AX_Buchungsstelle/istBestandteilVon</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">(ohne Wert), false</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Gleiches Ergebnis, alle Werte von 'istBestandteilVon' sind Buchungsblätter.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">local</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">istGebucht/AX_Buchungsstelle/istBestandteilVon/AX_Buchungsblatt</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>AX_Flurstueck, eingeschränkt auf alle Pflichteigenschaften einschließlich &lt;istGebucht xlink:href="urn:adv:oid:DE&#8230;&#8203;"/&gt; mit Verweis auf die AX_Buchungsstelle.</p>
+</div>
+<div class="paragraph">
+<p>Die mit der AX_Buchungsstelle über die Eigenschaft 'istBestandteilVon' direkt verbundenen AX_Buchungsblatt-Objekte sind im Ergebnis enthalten. Die Buchungsstelle ist selbst nicht im Ergebnis enthalten.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">local</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">istGebucht/AX_Buchungsstelle/istBestandteilVon</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Gleiches Ergebnis, alle Werte von 'istBestandteilVon' sind Buchungsblätter.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Bei 'Benutzungsergebnissen' erfolgt innerhalb einer &lt;FeatureCollection&gt; keine Klammerung in einer Ergebnismenge &lt;AdditonalObjekts&gt; für die zusätzlich über resolve, resolveDepth und resolvePath selektierten Objekte.</p>
+</div>
+<div class="paragraph">
+<p>In der NAS werden alle Relationen nur in einer, der im UML-Modell als navigierbar ausgezeichneten Richtung repräsentiert. Die folgende Query erfragt alle Flurstücke und die Buchungsstellen unter denen diese gebucht sind:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;wfs:Query typeNames="AX_Flurstueck"&gt;
+  &lt;wfsext:PropertyName resolve="local" resolvePath="istGebucht/AX_Buchungsstelle/istBestandteilVon/AX_Buchungsblatt"&gt;this&lt;/wfsext:PropertyName&gt;
+&lt;/wfs:Query&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Oder im Fall, dass ein Flurstück bekannt ist, dann kann aus dem &lt;istGebucht&gt;-Element der Identifikator der Buchungsstelle extrahiert werden (der String nach dem "urn:adv:oid:"-Präfix, in diesem Beispiel "DEBY123412345678") und die Buchungsstelle wie folgt erfragt werden:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;wfs:Query typeNames="AX_Buchungsstelle"&gt;
+  &lt;fes:Filter&gt;
+    &lt;fes:ResourceId rid="DEBY123412345678"/&gt;
+  &lt;/fes:Filter&gt;
+&lt;/wfs:Query&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In umgekehrter Richtung, d.h. von der Buchungsstelle zum Flurstück ist die Relation zwar auch benannt ("grundstueckBestehtAus"), aber nicht in der NAS repräsentiert. Sollen nun die Flurstücke ermittelt werden, die über "istGebucht" einer bestimmten Buchungsstelle (im Beispiel wird wieder die ID "DEBY123412345678" verwendet) zugeordnet sind, so kann dies über die Prüfung der Relation erfolgen:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;wfs:Query typeNames="AX_Flurstueck"&gt;
+  &lt;fes:Filter&gt;
+    &lt;fes:PropertyIsEqualTo&gt;
+      &lt;fes:ValueReference&gt;istGebucht/AX_Buchungsstelle/gml:identifier&lt;/fes:ValueReference&gt;
+      &lt;fes:Literal&gt;urn:adv:oid:DEBY123412345678&lt;/fes:Literal&gt;
+    &lt;/fes:PropertyIsEqualTo&gt;
+  &lt;/fes:Filter&gt;
+&lt;/wfs:Query&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Eine äquivalente Abfrage (sofern sich Flurstück und Buchungsstelle in derselben lokalen Datenbasis befinden) ist</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;wfs:Query typeNames="AX_Flurstueck"&gt;
+  &lt;fes:Filter&gt;
+    &lt;fes:PropertyIsEqualTo&gt;
+      &lt;fes:ValueReference&gt;istGebucht/AX_Buchungsstelle/@gml:id&lt;/fes:ValueReference&gt;
+      &lt;fes:Literal&gt;DEBY123412345678&lt;/fes:Literal&gt;
+    &lt;/fes:PropertyIsEqualTo&gt;
+  &lt;/fes:Filter&gt;
+&lt;/wfs:Query&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Eine Möglichkeit so etwas wie wfsext:PropertyName mit resolvePath auch in inverser Richtung, also das gleichzeitige Selektieren bestimmter Buchungsstellen und aller Flurstücke, die auf diese gebucht sind, besteht durch die Möglichkeit der Verwendung inverser Relationen in Filterausdrücken. Hier kann die Selektion stattdessen natürlich auch in zwei Schritten, d.h. über zwei Queries, erfolgen.</p>
+</div>
+<div class="paragraph">
+<p>In aller Regel werden mehrere Queries erforderlich sein, um sich die Objekte aus dem Datenbestand zu besorgen, die für komplexere Abfragen benötigt werden. Hierbei wird aus den Ergebnissen der vorigen Query die neue Query formuliert. Sehr häufig werden hierbei Zugriffe auf die Katalogeinträge zum Entschlüsseln von Schlüsselwerten erforderlich sein.</p>
+</div>
+<div class="paragraph">
+<p>In der NAS ist es unzulässig in einer WFS-Query durch die Angabe mehrerer Objektarten im Parameter 'typeNames' eine Verknüpfung als JOIN zu realisieren, auch wenn es diese Möglichkeit im WFS-Standard 2.0 gibt.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="nasops_funktionsumfang_erweiterungenogc">Erweiterungen der OGC Standards</h4>
+<div class="paragraph">
+<p>Zur Codierung von Selektionskriterien wird das &lt;wfs:Query&gt;-Element aus der Spezifikation <em>"Web Feature Service, Version 2.0.2"</em> in Verbindung mit den Festlegungen der Spezifikation <em>"Filter Encoding, Version 2.0.2"</em> des Open Geospatial Consortiums verwendet. In OGC wird üblicherweise die Version nur bis zur zweiten Stelle referenziert (z.B. WFS 2.0, GML 3.2). Anzuwenden ist dann jedoch jeweils der letzte Bugfix, der über die dritte Stelle versioniert wird, bei WFS 2.0 beispielsweise WFS 2.0.2.</p>
+</div>
+<div class="paragraph">
+<p>Die Anforderungen an die Selektions- bzw. Filterfunktionalität von AFIS-ALKIS-ATKIS gingen in früheren GeoInfoDok-Versionen über die in den dabei zugrundeliegenden Versionen der OGC-Spezifikationen beschriebenen Funktionalitäten hinaus. Deshalb wurden bislang zusätzlich einige Erweiterungen festgeschrieben, die mit dieser Version nicht mehr erforderlich sind:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Über das matchAction-Attribut kann bei multiplen Objekteigenschaften inzwischen gesteuert werden, wie das Verhalten sein kann. Das für die GeoInfoDok vorgegebene Verhalten ist inzwischen das Standardverhalten des WFS (matchAction="Any").</p>
+<div class="paragraph">
+<p>Das Verhalten von matchAction soll an einem einfachen Beispiel erläutert werden. Nehmen wir ein AX_Gebaeude mit den folgenden weiteren Gebäudefunktionen: 1010 (Hotel) und 1050 (Spielcasino).</p>
+</div>
+<div class="paragraph">
+<p>Verwendet wird die Query nach dem Muster</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;wfs:Query typeNames="AX_Gebaeude"&gt;
+  &lt;fes:Filter&gt;
+    &lt;fes:PropertyIsEqualTo matchAction="..."&gt;
+      &lt;fes:ValueReference&gt;weitereGebaeudefunktion&lt;/fes:ValueReference&gt;
+      &lt;fes:Literal&gt;1050&lt;/fes:Literal&gt;
+    &lt;/fes:PropertyIsEqualTo&gt;
+  &lt;/fes:Filter&gt;
+&lt;/wfs:Query&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Das Ergebnis der Query in Abhängigkeit von matchAction wird in folgender Tabelle erläutert.</p>
+</div>
+</li>
+</ul>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 19%;">
+<col style="width: 81%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top"><strong>Wert von matchAction</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Ergebnis</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Any</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Das AX_Gebaeude wird im Ergebnis zurückgeliefert, da mindestens ein Attribut weitereGebaeudefunktion den Wert 1050 hat.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">All</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Das AX_Gebaeude wird im Ergebnis nicht zurückgeliefert, da nicht alle Attribute weitereGebaeudefunktion den Wert 1050 haben, sondern auch 1010 vorkommt.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">One</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Das AX_Gebaeude wird im Ergebnis zurückgeliefert, da genau ein Attribut weitereGebaeudefunktion den Wert 1050 hat.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">(ohne Wert)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Das AX_Gebaeude wird im Ergebnis zurückgeliefert, da "Any" der Standardwert ist.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="ulist">
+<ul>
+<li>
+<p>Das Element &lt;wfsext:XlinkPropertyName&gt; ist nicht länger erforderlich, wfs:PropertyName mit den Attributen resolve="local" und resolveDepth="1"hat dieselbe Wirkung wie bisher wfsext:XlinkPropertyName mit dem Attribut traverseXlinkDepth.</p>
+</li>
+<li>
+<p>Das Element &lt;wfsext:XlinkPropertyPath&gt; wird durch wfs:PropertyName oder wfsext:PropertyName mit den Attributen resolve="local" und resolvePath ersetzt (siehe unten <mark><strong>TBD:</strong> Genaue Referenz?</mark>). Das Element wfsext:PropertyName hat weitgehend die Wirkung wie bisher wfsext:XlinkPropertyPath.</p>
+<div class="paragraph">
+<p>Hinweis: Der Grund für die Verwendung des GeoInfoDok-spezifischen Elements wfsext:PropertyName mit resolvePath statt wfs:PropertyName mit resolvePath ist folgender: Ist die Zielobjektart der im Inhalt des Elements &lt;wfs:PropertyName&gt; angegebenen Relationsart eine abstrakte Objektart und beginnt der weitere in resolvePath angegebene Relationspfad mit einer Relationsart, die in einer davon abgeleiteten Objektart definiert ist, dann ergibt sich insgesamt ein mehrdeutiger Relationspfad. Das Verhalten der Implementierung ist in diesem Fall undefiniert. Das Element wfsext:PropertyName mit vollständigem Pfad im Attribut resolvePath vermeidet diese Probleme.</p>
+</div>
+</li>
+<li>
+<p>Die Definition eines &lt;wfsext:Replace&gt;-Elements für Transaktionen ist nicht weiter erforderlich, da WFS 2.0.2 ein entsprechendes Element unterstützt.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Darüber hinaus verwendet die GeoInfoDok noch einige wenige Festlegungen, die in dieser Form <strong>kein</strong> Bestandteil der oben genannten Spezifikationen sind:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Assoziationen können standardmäßig entweder über das Einbetten des referenzierten Objekts oder über einen "xlink:href"-Verweis zu diesem ausgedrückt werden. Beide Darstellungen sind hierbei semantisch grundsätzlich vollkommen äquivalent:</p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Zur einfacheren Interpretierbarkeit der NAS-Dateien ist die Verwendung der 2.
+Darstellung in der NAS explizit vorgeschrieben.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Darstellung 1:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;AX_Flurstueck&gt;
+  &lt;istGebucht&gt;
+    &lt;AX_Buchungsstelle gml:id="DEXXXX00000001"&gt;
+      &lt;zu&gt;
+        &lt;AX_Buchungsstelle gml:id="DEXXXX00000002"&gt;
+          &lt;laufendeNummer&gt;1&lt;/laufendeNummer&gt;
+        &lt;/AX_Buchungsstelle&gt;
+      &lt;/zu&gt;
+    &lt;/AX_Buchungsstelle&gt;
+  &lt;/istGebucht&gt;
+&lt;/AX_Flurstueck&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Darstellung 2:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;AX_Flurstueck&gt;
+  &lt;istGebucht xlink:href="urn:adv:oid:DEXXXX00000001"/&gt;
+&lt;/AX_Flurstueck&gt;
+&lt;AX_Buchungsstelle gml:id="DEXXXX00000001"&gt;
+  &lt;zu xlink:href="urn:adv:oid:DEXXXX00000002"/&gt;
+&lt;/AX_Buchungsstelle&gt;
+&lt;AX_Buchungsstelle gml:id="DEXXXX00000002"&gt;
+  &lt;laufendeNummer&gt;1&lt;/laufendeNummer&gt;
+&lt;/AX_Buchungsstelle&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Für die erste Darstellung ist eine explizite Verfolgung der Objekt-Assoziationen durch den "/"-Operator von Xpath in einem Web Feature Service bereits explizit erlaubt. Da diese Darstellungen semantisch äquivalent sind, wird explizit erlaubt, den "/"-Operator auch auf xlink:href-Verweise wirken zu lassen, wobei hier bis auf weiteres nur lokal auflösbare xlink:href-Verweise unterstützt werden müssen. Das bedeutet, dass z.B. eine Abfrage über die Flurstücke, deren Buchungsstelle über die "zu"-Relation mit einer anderen Buchungsstelle mit der laufenden Nummer "1" verbunden ist, wie folgt formuliert werden kann:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;wfs:Query typeNames="AX_Flurstueck"&gt;
+  &lt;fes:Filter&gt;
+    &lt;fes:PropertyIsEqualTo&gt;
+      &lt;fes:ValueReference&gt;istGebucht/AX_Buchungsstelle/zu/AX_Buchungsstelle/laufendeNummer&lt;/fes:ValueReference&gt;
+      &lt;fes:Literal&gt;1&lt;/fes:Literal&gt;
+    &lt;/fes:PropertyIsEqualTo&gt;
+  &lt;/fes:Filter&gt;
+&lt;/wfs:Query&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Verwendung von <code>&lt;wfs:PropertyName&gt;</code> mit Attributen <code>resolveDepth</code> bzw. <code>resolvePath</code></p>
+</div>
+<div class="paragraph">
+<p>Die Verwendung ist innerhalb der Queries im Benutzungsauftrag sowie in den Nutzerprofilen erlaubt. Hierbei werden insbesondere die folgenden Regelungen festgehalten:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Sofern das Anwendungsschema (wie im Fall der NAS) fordert, dass die Objekt-Assoziationen nicht inline, sondern stets über xlink-Verweise angebunden sind, führt ein xlink-Traversal dazu, dass das referenzierte Objekt in der Ergebnismenge enthalten sind.</p>
+</li>
+<li>
+<p>Die Auflösung von href-Verweisen unterstützt im Fall der NAS explizit die URN-Identifikatoren des AAA-Modells.</p>
+</li>
+<li>
+<p>Eine Auflösung von href-Verweisen erfolgt nur für lokal verfügbare Ressourcen.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Verwendung von <code>&lt;wfsext:PropertyName&gt;</code> mit den Attributen resolve="local", resolvePath und optional 'leafOnly'. Das Verhalten ist identisch zur Verwendung von <code>&lt;wfs:PropertyName&gt;</code> mit den folgenden Unterschieden:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Als Inhalt des Elements kann das Schlüsselwort 'this' verwendet werden. Es stellt jeweils eine Relation von den Objektinstanzen der Ergebnismenge auf sich selbst dar. In 'resolvePath' wird bei der Verwendung von 'this' immer der vollständige Relationspfad bezogen auf die in der Query im Attribut 'typenames' angefragte Objektart angegeben. Die Objektart am Ende des Relationspfades in 'resolvePath' ist bei der Verwendung von 'this' optional. Wird sie nicht angegeben und ist das Ziel der letzten Relationsart eine abstrakte Objektart, dann qualifizieren sich alle daraus abgeleiteten Objektarten.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Durch die Angabe des Attributs 'leafOnly' mit dem Wert 'true' kann zusätzlich die Erweiterung der Ergebnismenge auf die Objekte am Ende des Pfads in resolvePath eingeschränkt werden. Die übrigen Objekte entlang des Pfads werden nicht zurückgeliefert. Hinweis: In der GeoInfoDok 6.0.1 wurden diese WFS-Erweiterungen über das Element <code>&lt;wfsext:XlinkPropertyPath&gt;</code> realisiert.</p>
+</div>
+</li>
+<li>
+<p>Verwendung von <code>&lt;wfsext:PropertyIsOfType&gt;</code> zur Prüfung des Typs einer Objekteigenschaft. Bei Eigenschaften mit complexContent ist dies der qualifizierte Elementname des Kindelements, bei Eigenschaften mit simpleContent der qualifizierte Typname des Eigenschaftselements.</p>
+<div class="paragraph">
+<p>Wenn der Typ der Objekteigenschaft <code>gml:ReferenceType</code> ist, ermittelt <code>&lt;wfsext:PropertyIsOfType&gt;</code> den qualifizierten Elementnamen des referenzierten Objekts (dessen Objektart).</p>
+</div>
+<div class="paragraph">
+<p>Beispiele unter Verwendung der Objektart AX_Flurstueck und "adv" als Namespacepräfix für die NAS und "xs" als Namespacepräfix für XML Schema:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Beim Attribut 'flurstuecksnummer', das einen Datentyp als Wert hat, liefert der Operator als Wert 'adv:AX_Flurstuecksnummer'.</p>
+</li>
+<li>
+<p>Beim Attribut 'flurstueckskennzeichenKennung' (Attribut mit einem einfachen Wert) ist es 'xs:string'.</p>
+</li>
+<li>
+<p>Bei der Relationsart 'istGebucht' ist es 'adv:AX_Buchungsstelle'.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Besonders nützlich ist der Operator bei Fällen, wo der Wert der Relationsart eine abstrakte Objektart ist. Bei Punktorten ermöglicht der Operator beispielsweise das Filtern anhand der Art des Punktes (der Wert bei 'istTeilVon' ist der Elementname des referenzierten ZUSOs, also z.B. 'adv:AX_Sicherungspunkt').</p>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="nasops_funktionsumfang_ausgabebenutzungsdaten">Ausgabe von Benutzungsdaten</h4>
+<div class="paragraph">
+<p>Die Ausgabe von Benutzungsdaten ist eine Datenausgabe ohne explizite Angabe einer im aufnehmenden System auszuführenden Funktionalität. Eine spezielle Aufbereitung der Daten in Abhängigkeit von der Ausgabeanforderung (z.B. Herstellung der "flurstückszentrierten Sicht" in ALKIS) ist möglich, indem entsprechende temporäre Objekte ausgegeben werden.</p>
+</div>
+<div class="paragraph">
+<p>Für das Ergebnis einer Benutzung wird die wfs:FeatureCollection aus dem <em>Web Feature Service</em> von OGC verwendet und für AAA entsprechend um weitere Informationen ergänzt. Für jede Art der Ausgabe wird je nach Benutzungsauftrag eine eigene Schema-Datei verwendet.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="nasops_funktionsumfang_sekundaernachweise">Führung von Sekundärnachweisen</h4>
+<div class="paragraph">
+<p>Die Führung von Sekundärnachweisen erfolgt über die Nutzerbezogene Bestandsdatenaktualisierung fallbezogen oder stichtagsbezogen. Die nachfolgenden Regelungen gelten unabhängig davon, ob das NBA-Verfahren stichtags- oder fallbezogen erfolgt.</p>
+</div>
+<div class="paragraph">
+<p>Im Fall einer Führung der Sekundärdatenbank ohne vollständigen Historiennachweis, d.h. es ist in der Sekundärdatenbank stets nur der aktuelle Stand der Daten verfügbar, gelten die folgenden Regeln:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Die Operationen &lt;wfs:Insert&gt;, &lt;wfs:Replace&gt; und &lt;wfs:Delete&gt; werden sinngemäß wie bei der Führung von Primärnachweisen ohne vollständigen Historiennachweis durch das aufnehmende System ausgeführt.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Im Fall einer Führung der Sekundärdatenbank mit vollständigem Historiennachweis, d.h. es werden in der Sekundärdatenbank zumindest temporär auch untergegangene Objekte und Objektversionen vorgehalten, gelten die folgenden Regeln:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Die Operationen &lt;wfs:Insert&gt; und &lt;wfs:Replace&gt; werden sinngemäß wie bei der Führung von Primärnachweisen mit vollständigem Historiennachweis durch das aufnehmende System ausgeführt.</p>
+<div class="paragraph">
+<p>Ausnahme: Da in der Sekundärdatenhaltung Objektidentifikatoren und der Beginn des Lebenszeitintervalls der neuen Objektversionen nicht vom System vergeben werden, müssen diese abweichend zur Regelung bei der Fortführung von Primärnachweisen aus dem Attribut "@gml:id" bzw. dem Element "lebenszeitintervall/AA_Lebenszeitintervall/beginnt" übernommen werden.</p>
+</div>
+</li>
+<li>
+<p>In dem Fall, dass ein Objekt untergeht ("historisiert" wird), ist statt des &lt;wfs:Delete&gt;-Operators der ansonsten in der NAS nicht unterstützte &lt;wfs:Update&gt;-Operator verwendet. Mit dem Update dürfen ausschließlich die folgenden Eigenschaften verändert werden:</p>
+</li>
+<li>
+<p>"lebenszeitintervall/AA_Lebenszeitintervall/endet" mit dem Zeitpunkt an dem die letzte Version des Objekts in der Primärdatenbank untergegangen ist. Die Fortschreibung dieser Eigenschaft muss bei jeder &lt;wfs:Update&gt;-Operation erfolgen.</p>
+</li>
+<li>
+<p>"anlass" mit dem Entstehungs- und Untergangsanlass. Hierfür sind zwei &lt;wfs:Property&gt;-Elemente, jeweils mit dem qualifizierten Namen "anlass" zu verwenden; &lt;wfs:Value&gt; im ersten &lt;wfs:Property&gt;-Element ist der Entstehungsanlass, &lt;wfs:Value&gt; im zweiten &lt;wfs:Property&gt;-Element der Untergangsanlass. Diese Angaben sollen nur erfolgen, sofern in der Primärdatenbank ein Untergangsanlass vergeben wurde.</p>
+<div class="paragraph">
+<p>Beispiel:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;wfs:Update typeName="adv:AX_Flurstueck"&gt;
+  &lt;wfs:Property&gt;
+    &lt;wfs:ValueReference&gt;adv:lebenszeitintervall/adv:AA_Lebenszeitintervall/adv:endet&lt;/wfs:ValueReference&gt;
+    &lt;wfs:Value&gt;2007-11-13T12:00:00Z&lt;/wfs:Value&gt;
+  &lt;/wfs:Property&gt;
+  &lt;wfs:Property&gt;
+    &lt;wfs:ValueReference&gt;adv:anlass&lt;/wfs:ValueReference&gt;
+    &lt;wfs:Value&gt;000000&lt;/wfs:Value&gt;
+  &lt;/wfs:Property&gt;
+  &lt;wfs:Property&gt;
+    &lt;wfs:ValueReference&gt;adv:anlass&lt;/wfs:ValueReference&gt;
+    &lt;wfs:Value&gt;010102&lt;/wfs:Value&gt;
+  &lt;/wfs:Property&gt;
+  &lt;fes:Filter&gt;
+    &lt;fes:ResourceId rid="DEBY123412345678"/&gt;
+  &lt;/fes:Filter&gt;
+&lt;/wfs:Update&gt;</code></pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Da in der Sekundärdatenhaltung nie eine Aktualitätsprüfung erfolgt, wird für die Führung von Sekundärnachweisen abweichend von der Führung von Primärnachweisen festgelegt, dass das Attribut rid des Filterausdrucks im &lt;wfs:Delete&gt;-, &lt;wfs:Replace&gt;- oder &lt;wfs:Update&gt;-Element nie um die Angabe des Entstehungsdatums/-zeit der vorhandenen Version ergänzt wird.</p>
+</div>
+<div class="paragraph">
+<p>Diese Definitionen wurden so gewählt, dass möglichst weitgehend ein bestehender Web Feature Service ohne zusätzliche Anpassungen verwendet werden kann - insbesondere im Fall ohne Historienführung. Es ist allerdings erforderlich, dass der Web Feature Service die &lt;wfs:Replace&gt;-Operation der GeoInfoDok unterstützt.</p>
+</div>
+<div class="paragraph">
+<p>Wenn eine Sekundärdatenhaltung NBA-Abgaben an ein Tertiärsystem vornehmen soll, muss diese sicherstellen, dass alle Aufnahmen aus Primärsystemen auch berücksichtigt werden. Können bei der Abgabe der Daten aus Primärsystemen an eine Sekundärdatenhaltung nicht alle Daten übernommen werden, gibt es 2 Möglichkeiten:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Die Sekundärdatenhaltung muss bis zu einer Abgabe an ein Tertiärsystem warten bis alle Datenlieferungen aus den Primärsystemen übernommen werden können.</p>
+</li>
+<li>
+<p>Die Sekundärdatenhaltung gibt nur die bisher von Primärsystemen übernommenen Daten an ein Tertiärsystem weiter. Sind die fehlenden Daten im Sekundärsystem übernommen, ist sicherzustellen, dass diese im nächsten Lieferzyklus an das Tertiärsystem weitergereicht werden. Dies kann z. B. in der Implementierung durch die Vergabe eines technischen Datums bei der NBA-Übernahme und Auswertung der NBA-Abgabe erfolgen.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Um die unterschiedlichen Kundenanforderungen erfüllen zu können, ist bei Bedarf die entsprechende Möglichkeit in den Verfahrenslösungen zu implementieren.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="nasops_funktionsumfang_sperren">Sperren und Entsperren von Objekten</h4>
+<div class="paragraph">
+<p>Sperraufträge ermöglichen das Sperren von Objekten im Führungssystem gegen Fortführungen von Dritten durch Angabe einer Liste mit Objekt-Identifikatoren. Entsperraufträge heben die Sperrung wieder auf. Objekte mit Stereotype und Tagged Value "retired" können weder gesperrt noch entsperrt werden.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="nasops_funktionsumfang_reservierungen">Reservierungen</h4>
+<div class="paragraph">
+<p>Zur Reservierung von Kennungen (z.B. für Vermessungspunkte, Flurstückskennzeichen, etc.) können entsprechende Aufträge an ein Führungssystem formuliert werden. In der Ergebnis-Datei erhält man eine Liste mit den angeforderten Kennungen.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="nasops_funktionsumfang_protokolluebermittlung">Übermittlung von Protokollinformationen</h4>
+<div class="paragraph">
+<p>Da für jede Operation der NAS sowohl eine <em>Request-</em> als auch eine <em>Response</em>-Klasse definiert wurden, wird in letzterer definiert, welche Protokollinformation bei der jeweiligen Operation ausgegeben wird. Sie sind somit in den bei den einzelnen Operationen enthalten.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="nasops_funktionsumfang_bestandsdatenhaltungseigenschaften">Ermitteln der Eigenschaften einer Bestandsdatenhaltung</h4>
+<div class="paragraph">
+<p>Jede Software-Komponente, die eine NAS-Schnittstelle besitzt, sollte die GetCapabilities-Operation unterstützen.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="nasops_austauscheinheiten">Auszutauschende Einheiten</h3>
+<div class="paragraph">
+<p>Die kleinsten Einheiten des Datenaustauschs sind vollständige Fachobjekte. Dies gilt grundsätzlich auch für die Fortführung des Primärnachweises (AAA-Führungssystem). Unabhängig davon, ob sich Objekte durch eigene Eigenschaften zur Ausgabe qualifiziert haben oder über die Auswertung einer vorgegebenen Selektionskette zur Ausgabe qualifiziert wurden, sind sie hinsichtlich der Fortführungsfunktionalität grundsätzlich als eigene fortzuführende Einheit zu betrachten (Ausnahmen siehe Abschnitt "Erläuterungen zu ALKIS" <mark><strong>TBD:</strong> Genaue Referenz?</mark>).</p>
+</div>
+<div class="paragraph">
+<p>Benutzungen, die nicht dem Zweck der Fortführung des Primärnachweises dienen, können, je nach Nutzerwunsch oder Nutzerprofil, unvollständige Fachobjekte (fehlende Attribute oder Relationen) oder durch spezielle Aufbereitung der Daten entstandene "temporäre Objekte" für den Datenaustausch erzeugen.</p>
+</div>
+<div class="paragraph">
+<p>Der Datenaustausch erfolgt in der NAS unabhängig vom konzeptuellen Modell der Versionierung (Behälter mit Versionen) so, als ob alle Objektversionen unabhängige Objekte wären. Auf diese Art und Weise ist es möglich, die Austauschschnittstelle für Stellen, die eine vollständige Historie führen und solche, die dies nicht tun, identisch zu definieren. Dabei sind jedoch folgende Rahmenbedingungen zu beachten:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Damit die Zahl der entstehenden Versionen reduziert wird, müssen zweiseitige Relationen im Datenaustausch durch eine einzige einseitige Relation dargestellt werden. Es wird diejenige Relation im Datenaustausch codiert, die im UML-Schema als bevorzugte Navigationsrichtung definiert wurde. Zweiseitige Relationen in genormten Schemata werden mittels geeigneten Parametrisierung durch einseitige ersetzt.</p>
+</li>
+<li>
+<p>Um beim Datenaustausch die zu löschende oder zu überschreibende bzw. zu versionierende Version eines Objekts eindeutig identifizieren zu können, wird in der Austauschdatei der Identifikator in den XML-&lt;Delete&gt;- und -&lt;Replace&gt;-Elementen um Entstehungsdatum/-zeit ergänzt. Die Ergänzung des Identifikators um den Zeitstempel ist nur im Datenaustausch erforderlich, um sicherzustellen, dass sich Fortführungen auch auf den aktuellen Datenbestand beziehen. Im Datenbestand selbst werden die zu referenzierenden Versionen durch Auswertung des Lebenszeitintervalls der Versionen auf attributiver Ebene gewonnen.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="nasops_implfunkt">Implizite Funktionalität</h3>
+<div class="paragraph">
+<p>Bei der Führung von Primär- und Sekundärnachweisen über die Schnittstelle NAS ist es erforderlich, dass das aufnehmende System neben der Ausführung der expliziten Funktionen <em>&lt;Insert&gt;, &lt;Delete&gt;</em> und <em>&lt;Replace&gt;</em> auch über implizite Funktionen verfügt, die erst die komfortable Arbeitsweise mit dem System erlauben.</p>
+</div>
+<div class="paragraph">
+<p>Der Umfang der zu realisierenden impliziten Funktionalität eines Datenhaltungssystems ist für ein System zum Primärnachweis und zum Sekundärnachweis unterschiedlich groß. Die von einem Sekundärnachweissystem beim Datennutzer zu fordernden Funktionen sollten grundsätzlich möglichst gering sein, damit eine einfache Implementierung ermöglicht wird. Demgegenüber kann ein Datenhaltungssystem für den Primärnachweis bei der originär zuständigen datenführenden Stelle über wesentlich mehr Funktionen verfügen.</p>
+</div>
+<div class="sect3">
+<h4 id="_implizite_funktionalität_eines_systems_für_den_primärnachweis">Implizite Funktionalität eines Systems für den Primärnachweis</h4>
+<div class="paragraph">
+<p>Bei der Nutzung der NAS für die Kommunikation zwischen einem Qualifizierungs- bzw. Erfassungssystem und einem Führungssystem sind folgende implizite Funktionen notwendig:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Das aufnehmende System leitet beim Eintrag neuer Versionen das <strong>Entstehungsdatum/-zeit</strong> aus der Systemzeit ab. Alle in einem Fortführungsfall eingetragenen (oder durch die Funktion <em>&lt;Replace&gt;</em> entstandenen) neuen Versionen erhalten dasselbe Entstehungsdatum/-zeit. Dies ist i.d.R. die Zeit, an der die Transaktion begonnen wird (<em>commit</em>). Besteht ein Auftrag aus Teilaufträgen (Fortführungsfällen), werden diese in der Reihenfolge ihres Auftretens in der NAS-Datei abgearbeitet. Für jeden Teilauftrag wird ein eigenes Entstehungsdatum/-zeit vergeben.</p>
+</li>
+<li>
+<p>Referenzen werden beim Datenaustausch über die NAS nur einseitig in der bevorzugten Richtung der Referenz ausgetauscht. Das aufnehmende System baut die <strong>Gegenreferenz</strong> implizit auf. Durch den Aufbau der Gegenreferenz entsteht keine neue Version.</p>
+</li>
+<li>
+<p>Es gibt Fachobjekte, die nur dann eine Existenzberechtigung haben, wenn sie von anderen Objekten referenziert werden (z.B. Objekte vom Typ Lage). Weil Gegenreferenzen nicht über die NAS übermittelt werden, kann ein fortführendes System dann nicht wissen, ob ein Objekt, das durch die Fortführung nicht mehr referenziert wird auch gelöscht werden kann. Das <strong>nicht mehr referenzierte Fachobjekt</strong> muss durch die Datenbank <strong>gelöscht</strong> werden. Die Fachobjekte, die wegen fehlender Referenzierung gelöscht werden können, sind im Objektartenkatalog zu bezeichnen. Dieser Fortführungsfall findet Eingang in die Versionierung und Historisierung.</p>
+</li>
+<li>
+<p>Es gibt Fachobjekte, die Objekte referenzieren, die im Rahmen der Fortführung gelöscht werden sollen. Weil Gegenreferenzen nicht über die NAS übermittelt werden, kann ein fortführendes System nicht wissen, ob ein zu löschendes Objekt durch weitere Objekte referenziert wird. Dadurch kann es vorkommen, dass Referenzen nach der Fortführung nicht mehr befriedigt werden. Das Datenhaltungssystem muss solche <strong>unbefriedigten Referenzen automatisch löschen</strong>. Dieser Fortführungsfall findet Eingang in die Versionierung und Historisierung.</p>
+</li>
+<li>
+<p>Es gibt Fachobjekte, die nur dann eine Existenzberechtigung haben, wenn sie andere Fachobjekte referenzieren (z.B. Präsentationsobjekte). Werden im Rahmen einer Fortführung alle solchen Referenzen explizit oder implizit gelöscht, so <strong>löscht</strong> das Datenhaltungssystem automatisch das entsprechende <strong>Fachobjekt, dem die notwendigen Referenzen fehlen</strong>. Die Fachobjekte, die wegen fehlender notwendiger Referenzen gelöscht werden müssen, sind im Objektartenkatalog zu bezeichnen. Dieser Fortführungsfall findet Eingang in die Versionierung und Historisierung.</p>
+</li>
+<li>
+<p>Werden im Zuge einer Fortführung nur die fachlich geänderten Objekte angeliefert, muss die Datenbank ggf. die topologische und geometrische Konsistenz selbstständig herstellen (Geometriebehandlung).</p>
+</li>
+<li>
+<p>Beim <strong>Löschen von Geometrien</strong> sind ggf. Zerschlagungen aus vorherigen Implizitprozessen nach folgender Regel wieder rückgängig zu machen. Eine Position wird aus der Geometrie aller Objekte entfernt, wenn sie in keinem Objekt, in dem sie verwendet wird zur geometrischen Definition dieses Objektes beiträgt; trägt sie auch nur in einem Objekt zur geometrischen Definition bei, bleibt sie in allen Objekten erhalten. Eine Position trägt dann zur geometrischen Definition eines Objekts bei, wenn das Objekt punktförmigen Raumbezug hat, oder wenn sie (bei linienhaftem oder flächenhaftem Raumbezug) nicht in einer Geraden mit der vorhergehenden und der folgenden Position liegt. Der Begriff "liegt in der Geraden" ist dabei in Abhängigkeit von der festgelegten Koordinatenauflösung (für metrische Lagekoordinaten in AFIS-ALKIS-ATKIS: Millimeter) zu definieren. Dieses Implizitverhalten führt im aufnehmenden System zu Fortführungen, die im auslösenden Fortführungsauftrag aus der NAS nicht explizit angegeben sind. Diese Fortführungen sind durch das aufnehmende System implizit zu veranlassen und führen zur Erzeugung neuer Versionen aller beteiligten Objekte.</p>
+</li>
+<li>
+<p>Werden zur Fortführung eines Primärnachweises Austauschelemente mit vorläufigen Identifikatoren angeliefert, erzeugt das aufnehmende System endgültige eineindeutige Identifikatoren.</p>
+</li>
+<li>
+<p>Beim Löschen von Flurstücken in Systemen mit vollständigem Historiennachweis wird der erste Fortführungsanlass aus dem Attribut "ueberschriftImFortfuehrungsnachweis" der Objektart AX_Fortfuehrungsfall in die untergehende Version des Flurstücks als zusätzlicher Untergangsanlass in das Attribut "Anlass" übernommen.</p>
+</li>
+<li>
+<p>Bei den Stellen, die keine vollständige Historie führen, erzeugt die Datenhaltung beim Löschen eines aktuellen Flurstücks automatisch das entsprechende Objekt "Historisches Flurstück". Dabei ist der erste Fortführungsanlass aus dem Attribut "ueberschriftImFortfuehrungsnachweis" der Objektart AX_Fortfuehrungsfall als zusätzlicher Untergangsanlass in das Attribut "Anlass" zu übernehmen.</p>
+</li>
+<li>
+<p>Weitere implizite Funktionen (z.B. Vergabe von Punktkennzeichen) sind implementierungsspezifisch.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Geometriebehandlung</strong></p>
+</div>
+<div class="paragraph">
+<p>Geometriebehandlung stellt eine Funktionalität der Datenbank (AAA-Führungskomponente) im Rahmen der Fortführungsverarbeitung dar. Dabei werden neue bzw. geänderte Geometrien so mit dem Altbestand verknüpft, dass bei geometrischen Identitäten zwischen Alt- und Neubestand in Abhängigkeit von der Themenzugehörigkeit der beteiligten Objekte redundanzfreie Geometrien entstehen.</p>
+</div>
+<div class="paragraph">
+<p>Diese Funktionalität ist unabhängig von den Geometrie behandelnden bzw. Identitäten herstellenden Funktionen des Verarbeitungssystems (AAA-Verarbeitungskomponente) immer dann notwendig, wenn vom Verarbeitungssystem im Rahmen einer Fortführung nicht alle von geometrischen Operationen betroffenen Objekte an die AAA-Führungskomponente geliefert werden (z.B. bei einer Flurstückszerlegung nur das gelöschte und die neuen Flurstücke). Für die Geometriebehandlung gelten folgende Grundsätze:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Die Funktionalität der Geometriebehandlung kann von AAA-Führungssystemen optional realisiert werden. AAA-Verarbeitungskomponenten können ggf. von einer vorhandenen Geometriebehandlung in der AAA-Führungskomponente Gebrauch machen. Sofern in der AAA-Führungskomponente keine Geometriebehandlung realisiert ist, müssen die AAA-Verarbeitungskomponenten vollständige Daten anliefern. Unberührt davon ist die Verpflichtung der AAA-Führungskomponente zur Prüfung der Daten auf (geometrische) Konsistenz.</p>
+</li>
+<li>
+<p>Die durch Geometriebehandlung implizit veränderten Objekte werden versioniert.</p>
+</li>
+<li>
+<p>Die Geometriebehandlung beschränkt sich auf Klassen-Themen; eine Geometriebehandlung bei individuell gewollten Geometrieidentitäten ist nicht vorgesehen. Insofern wirkt sich eine Geometriebehandlung bei Klassen-Themen auch nicht auf Instanzen aus, für die Geometrieidentitäten individuell festgelegt wurden (keine "kaskadierende" Geometriebehandlung).</p>
+</li>
+<li>
+<p>Bei individuell festgelegter, gewollter Geometrieidentität von Instanzen hat die AAA-Verarbeitungskomponente dafür zu sorgen, dass a) bei gewollter Identität (redundanzfreie Geometrie) ggf. ein Aufsplitten der Linien erfolgt und b) alle betroffenen Objekte im Fortführungsauftrag mitgeliefert werden.</p>
+</li>
+<li>
+<p>AX_Fortfuehrungsauftrag wird um einen Steuerparameter (Geometriebehandlung ja/nein) ergänzt. Die AAA-Führungskomponente muss diesen Schalter auswerten und entsprechend reagieren, d.h. entweder die Geometriebehandlung ein- bzw. ausschalten oder den Fortführungsauftrag ablehnen. Die AAA-Verarbeitungskomponente hat dafür zu sorgen, dass die Schalterstellung dem Inhalt des Fortführungsauftrags entspricht.</p>
+</li>
+<li>
+<p>Eine Geometriebehandlung bei aufnehmenden Systemen im NBA-Verfahren wird nicht vorgesehen/erwartet. Es werden alle veränderten Objekte übermittelt, auch die, die lediglich durch Geometriebehandlung in der AAA-Führungskomponente geändert wurden.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Es gelten folgende geometrische Kriterien:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Das Such- bzw. Trennkriterium für die Geometriebehandlung beträgt Wurzel 2 [mm].</p>
+</li>
+<li>
+<p>An der Geometriebehandlung nehmen Punkte/Stützpunkte und Linien teil.</p>
+</li>
+<li>
+<p>Bei Linien nehmen nur Geraden und Kreisbögen/Vollkreise an der Geometriebehandlung teil. Splines nehmen nicht an der Geometriebehandlung teil; hier muss die Verarbeitungskomponente dafür sorgen, dass alle betroffenen Objekte fortgeführt werden.</p>
+</li>
+<li>
+<p>Auch wenn eine Neulinie eingetragen wird, muss ein "darunter liegender" Altpunkt die Neulinie splitten. Diese muss über den Altpunkt geführt werden.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Eine Tabelle mit einer Zusammenstellung der Impliziten Funktionen im Führungsprozess für ein System zum Primärnachweis befindet sich in <a href="#implfunkt_primaernachweis">[implfunkt_primaernachweis]</a> dieses Dokumentes.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_implizite_funktionalität_eines_systems_für_den_sekundärnachweis">Implizite Funktionalität eines Systems für den Sekundärnachweis</h4>
+<div class="paragraph">
+<p>Bei der Führung von Sekundärnachweisen über die Schnittstelle NAS baut das aufnehmende System (soweit vom Nutzer gewünscht) die Gegenreferenzen zu den ausgetauschten Referenzen auf und pflegt sie.</p>
+</div>
+<div class="paragraph">
+<p>Replace-Befehle, bei denen das fortzuführende Objekt noch nicht im Datenbestand des Nutzers ist, sind bei der Übernahme wie <em>Insert</em>-Befehle zu behandeln. (Beispiel: Ein Nutzer erhält im Interessengebiet alle Flurstücke und die zugehörigen Eigentümer. Ein Flurstück wechselt seinen Eigentümer. Der Eigentümer ist aus Sicht des Nutzers neu (<em>Insert</em>) aus Sicht des ALKIS-Führungssystems aber alt (<em>Replace</em>), weil er bereits an Flurstücken außerhalb des Interessengebiets Eigentum hatte und deshalb seit langem im abgebenden System geführt wird, jedoch noch nie im System des Nutzers geführt wurde.)</p>
+</div>
+<div class="paragraph">
+<p>Insert-Befehle, bei denen das einzutragende Objekt im Datenbestand des Nutzers bereits vorhanden ist, sind bei der Übernahme zu ignorieren. Ein aufnehmendes System muss Objektversionen verarbeiten können, deren Lebenszeitbeginn vor dem Intervallbeginn des NBA-Verfahrens liegt und im Abgabezeitraum nicht verändert wurde.</p>
+</div>
+<div class="paragraph">
+<p>Eine Objektversion kann durch die neue Abgabeform mit gleichem Lebenszeitbeginn in unterschiedlichen Folgeabgaben auftauchen. Das aufnehmende System muss daher identische Versionen bei der Übernahme erkennen und ignorieren.</p>
+</div>
+<div class="paragraph">
+<p>Eine Tabelle mit einer Zusammenstellung der Impliziten Funktionen im Führungsprozess für ein System zum Sekundärnachweis befindet sich in <a href="#implfunkt_sekundaernachweis">[implfunkt_sekundaernachweis]</a> dieses Dokumentes.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="nasops_nba">Nutzerbezogene Bestandsdatenaktualisierung (NBA)</h3>
+<div class="paragraph">
+<p>In diesem Abschnitt wird klargestellt, dass die folgenden Modi gemäß der Enumeration AX_Art_BereichZeitlich unterschieden werden müssen:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Selektion der abzugebenden Änderungen:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>"stichtagsbezogen": Differenzdaten zwischen letzter erfolgreicher Datenabgabe und Stichzeitpunkt</p>
+</li>
+<li>
+<p>"fallbezogen": alle Änderungen zwischen letzter erfolgreicher Datenabgabe und Stichzeitpunkt</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Codierung der Änderungen in Abhängigkeit von einer Führung eines Historiennachweises im aufnehmenden System:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>"ohne Historie": in der Sekundärdatenbank ist stets nur der aktuelle Stand der Daten verfügbar</p>
+</li>
+<li>
+<p>"mit Historie": in der Sekundärdatenbank werden zumindest temporär auch untergegangene Objekte und Objektversionen vorgehalten.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Die Regeln zur Codierung in der NAS sind in <a href="#nasschema">[nasschema]</a> beschrieben.</p>
+</div>
+<div class="paragraph">
+<p>In der Kombination "fallbezogen" / "mit Historie" ist der Datenumfang in der Sekundärdatenbank grundsätzlich geeignet, selbst zur Abgabe von Ausgaben oder als Quelle für die Fortführung von weiteren Sekundärdatenbeständen genutzt zu werden.</p>
+</div>
+<div class="paragraph">
+<p>Bei Einführung einer neuen GeoInfoDok-Referenzversion qualifizieren sich im Rahmen der Migration übertragene bzw. gebildete Objekte mit Sterotype und Tagged Value "retired" nicht aufgrund ihres Migrationshintergrundes zur NBA-Abgabe.</p>
+</div>
+<div class="sect3">
+<h4 id="nasops_nba_fachreqs">Fachliche Anforderungen</h4>
+<div class="paragraph">
+<p>Die fachlichen Anforderungen zur Nutzerbezogenen Bestandsdatenaktualisierung (NBA) gründen sich auf die vorhandenen Verfahren, wie sie in ALK/ATKIS und im ALB realisiert vorliegen. Diese Verfahren sind nicht identisch. Weitere fachliche Anforderungen lassen sich folgendermaßen zusammenfassen:</p>
+</div>
+<div class="paragraph">
+<p>Änderungsdaten sind auf der Grundlage der Fortführungsdaten abzuleiten, die ihrerseits die Struktur der Bestandsdaten aufweisen. Änderungsdaten zur Nutzerbezogenen Bestandsdatenaktualisierung sollen:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>kontinuierlich und fortführungsfallbezogen (Änderungsdaten) und/oder</p>
+</li>
+<li>
+<p>stichtagsbezogen (Differenzdaten) abgegeben werden können.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Fortführungsfallbezogen bedeutet, dass alle Veränderungen, die in einem zurückliegenden Zeitraum stattgefunden haben, der zeitlichen Reihenfolge nach aufgeführt werden. Damit wird es möglich, alle Prozesse schrittweise im aufnehmenden System nachzuvollziehen. Voraussetzung ist allerdings, dass auch alle Informationen in den Änderungsdaten enthalten sind, die das Erzeugen, Ändern und Löschen von Objekten in dem zurückliegenden Zeitraum betreffen.</p>
+</div>
+<div class="paragraph">
+<p>Im Gegensatz dazu liefert das stichtagsbezogene Verfahren nur die Differenzdaten, die nötig sind, um den Ausgangszustand beim Nutzer auf den vom Nutzer gewünschten Endzustand zu bringen. Was auf dem Weg zum Endzustand mit den Objekten geschehen ist, kann in diesem Fall nicht nachvollzogen werden. Die stichtagsbezogenen Differenzdaten stellen eine Untermenge der Änderungsdaten dar und können durch Auswertung aus ihnen abgeleitet werden; sie umfassen alle neu entstandenen Objekte, die jeweils aktuellen Versionen von fortgeführten Objekten sowie Angaben zu historisch gewordenen Objekten.</p>
+</div>
+<div class="paragraph">
+<p>Für jeden Nutzer wird ein Profil angelegt, das beschreibt, nach welchen Kriterien der Nutzer mit Änderungsdaten aus dem einmal für das NBA-Verfahren vorgehaltenen Bestand versorgt werden soll. Dieses Profil ist vor der ersten Datenabgabe zu erstellen.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Der Benutzungsauftrag 0040 für die erste Datenabgabe enthält eine
+Profilkennung; diese <span class="underline">muss</span> dem System <span class="underline">vor</span> der Verarbeitung
+bekannt sein.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Für jeden Benutzer wird eine Profilkennung angegeben. Diese Kennung wird auch verwendet, um in der OA AX_NutzerbezogeneBestandsdatenaktualisierung_NBA eine automatische Abarbeitung der NBA-Dateien zu ermöglichen. Mit der Profilkennung kann eindeutig der Bezug zur AX_BenutzergruppeNBA hergestellt werden, welche die maßgeblichen Selektionskriterien des Nutzers enthält. Nutzerbezogene Selektionskriterien sind:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Fachlich durch Angabe von Objektarten, Attributarten und -werten sowie Relationen,</p>
+</li>
+<li>
+<p>Räumlich durch Angabe einer Fläche und</p>
+</li>
+<li>
+<p>Zeitlich durch Angabe eines Zeitintervalls.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Objektarten, Attribute und Relationen bestimmen auch den inhaltlichen Umfang der abzugebenden Daten für den einzelnen Nutzer; diese Angaben sind ebenfalls im Nutzerprofil, das z.B. in ALKIS durch die Objektart AX_Benutzergruppe realisiert ist, zu hinterlegen.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_modellierung">Modellierung</h4>
+<div class="paragraph">
+<p>Das NBA-Verfahren ist für alle Objektarten anzubieten, die eine datenführende Stelle im Bestand führt, ausgenommen Objekte mit dem Stereotype und dem Tagged Value "retired". Für den Nutzer kann die Selektion auf dem gesamten Vorrat der Objekteigenschaften aufsetzen; die Anforderungen des Datenschutzes sind dabei jedoch zu berücksichtigen. Als Ergebnis liefert das NBA-Verfahren als kleinste Einheiten der Änderungsdaten immer Fachobjekte. Werden Fortführungsdaten für dasselbe Zeitintervall in mehreren Portionen an Nutzer abgegeben, stellt das abgebende System sicher, dass dieselbe Version eines Fachobjektes nur einmal an den Nutzer abgegeben wird.</p>
+</div>
+<div class="paragraph">
+<p>Diese Daten sind vollständig in Bezug auf das aktuelle Nutzerprofil; aus Sicht des gesamten Datenbestandes können diese Objekte unvollständig sein. Sofern der Nutzer seine Selektion auf einzelne Objekteigenschaften beschränkt (Nutzerprofil), können zwischen den Lieferungen Inkonsistenzen zwischen dem vorhandenen Datenbestand beim Nutzer und der aktuellen Datenhaltung in der datenführenden Stelle auftreten. Dies kann passieren durch die Aktualisierung der Bestandsdaten im Bereich der Selektionskriterien oder Änderungen der Selektionskriterien. Derartige Inkonsistenzen müssen vom aufnehmenden System gehandhabt werden.</p>
+</div>
+<div class="paragraph">
+<p>Die räumliche Ausdehnung des Interessengebiets eines Nutzers wird durch Angabe beliebiger Flächen (Flächenobjekte) im Nutzerprofil beschrieben. Raumbezogene Elementarobjekte (REO) qualifizieren sich, sobald die Geometrie eines Objekts durch die Geometrie des Interessengebietes angeschnitten wird (Operation INTERSECTS) oder die Geometrie des Objektes vollständig im Interessensgebiet liegt.</p>
+</div>
+<div class="paragraph">
+<p>Vor der ersten Datenabgabe ist das Nutzerprofil (AX_Benutzergruppe) mit den fachlichen, räumlichen und zeitlichen Kriterien für die NBA-Änderungsdaten zu erstellen. Die fachlichen und räumlichen Kriterien können auch im Nachhinein verändert werden.</p>
+</div>
+<div class="paragraph">
+<p>Technisch soll die Änderung von Selektionskriterien einer NBA stets durch einen Fortführungsauftrag der Verarbeitungsart 4000 (Fortführen ohne Sperre) abgewickelt werden, der die Objektarten AX_BenutzergruppeNBA und ggf. AX_Benutzer umfasst. Dabei sind Fortführungen während laufenden NBA-Prozessen unzulässig.</p>
+</div>
+<div class="paragraph">
+<p>Aus Sicht des NBA-Beziehers müssen alle Objekte und mit ihnen in relationalem und attributivem [sprich: schlüsselseitigem] Zusammenhang stehenden weiteren Objekte, die in das Gebiet der Erweiterung ganz oder teilweise fallen, wie bei einer NBA-Erstabgabe behandelt werden. Gleiches gilt auch für fachliche Erweiterungen innerhalb eines NBA-Gebietes. Das heißt, dass die zum bisherigen NBA-Gebiet gehörige Datenabgabe sich um Einfüge-Operationen für die erstmalig abzugebenden Objekte vergrößert. Erweiterungen und Wieder- bzw. Aufholungsläufe schließen sich aus. Für NBA-Bezieher sollen in Zusammenhang mit räumlichen und fachlichen Reduzierungen keine Löschsätze erzeugt werden. Änderungen zu den nicht mehr räumlich bzw. fachlich inbegriffenen Objekten werden ab der Reduzierung einfach nicht mehr geliefert. Zeitliche Erweiterungen (zusätzliche Abgabe von historischen Versionen) und Reduzierungen sind nicht vorgesehen.</p>
+</div>
+<div class="paragraph">
+<p>In welchem Umfang Objekte durch Nachverfolgung von Relationen nachzuziehen sind, muss ebenfalls in den Selektionskriterien des Nutzerprofils beschrieben sein.</p>
+</div>
+<div class="paragraph">
+<p>Der Zeitraum, für den die Bereitstellung von Änderungsdaten nach dem Verfahren NBA für verschiedene Nutzer sichergestellt werden muss, kann zeitlich begrenzt werden (zeitlicher Rahmen). Damit wird es möglich,</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>für jeden Nutzer Änderungsdaten rückwirkend innerhalb dieses Zeitraums anzufordern und</p>
+</li>
+<li>
+<p>Änderungsdaten nutzerbezogen abzugeben, sie aber nicht nutzerbezogen vorhalten zu müssen.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Das Verfahren zur Nutzerbezogenen Bestandsdatenaktualisierung erfordert, dass für diesen Zeitraum Informationen über die Veränderung des Datenbestandes vorgehalten werden. Der Zeitraum wird durch die datenführende Stelle in Abstimmung mit den Nutzern bestimmt.</p>
+</div>
+<div class="paragraph">
+<p>Die beim Verfahren NBA erforderliche Verwaltung der verschiedenen Ausprägungen eines Objektes über die Zeit wird durch das Versionskonzept abgedeckt. Deshalb wird</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>die Datenhaltung der Änderungsdaten auf der Ebene der Bestandsdaten vorgenommen,</p>
+</li>
+<li>
+<p>die Führung der Informationen für das Verfahren der Nutzerbezogenen Bestandsdatenaktualisierung auf das Versionskonzept aufgesetzt und</p>
+</li>
+<li>
+<p>keine neue, zusätzliche und damit redundante Datenstruktur entwickelt.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Damit ist es möglich,</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>aus einer Sammlung von Veränderungen,</p>
+</li>
+<li>
+<p>die jeweils die vollständigen Informationen zu den Objekten des Bestandes enthalten müssen,</p>
+</li>
+<li>
+<p>über den Zeitraum mehrerer Jahre hinweg (in Abhängigkeit vom zeitlichen Rahmen),</p>
+</li>
+<li>
+<p>Auswertungen nach</p>
+<div class="ulist">
+<ul>
+<li>
+<p>inhaltlichem Umfang durch Objektarten, Attribute und Relationen,</p>
+</li>
+<li>
+<p>räumlicher Ausdehnung durch Flächen und</p>
+</li>
+<li>
+<p>zeitlicher Ausdehnung durch Zeitintervalle sowie</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>nutzerbezogen</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>durchzuführen.</p>
+</div>
+<div class="paragraph">
+<p>Um eindeutig die zu überschreibende Version zu kennzeichnen und Übermittlungsfehler im NBA-Verfahren aufzudecken, ist es erforderlich, den Objektidentifikator beim Datenaustausch um das Entstehungsdatum/-zeit zu ergänzen. Dies erfordert folgende Regeln:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Entstehungsdatum/-zeit im Objektidentifikator kann bei der Implementierung (z.B. im aufnehmenden System) weggelassen werden (Ersatz durch Zeitstempel der Versionen).</p>
+</li>
+<li>
+<p>Beim Datenaustausch mittels NBA-Verfahren mit fortführungsfallbezogener (kontinuierlicher) Datenabgabe wird beim Austausch von Objektversionen die Relation mit einem zum Entstehungsdatum der Objektversion passenden Entstehungsdatum der referenzierten Information ausgegeben.</p>
+</li>
+<li>
+<p>Beim Datenaustausch mittels NBA-Verfahren mit stichtagsbezogener Datenabgabe (Differenzdaten) wird beim Austausch von Objektversionen die Relation mit einem zum Stichtagsdatum passenden Entstehungsdatum der referenzierten Information ausgegeben.</p>
+</li>
+<li>
+<p>Bei der Erzeugung der Austauschdatei für die Nutzerbezogene Bestandsdatenaktualisierung muss das abgebende System folgende Funktionen erfüllen:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Selektion der abzugebenden Daten aus dem (ggf. temporären) Historiennachweis entsprechend den im Nutzerprofil hinterlegten Selektionsketten und Filterangaben,</p>
+<div class="paragraph">
+<p>Erzeugung der Fortführungsoperationen für das aufnehmende System aus dem Historiennachweis,</p>
+</div>
+</li>
+<li>
+<p>Umwandlung der Daten in die Normbasierte Austauschschnittstelle.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Für die Ableitung der zu erzeugenden Fortführungsoperationen ist auszuwerten, ob das sich für die Datenausgabe qualifizierende Objekt aus Sicht der Datenhaltung eine erste, weitere oder letzte Version ist.</p>
+</div>
+<div class="paragraph">
+<p>Bei Verfolgung von inversen Relationen kann &lt;wfs:PropertyName&gt; bzw. &lt;wfsext:PropertyName&gt; mit dem Attribut resolve="local" kein Lebenszeitintervall bei Selektionskriterien für die NBA-Abgabe transportieren. Das hat zur Folge, dass eine oder mehrere Objektversion(en) als Ergebnis geliefert werden. Für die korrekte zeitliche Zuordnung sind weitere Bearbeitungsschritte erforderlich, die durch die Software-Implementierungen sicherzustellen sind.</p>
+</div>
+<div class="sect4">
+<h5 id="_abgabe_von_änderungsdaten">Abgabe von Änderungsdaten</h5>
+<div class="paragraph">
+<p>Bei der kontinuierlichen, fortführungsfallbezogenen Datenabgabe (Änderungsdaten) werden alle sich für die Datenabgabe qualifizierenden Versionen eines Objektes verarbeitet. Das betrachtete Zeitintervall erstreckt sich von der letzten Datenabgabe bis maximal zur Gegenwart. Dabei ist aus Sicht der Datenhaltung auszuwerten, ob es sich um eine erste, weitere oder letzte Version eines Objektes handelt.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">sich qualifizierende Version aus Sicht der Bestandsdaten-DB</th>
+<th class="tableblock halign-left valign-top">auszugebende Operation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><span class="underline">erste</span> Version eines neuen Objekts</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><em>&lt;Insert&gt;</em></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><span class="underline">weitere</span> Version eines Objektes</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><em>&lt;Replace&gt;</em> der letzten übermittelten Version (Entstehungsdatum/-zeit angeben)</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><span class="underline">letzte</span> Version eines Objektes</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><em>&lt;Delete&gt;</em> der letzten übermittelten Version (Entstehungsdatum/-zeit angeben)</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>In dem Fall, dass ein Objekt untergeht ("historisiert" wird), ist bei Sekundärdatenbanken mit vollständigem Historiennachweis statt des &lt;wfs:Delete&gt;-Operators der ansonsten in der NAS nicht unterstützte &lt;wfs:Update&gt;-Operator verwendet (siehe <a href="#nasops_funktionsumfang_sekundaernachweise">Führung von Sekundärnachweisen</a>).</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_abgabe_von_differenzdaten">Abgabe von Differenzdaten</h5>
+<div class="paragraph">
+<p>Bei der stichtagsbezogenen Datenabgabe (Differenzdaten) wird unter den Versionen eines Objektes jeweils nur die jüngste oder letzte Version verarbeitet, deren Entstehungs- bzw. Untergangszeit im betrachteten Zeitintervall liegt. Auch hier muss bei Sekundärdatenbanken mit vollständigem Historiennachweis im Fall, dass ein Objekt untergeht ("historisiert" wird), statt des &lt;wfs:Delete&gt;-Operators der ansonsten in der NAS nicht unterstützte &lt;wfs:Update&gt;-Operator verwendet werden (siehe <a href="#nasops_funktionsumfang_sekundaernachweise">Führung von Sekundärnachweisen</a>).</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">jüngste oder letzte sich qualifizierende Version aus Sicht der Bestandsdaten-DB</th>
+<th class="tableblock halign-left valign-top">auszugebende Operation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><span class="underline">erste</span> Version eines neuen Objektes</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><em>&lt;Insert&gt;</em> der <span class="underline">aktuellen</span> Version dieses Objektes</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><span class="underline">weitere</span> Version eines Objektes</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><em>&lt;Replace&gt;</em> der letzten übermittelten Version (Entstehungsdatum/-zeit angeben) mit der <span class="underline">aktuellen</span> Version dieses Objektes</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><span class="underline">letzte</span> Version eines Objektes</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><em>&lt;Delete&gt;</em> der letzten übermittelten Version (Entstehungsdatum/-zeit angeben)</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="nasops_nba_portionierung">Portionierung von NBA-Daten, Protokolldatei</h4>
+<div class="paragraph">
+<p>Die Portionierung von NBA-Daten ist optional. Es besteht kein Zwang, diese zu verwenden, sie erlaubt jedoch den NBA-Beziehern die Übernahme der Daten in Etappen, was sich in der Vergangenheit bezüglich der Altverfahren insbesondere bei umfangreichen Datenbeständen bewährt hat.</p>
+</div>
+<div class="paragraph">
+<p>Es werden insbesondere die folgenden Anforderungen adressiert: Bereitstellung der Daten von ALKIS und von ATKIS in geometrischer Portionierung. Die Portionsgröße soll variabel, aber einheitlich für einen Bezieher (Parametrisierung der Portionsgröße im Benutzerprofil) sein. NREO und ZUSO werden portionsbezogen über Relationen gemäß Selektionskriterien im Nutzerprofil nachgezogen. Eine Portionierung allein nach Datenmenge ist nicht ausreichend.</p>
+</div>
+<div class="paragraph">
+<p>Die Datenabgabe an Sekundärnutzer soll möglichst "vollautomatisch" für das abgebende System und das aufnehmende System sein. Hierfür wird das Attribut &lt;profilkennung&gt; verwendet.</p>
+</div>
+<div id="img_56" class="imageblock">
+<div class="content">
+<img src="media/image56.png" alt="media/image56" width="396" height="211">
+</div>
+<div class="title">Figure 2. Geänderte Objektart AX_Nutzerbezogene-BestandsdatenaktualisierungNBA</div>
+</div>
+<div class="paragraph">
+<p>Bei der unportionierten Ausgabe war die Ausgabe der Profilkennung früher nicht verpflichtend. Diese Attributart wurde daher als Pflichtattribut bei AX_NutzerbezogeneBestandsdatenaktualisierungNBA ergänzt. Damit wird nicht zwischen der portionierten und unportionierten Ausgabe durch Weglassen der Attributart &lt;portionskennung&gt; unterschieden, sondern durch die Angaben in &lt;laufendeNummerVonGesamtzahl&gt; und &lt;gesamtzahl&gt; im Datentyp AX_Portionskennung. Im Falle der unportionierten Abgabe sind beide Werte mit "1" belegt.</p>
+</div>
+<div class="paragraph">
+<p><strong>Portion ohne Raumbezug</strong></p>
+</div>
+<div class="paragraph">
+<p>Vor der Portionierung müssen über einen Benutzungsauftrag alle Objekte und mit ihnen in relationalem und attributivem Zusammenhang stehenden weiteren Objekte (ZUSO, NREO, REO) über die Selektionskriterien aus der DHK selektiert worden sein. Diese selektierte Menge an Objekten kann dann ggf. portioniert werden, entweder mit Hilfe von geometrischen Parametern oder ohne. Die Portionierung zieht keine weiteren (ggf. fehlende) Objekte nach.</p>
+</div>
+<div class="paragraph">
+<p>Dazu kann die Attributart AX_Portionskennung.suedwestEcke mit einem der Portionierungskonvention konformen Wert belegt werden oder unbelegt bleiben. Der Dateiname enthält je nachdem den o.g. konformen Wert oder der Dateinamensanteil von suedwestEcke wird nicht belegt. Die Position der nicht-raumbezogenen Portionen in der Portionsfolge ist frei wählbar.</p>
+</div>
+<div class="paragraph">
+<p><strong>Protokolldatei</strong></p>
+</div>
+<div class="paragraph">
+<p>Mit einer Portionsfolge bzw. einer unportionierten Gesamtlieferung kann eine optionale Protokolldatei mit Erläuterungen geliefert werden.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Im Rahmen von massenhaft betriebenen NBA-Verfahren ist es besser, ein Protokoll mit Fehlermeldungen zu erhalten als nicht zu wissen, was mit der NBA-Lieferung schief gelaufen ist. Dass soll nicht heißen, dass fehlerhafte NBA-Daten zur Auslieferung kommen sollen: Man bekommt dann eben nur ein Protokoll ohne Daten.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Im Falle der Portionierung ist diese als erste Portion einer Portionsfolge mit der laufenden Nummer 0 anzugeben. Im Falle der unportionierten Gesamtlieferung soll der Zusammenhang der Protokolldatei mit der NBA-Lieferung durch deren Dateinamen zum Ausdruck kommen, indem der Name der Protokolldatei gleich dem Namen der NBA-Lieferung ergänzt um "_p" am Ende, gefolgt vom Punkt mit Dateiextension (i.d.R. ".xml", ggf. auch "zip" usw.) sein soll. Ansonsten gelten für die Protokolldatei die Regeln einer Portionsdatei ohne Raumbezug (siehe oben <mark><strong>TBD:</strong> Genaue Referenz?</mark>).</p>
+</div>
+<div class="sect4">
+<h5 id="_formale_form_der_portionierung">Formale Form der Portionierung</h5>
+<div class="paragraph">
+<p>Die Abwicklung erfolgt über im automatisierten NBA-Ablauf systemseitig erzeugte AX_NutzerbezogeneBestandsdatenaktualisierung_NBA-Dokumente. Diese werden zu Zeitpunkten gemäß den Vorgaben in AX_BenutzergruppeNBA erzeugt. Die zur jeweiligen Auftragsabwicklung verwendete Anzahl von NBA-Dokumenten bleibt dabei der Implementierung überlassen, allerdings soll es ein zusammenfassendes Auftragsprotokoll zu den ggf. n Ergebnisdateien geben. Aufgrund von [1..n] Benutzungsaufträgen mit Anlass "Nutzerbezogene Bestandsdatenaktualisierung NBA" (0040) werden alle erforderlichen Portionen als eigene unabhängige "Fortführungsaufträge" abgegeben.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Hier ist der Begriff "Fortführungsauftrag" nicht wortwörtlich im Sinne des AX_Fortfuehrungsauftrag zu verstehen sondern in Form der Response AX_NutzerbezogeneBestandsdatenaktualisierung_NBA, welche die WFS-Operation "Transaction" wie der Fortführungsauftrag enthält.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Zur redundanzfreien Abgabe von Objekten folgen Erläuterungen bei der Parametrisierung der Portionierung (siehe <a href="#nasops_nba_portionierung_anforderungenabgebendessystem">Anforderungen an das abgebende System</a>).</p>
+</div>
+<div class="paragraph">
+<p>Alle Portionen eines Benutzungsauftrages erhalten dieselbe Antragsnummer und dieselbe Auftragsnummer. Bei Folgelieferungen erhöht sich die Auftragsnummer.</p>
+</div>
+<div class="paragraph">
+<p>Zu jeder Portion sind Metadaten zu erzeugen, aus denen mindestens das geometrische und logische Gebiet der Portion hervorgeht.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="nasops_nba_portionierung_anforderungenabgebendessystem">Anforderungen an das abgebende System</h5>
+<div class="paragraph">
+<p><strong>Parametrisierung der Portionierung</strong></p>
+</div>
+<div class="paragraph">
+<p>Auf Ebene des Nutzerprofils für NBA kann die Portionierung durch Angabe des Portionierungsparameters aktiviert bzw. durch weglassen deaktiviert werden.</p>
+</div>
+<div class="paragraph">
+<p>Die Selektion und Portionierung erfolgt als zweistufiger Prozess:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Die Selektionskriterien in AX_BenutzergruppeNBA dienen zur Auswahl der insgesamt in der Lieferung abzugebenden Objekte (unabhängig davon, ob eine Portionierung erfolgt oder nicht).</p>
+</li>
+<li>
+<p>Die Aufteilung der selektierten Objekte in Portionen erfolgt anhand des Portionierungsparameters wie nachfolgend beschrieben. Bei Einrichtung des NBA-Profils muss auf sinnvolle Parametrisierung der Portionierung geachtet werden.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Fallen in einer Portion keine Fortführungsdaten für die betreffende Lieferung an, so muss diese Portion nicht erzeugt werden. Hierdurch wird die Anzahl der Portionen pro Lieferung variabel, jedoch wird durch die Festlegungen bzgl. Dateinamen klar, welchen Umfang die Gesamtlieferung hat.</p>
+</div>
+<div class="paragraph">
+<p>Der folgende Portionierungsparameter steht zur Verfügung: <strong>Angabe der Seitenlänge</strong> in Metern. Sofern gesetzt, handelt es sich um einen positiven, von Null verschiedenen Integer-Wert. Das abgebende System unterteilt automatisch das in den Selektionskriterien insgesamt angegebene Gebiet in entsprechende Quadrate. Dabei gelten die folgenden Regeln:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Das Gebiet wird erst von West nach Ost, dann von Süd nach Nord abgearbeitet. Die erste linke untere Ecke ergibt sich dadurch, dass vom südwestlichsten Punkt des Abgabegebietes auf das nächste Koordinatenpaar mit vollen Meterwerten gegangen wird, das südwestlich davon liegt. Ist der südwestlichste Punkt des Abgabegebietes bereits ein Koordinatenpaar auf volle Meterwerte, so wird er direkt verwendet.</p>
+</li>
+<li>
+<p>Alle REOs, die innerhalb eines Portionsquadrates liegen, sowie alle über die Selektionskriterien zusätzlich angeforderten, mit den jeweiligen REOs assoziierten NREO und ZUSO, kommen gemeinsam in eine Portion.</p>
+</li>
+<li>
+<p>Würde ein Objekt aufgrund seiner Ausdehnung in mehreren Portionen auftauchen, so wird es lediglich mit dem in der Reihenfolge am Anfang stehenden Quadrat abgegeben. Ein Beispiel: Ein Flächenobjekt erstreckt sich über Portion (=Quadrat) 12, 13, 21 und 22. Es wird nur in Portion 12 abgegeben.</p>
+</li>
+<li>
+<p>Anhängende NREO und ZUSO werden nur in der jeweils ersten Portion ihres Auftretens abgegeben.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Klammerung der Lieferungsportionen</strong></p>
+</div>
+<div class="paragraph">
+<p>Die Portionen einer Lieferung werden über geeignete Portionskennungen als zusammengehörig kenntlich gemacht. Diese Kennung ist abzulegen</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>im Attribut AX_NutzerbezogeneBestandsdatenaktualisierung_NBA.portionskennung,</p>
+</li>
+<li>
+<p>im Dateinamen der Portion.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Die Portionskennungen setzen sich wie folgt zusammen:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>&lt;NBA-Profilkennung&gt;
+&lt;_&gt;
+&lt;Datum der NBA-Erzeugung im Format jjjjmmttf&gt;
+&lt;_&gt;
+&lt;Laufende Nummer der Portion, mit führenden Nullen&gt;
+&lt;von&gt;
+&lt;Gesamtzahl der Portionen der Lieferung, ohne führende Nullen&gt;
+&lt;_&gt;
+&lt;Koordinatenpaar der linken unteren Ecke der jeweiligen Portion, durch
+Unterstrich getrennt&gt;</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>bzgl. NBA-Profilkennung: Die Profilkennung sollte eine prägnante,
+nicht zu lange Bezeichnung sein. Bei Dateinamen problematische Zeichen
+(z.B. Leerzeichen) werden vermieden, indem sie bei der Ableitung dieses
+Namensbestandteils aus der Profilkennung nicht übernommen werden.</p>
+</li>
+<li>
+<p>bzgl. Datum der NBA-Erzeugung: Will man an einem
+Tag mehrere NBA-Ausgaben erzeugen, so ist eine Ergänzung um entsprechend
+genaue Uhrzeitangaben im Format hhmmss (d.h. ohne Trennzeichen) nötig.
+Hierbei ist das Datum von der Uhrzeit durch den Großbuchstaben "T" zu
+trennen (time designator). Am Ende der Uhrzeitangabe muss der
+Großbuchstabe "Z" verwendet werden (time-zone designator).</p>
+</li>
+<li>
+<p>bzgl. Laufende Nummer der Portionen: Dateinamen sind mit führenden Nullen zu kodieren, damit die korrekte Reihenfolge der Dateien leichter erkannt werden kann; die Sortierung nach Dateinamen würde bei mehr als 9 Portionen nämlich ohne führende Nullen fehlschlagen:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>xyz_20070301_10von12&#8230;&#8203;</p>
+</li>
+<li>
+<p>xyz_20070301_11von12&#8230;&#8203;</p>
+</li>
+<li>
+<p>xyz_20070301_12von12&#8230;&#8203;</p>
+</li>
+<li>
+<p>xyz_20070301_01von12&#8230;&#8203;</p>
+</li>
+<li>
+<p>xyz_20070301_02von12&#8230;&#8203;</p>
+</li>
+<li>
+<p>xyz_20070301_03von12&#8230;&#8203;</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>bzgl. des Koordinatenpaars:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Genauigkeit auf volle Meter, d.h. ohne
+Nachkommastellen. Beispiel: "3401559_5572720", Rechtswert ohne
+Zonenangabe</p>
+</li>
+<li>
+<p>Das Koordinatenpaar ist optional. Es kann bei
+unportionierter NBA-Lieferung auch weggelassen werden.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Die Attribute 'abgabeintervallBeginn' (Definition: Intervallbeginn der NBA-Abgabe, Kennung: AIB) und 'abgabeintervallEnde' (Definition: Intervallende der NBA-Abgabe, Kennung: AIE) enthalten Angaben über den zeitlichen Geltungsbereich einer NBA-Abgabe. Aus diesen Zeitangaben kann die Reihenfolge der NBA-Lieferungen durch den Empfänger nachvollzogen werden. Die Festlegungen zum Dateinamen bei der Portionierung von NBA-Abgaben sind davon nicht betroffen.</p>
+</div>
+<div class="paragraph">
+<p>Jede NBA-Portion wird als "lfd.Nr. von Gesamtanzahl", also z.B. "2von8" kenntlich gemacht. Führende Nullen sind zu kodieren, damit nach Dateinamen sortiert werden kann. Dabei gilt: Anzahl der führenden Nullen = Stellenzahl der Gesamtzahl - Stellenzahl der aktuell zu benennenden Portion. Beispiel: 1000 Portionen insgesamt. Aktuell zu benennende Portion ist die vierundneunzigste, daher ergeben sich zwei führenden Nullen: 0094von1000. Gäbe es bei diesem Beispiel als Gesamtanzahl nur 114 Portionen, so ergäbe sich 094von114, also hier nur eine führende Null.</p>
+</div>
+<div class="paragraph">
+<p>Sinn und Zweck dieser Namenskonvention ist a) die Klammerung der Portionen einer Lieferung und b) es Nutzern zu ermöglichen, Portionen räumlich zuordnen zu können ohne dazu in das NBA-Dokument schauen zu müssen.</p>
+</div>
+<div class="paragraph">
+<p>Insgesamt ergeben sich Dateinamen z.B. wie folgt:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><em>KUNDE_20221026_4von9_3401559_5572720.xml</em></p>
+</li>
+<li>
+<p><em>RMR_20080229T141557Z _07von31_3401449_5573000.xml</em></p>
+</li>
+<li>
+<p><em>Firmaxy_20040229_004von211_3401559_5572720.xml</em></p>
+</li>
+<li>
+<p><em>Firmaxy_20040229_024von211_3401559_5572720.xml</em></p>
+</li>
+<li>
+<p><em>Firmaxy_20040229_124von211_3401559_5572720.xml</em></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Erläuterndes Beispiel:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>In den Selektionskriterien bei der AX_BenutzergruppeNBA steht:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;wfs:Query typeNames="AX_PunktortTA"&gt;
+  &lt;adv:XlinkPropertyPath&gt;istTeilVon/AX_Grenzpunkt&lt;/adv:XlinkPropertyPath&gt;
+  &lt;fes:Filter&gt;
+    &lt;fes:BBOX&gt;
+      &lt;fes:ValueReference&gt;position&lt;/fes:ValueReference&gt;
+      &lt;gml:Envelope srsName="urn:adv:crs:DE_DHDN_3GK3"&gt;
+        &lt;gml:lowerCorner&gt;353100.000 5532300.000&lt;/gml:lowerCorner&gt;
+        &lt;gml:upperCorner&gt;353300.000 5532500.000&lt;/gml:upperCorner&gt;
+      &lt;/gml:Envelope&gt;
+    &lt;/fes:BBOX&gt;
+  &lt;/fes:Filter&gt;
+&lt;/wfs:Query&gt;</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>In den zusätzlich wirkenden Portionierungsparametern steht:</p>
+<div class="paragraph">
+<p>Seitenlänge = 100m</p>
+</div>
+</li>
+<li>
+<p>Ergebnis:</p>
+<div class="paragraph">
+<p>Es entstehen maximal vier Portionen, gefüllt mit AX_PunktortTA und zugehörigen AX_Grenzpunkt</p>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Aus Profilkennung und Datum können zur Erhöhung der Übersichtlichkeit geeignete Verzeichnisstrukturen generiert werden.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_anforderungen_an_das_aufnehmende_system_verarbeitung_der_lieferung">Anforderungen an das aufnehmende System -Verarbeitung der Lieferung</h5>
+<div class="paragraph">
+<p>Anhand der Portionskennung ("3von8") wird ausgewertet, ob alle Portionen einer Lieferung übernommen worden sind. Dem aufnehmenden System muss hierzu bekannt sein, aus welchen Portionen die Gesamtlieferung besteht.</p>
+</div>
+<div class="paragraph">
+<p>Inkonsistenzen müssen so lange "zwischengepuffert" akzeptiert werden, bis die portionierte NBA-Lieferung, also der ganze NBA-Konvoi, komplett übernommen wurde.<br>
+Mit vollständiger Übernahme einer portionierten NBA-Lieferung müssen alle "zwischengepufferten" Inkonsistenzen aufgelöst werden können - sollte dies nicht möglich sein, muss eine Fehlermeldung erfolgen und die NBA-Übernahme scheitern.</p>
+</div>
+<div class="paragraph">
+<p>Erst nach vollständiger Übernahme einer NBA-Lieferung kann diese auf Anforderung quittiert werden und es darf mit der Übernahme der Folgelieferung begonnen werden.</p>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_quittierung_von_nba_lieferungen">Quittierung von NBA-Lieferungen</h4>
+<div class="paragraph">
+<p>Bei Übernahme einer NBA-Lieferung kann eine Quittierung an die liefernde Stelle in Form des NBA-Quittierungs-Auftrags AX_NBAQuittierung erfolgen, soweit dies länderspezifisch gewünscht wird und in der NBA-Lieferung angefordert wurde. Die Art der Verarbeitung der NBA-Quittierung obliegt länderspezifischen Regelungen.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2025-05-20 09:39:07 UTC
+</div>
+</div>
+</body>
+</html>

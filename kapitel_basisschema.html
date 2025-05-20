@@ -1,0 +1,2804 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.23">
+<title>Das konzeptuelle Modell des AAA-Basisschemas</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<style>
+/*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
+/* Uncomment the following line when using as a custom stylesheet */
+/* @import "https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700"; */
+html{font-family:sans-serif;-webkit-text-size-adjust:100%}
+a{background:none}
+a:focus{outline:thin dotted}
+a:active,a:hover{outline:0}
+h1{font-size:2em;margin:.67em 0}
+b,strong{font-weight:bold}
+abbr{font-size:.9em}
+abbr[title]{cursor:help;border-bottom:1px dotted #dddddf;text-decoration:none}
+dfn{font-style:italic}
+hr{height:0}
+mark{background:#ff0;color:#000}
+code,kbd,pre,samp{font-family:monospace;font-size:1em}
+pre{white-space:pre-wrap}
+q{quotes:"\201C" "\201D" "\2018" "\2019"}
+small{font-size:80%}
+sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}
+sup{top:-.5em}
+sub{bottom:-.25em}
+img{border:0}
+svg:not(:root){overflow:hidden}
+figure{margin:0}
+audio,video{display:inline-block}
+audio:not([controls]){display:none;height:0}
+fieldset{border:1px solid silver;margin:0 2px;padding:.35em .625em .75em}
+legend{border:0;padding:0}
+button,input,select,textarea{font-family:inherit;font-size:100%;margin:0}
+button,input{line-height:normal}
+button,select{text-transform:none}
+button,html input[type=button],input[type=reset],input[type=submit]{-webkit-appearance:button;cursor:pointer}
+button[disabled],html input[disabled]{cursor:default}
+input[type=checkbox],input[type=radio]{padding:0}
+button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0}
+textarea{overflow:auto;vertical-align:top}
+table{border-collapse:collapse;border-spacing:0}
+*,::before,::after{box-sizing:border-box}
+html,body{font-size:100%}
+body{background:#fff;color:rgba(0,0,0,.8);padding:0;margin:0;font-family:"Noto Serif","DejaVu Serif",serif;line-height:1;position:relative;cursor:auto;-moz-tab-size:4;-o-tab-size:4;tab-size:4;word-wrap:anywhere;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased}
+a:hover{cursor:pointer}
+img,object,embed{max-width:100%;height:auto}
+object,embed{height:100%}
+img{-ms-interpolation-mode:bicubic}
+.left{float:left!important}
+.right{float:right!important}
+.text-left{text-align:left!important}
+.text-right{text-align:right!important}
+.text-center{text-align:center!important}
+.text-justify{text-align:justify!important}
+.hide{display:none}
+img,object,svg{display:inline-block;vertical-align:middle}
+textarea{height:auto;min-height:50px}
+select{width:100%}
+.subheader,.admonitionblock td.content>.title,.audioblock>.title,.exampleblock>.title,.imageblock>.title,.listingblock>.title,.literalblock>.title,.stemblock>.title,.openblock>.title,.paragraph>.title,.quoteblock>.title,table.tableblock>.title,.verseblock>.title,.videoblock>.title,.dlist>.title,.olist>.title,.ulist>.title,.qlist>.title,.hdlist>.title{line-height:1.45;color:#7a2518;font-weight:400;margin-top:0;margin-bottom:.25em}
+div,dl,dt,dd,ul,ol,li,h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6,pre,form,p,blockquote,th,td{margin:0;padding:0}
+a{color:#2156a5;text-decoration:underline;line-height:inherit}
+a:hover,a:focus{color:#1d4b8f}
+a img{border:0}
+p{line-height:1.6;margin-bottom:1.25em;text-rendering:optimizeLegibility}
+p aside{font-size:.875em;line-height:1.35;font-style:italic}
+h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{font-family:"Open Sans","DejaVu Sans",sans-serif;font-weight:300;font-style:normal;color:#ba3925;text-rendering:optimizeLegibility;margin-top:1em;margin-bottom:.5em;line-height:1.0125em}
+h1 small,h2 small,h3 small,#toctitle small,.sidebarblock>.content>.title small,h4 small,h5 small,h6 small{font-size:60%;color:#e99b8f;line-height:0}
+h1{font-size:2.125em}
+h2{font-size:1.6875em}
+h3,#toctitle,.sidebarblock>.content>.title{font-size:1.375em}
+h4,h5{font-size:1.125em}
+h6{font-size:1em}
+hr{border:solid #dddddf;border-width:1px 0 0;clear:both;margin:1.25em 0 1.1875em}
+em,i{font-style:italic;line-height:inherit}
+strong,b{font-weight:bold;line-height:inherit}
+small{font-size:60%;line-height:inherit}
+code{font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;font-weight:400;color:rgba(0,0,0,.9)}
+ul,ol,dl{line-height:1.6;margin-bottom:1.25em;list-style-position:outside;font-family:inherit}
+ul,ol{margin-left:1.5em}
+ul li ul,ul li ol{margin-left:1.25em;margin-bottom:0}
+ul.circle{list-style-type:circle}
+ul.disc{list-style-type:disc}
+ul.square{list-style-type:square}
+ul.circle ul:not([class]),ul.disc ul:not([class]),ul.square ul:not([class]){list-style:inherit}
+ol li ul,ol li ol{margin-left:1.25em;margin-bottom:0}
+dl dt{margin-bottom:.3125em;font-weight:bold}
+dl dd{margin-bottom:1.25em}
+blockquote{margin:0 0 1.25em;padding:.5625em 1.25em 0 1.1875em;border-left:1px solid #ddd}
+blockquote,blockquote p{line-height:1.6;color:rgba(0,0,0,.85)}
+@media screen and (min-width:768px){h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{line-height:1.2}
+h1{font-size:2.75em}
+h2{font-size:2.3125em}
+h3,#toctitle,.sidebarblock>.content>.title{font-size:1.6875em}
+h4{font-size:1.4375em}}
+table{background:#fff;margin-bottom:1.25em;border:1px solid #dedede;word-wrap:normal}
+table thead,table tfoot{background:#f7f8f7}
+table thead tr th,table thead tr td,table tfoot tr th,table tfoot tr td{padding:.5em .625em .625em;font-size:inherit;color:rgba(0,0,0,.8);text-align:left}
+table tr th,table tr td{padding:.5625em .625em;font-size:inherit;color:rgba(0,0,0,.8)}
+table tr.even,table tr.alt{background:#f8f8f7}
+table thead tr th,table tfoot tr th,table tbody tr td,table tr td,table tfoot tr td{line-height:1.6}
+h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{line-height:1.2;word-spacing:-.05em}
+h1 strong,h2 strong,h3 strong,#toctitle strong,.sidebarblock>.content>.title strong,h4 strong,h5 strong,h6 strong{font-weight:400}
+.center{margin-left:auto;margin-right:auto}
+.stretch{width:100%}
+.clearfix::before,.clearfix::after,.float-group::before,.float-group::after{content:" ";display:table}
+.clearfix::after,.float-group::after{clear:both}
+:not(pre).nobreak{word-wrap:normal}
+:not(pre).nowrap{white-space:nowrap}
+:not(pre).pre-wrap{white-space:pre-wrap}
+:not(pre):not([class^=L])>code{font-size:.9375em;font-style:normal!important;letter-spacing:0;padding:.1em .5ex;word-spacing:-.15em;background:#f7f7f8;border-radius:4px;line-height:1.45;text-rendering:optimizeSpeed}
+pre{color:rgba(0,0,0,.9);font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;line-height:1.45;text-rendering:optimizeSpeed}
+pre code,pre pre{color:inherit;font-size:inherit;line-height:inherit}
+pre>code{display:block}
+pre.nowrap,pre.nowrap pre{white-space:pre;word-wrap:normal}
+em em{font-style:normal}
+strong strong{font-weight:400}
+.keyseq{color:rgba(51,51,51,.8)}
+kbd{font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;display:inline-block;color:rgba(0,0,0,.8);font-size:.65em;line-height:1.45;background:#f7f7f7;border:1px solid #ccc;border-radius:3px;box-shadow:0 1px 0 rgba(0,0,0,.2),inset 0 0 0 .1em #fff;margin:0 .15em;padding:.2em .5em;vertical-align:middle;position:relative;top:-.1em;white-space:nowrap}
+.keyseq kbd:first-child{margin-left:0}
+.keyseq kbd:last-child{margin-right:0}
+.menuseq,.menuref{color:#000}
+.menuseq b:not(.caret),.menuref{font-weight:inherit}
+.menuseq{word-spacing:-.02em}
+.menuseq b.caret{font-size:1.25em;line-height:.8}
+.menuseq i.caret{font-weight:bold;text-align:center;width:.45em}
+b.button::before,b.button::after{position:relative;top:-1px;font-weight:400}
+b.button::before{content:"[";padding:0 3px 0 2px}
+b.button::after{content:"]";padding:0 2px 0 3px}
+p a>code:hover{color:rgba(0,0,0,.9)}
+#header,#content,#footnotes,#footer{width:100%;margin:0 auto;max-width:62.5em;*zoom:1;position:relative;padding-left:.9375em;padding-right:.9375em}
+#header::before,#header::after,#content::before,#content::after,#footnotes::before,#footnotes::after,#footer::before,#footer::after{content:" ";display:table}
+#header::after,#content::after,#footnotes::after,#footer::after{clear:both}
+#content{margin-top:1.25em}
+#content::before{content:none}
+#header>h1:first-child{color:rgba(0,0,0,.85);margin-top:2.25rem;margin-bottom:0}
+#header>h1:first-child+#toc{margin-top:8px;border-top:1px solid #dddddf}
+#header>h1:only-child{border-bottom:1px solid #dddddf;padding-bottom:8px}
+#header .details{border-bottom:1px solid #dddddf;line-height:1.45;padding-top:.25em;padding-bottom:.25em;padding-left:.25em;color:rgba(0,0,0,.6);display:flex;flex-flow:row wrap}
+#header .details span:first-child{margin-left:-.125em}
+#header .details span.email a{color:rgba(0,0,0,.85)}
+#header .details br{display:none}
+#header .details br+span::before{content:"\00a0\2013\00a0"}
+#header .details br+span.author::before{content:"\00a0\22c5\00a0";color:rgba(0,0,0,.85)}
+#header .details br+span#revremark::before{content:"\00a0|\00a0"}
+#header #revnumber{text-transform:capitalize}
+#header #revnumber::after{content:"\00a0"}
+#content>h1:first-child:not([class]){color:rgba(0,0,0,.85);border-bottom:1px solid #dddddf;padding-bottom:8px;margin-top:0;padding-top:1rem;margin-bottom:1.25rem}
+#toc{border-bottom:1px solid #e7e7e9;padding-bottom:.5em}
+#toc>ul{margin-left:.125em}
+#toc ul.sectlevel0>li>a{font-style:italic}
+#toc ul.sectlevel0 ul.sectlevel1{margin:.5em 0}
+#toc ul{font-family:"Open Sans","DejaVu Sans",sans-serif;list-style-type:none}
+#toc li{line-height:1.3334;margin-top:.3334em}
+#toc a{text-decoration:none}
+#toc a:active{text-decoration:underline}
+#toctitle{color:#7a2518;font-size:1.2em}
+@media screen and (min-width:768px){#toctitle{font-size:1.375em}
+body.toc2{padding-left:15em;padding-right:0}
+body.toc2 #header>h1:nth-last-child(2){border-bottom:1px solid #dddddf;padding-bottom:8px}
+#toc.toc2{margin-top:0!important;background:#f8f8f7;position:fixed;width:15em;left:0;top:0;border-right:1px solid #e7e7e9;border-top-width:0!important;border-bottom-width:0!important;z-index:1000;padding:1.25em 1em;height:100%;overflow:auto}
+#toc.toc2 #toctitle{margin-top:0;margin-bottom:.8rem;font-size:1.2em}
+#toc.toc2>ul{font-size:.9em;margin-bottom:0}
+#toc.toc2 ul ul{margin-left:0;padding-left:1em}
+#toc.toc2 ul.sectlevel0 ul.sectlevel1{padding-left:0;margin-top:.5em;margin-bottom:.5em}
+body.toc2.toc-right{padding-left:0;padding-right:15em}
+body.toc2.toc-right #toc.toc2{border-right-width:0;border-left:1px solid #e7e7e9;left:auto;right:0}}
+@media screen and (min-width:1280px){body.toc2{padding-left:20em;padding-right:0}
+#toc.toc2{width:20em}
+#toc.toc2 #toctitle{font-size:1.375em}
+#toc.toc2>ul{font-size:.95em}
+#toc.toc2 ul ul{padding-left:1.25em}
+body.toc2.toc-right{padding-left:0;padding-right:20em}}
+#content #toc{border:1px solid #e0e0dc;margin-bottom:1.25em;padding:1.25em;background:#f8f8f7;border-radius:4px}
+#content #toc>:first-child{margin-top:0}
+#content #toc>:last-child{margin-bottom:0}
+#footer{max-width:none;background:rgba(0,0,0,.8);padding:1.25em}
+#footer-text{color:hsla(0,0%,100%,.8);line-height:1.44}
+#content{margin-bottom:.625em}
+.sect1{padding-bottom:.625em}
+@media screen and (min-width:768px){#content{margin-bottom:1.25em}
+.sect1{padding-bottom:1.25em}}
+.sect1:last-child{padding-bottom:0}
+.sect1+.sect1{border-top:1px solid #e7e7e9}
+#content h1>a.anchor,h2>a.anchor,h3>a.anchor,#toctitle>a.anchor,.sidebarblock>.content>.title>a.anchor,h4>a.anchor,h5>a.anchor,h6>a.anchor{position:absolute;z-index:1001;width:1.5ex;margin-left:-1.5ex;display:block;text-decoration:none!important;visibility:hidden;text-align:center;font-weight:400}
+#content h1>a.anchor::before,h2>a.anchor::before,h3>a.anchor::before,#toctitle>a.anchor::before,.sidebarblock>.content>.title>a.anchor::before,h4>a.anchor::before,h5>a.anchor::before,h6>a.anchor::before{content:"\00A7";font-size:.85em;display:block;padding-top:.1em}
+#content h1:hover>a.anchor,#content h1>a.anchor:hover,h2:hover>a.anchor,h2>a.anchor:hover,h3:hover>a.anchor,#toctitle:hover>a.anchor,.sidebarblock>.content>.title:hover>a.anchor,h3>a.anchor:hover,#toctitle>a.anchor:hover,.sidebarblock>.content>.title>a.anchor:hover,h4:hover>a.anchor,h4>a.anchor:hover,h5:hover>a.anchor,h5>a.anchor:hover,h6:hover>a.anchor,h6>a.anchor:hover{visibility:visible}
+#content h1>a.link,h2>a.link,h3>a.link,#toctitle>a.link,.sidebarblock>.content>.title>a.link,h4>a.link,h5>a.link,h6>a.link{color:#ba3925;text-decoration:none}
+#content h1>a.link:hover,h2>a.link:hover,h3>a.link:hover,#toctitle>a.link:hover,.sidebarblock>.content>.title>a.link:hover,h4>a.link:hover,h5>a.link:hover,h6>a.link:hover{color:#a53221}
+details,.audioblock,.imageblock,.literalblock,.listingblock,.stemblock,.videoblock{margin-bottom:1.25em}
+details{margin-left:1.25rem}
+details>summary{cursor:pointer;display:block;position:relative;line-height:1.6;margin-bottom:.625rem;outline:none;-webkit-tap-highlight-color:transparent}
+details>summary::-webkit-details-marker{display:none}
+details>summary::before{content:"";border:solid transparent;border-left:solid;border-width:.3em 0 .3em .5em;position:absolute;top:.5em;left:-1.25rem;transform:translateX(15%)}
+details[open]>summary::before{border:solid transparent;border-top:solid;border-width:.5em .3em 0;transform:translateY(15%)}
+details>summary::after{content:"";width:1.25rem;height:1em;position:absolute;top:.3em;left:-1.25rem}
+.admonitionblock td.content>.title,.audioblock>.title,.exampleblock>.title,.imageblock>.title,.listingblock>.title,.literalblock>.title,.stemblock>.title,.openblock>.title,.paragraph>.title,.quoteblock>.title,table.tableblock>.title,.verseblock>.title,.videoblock>.title,.dlist>.title,.olist>.title,.ulist>.title,.qlist>.title,.hdlist>.title{text-rendering:optimizeLegibility;text-align:left;font-family:"Noto Serif","DejaVu Serif",serif;font-size:1rem;font-style:italic}
+table.tableblock.fit-content>caption.title{white-space:nowrap;width:0}
+.paragraph.lead>p,#preamble>.sectionbody>[class=paragraph]:first-of-type p{font-size:1.21875em;line-height:1.6;color:rgba(0,0,0,.85)}
+.admonitionblock>table{border-collapse:separate;border:0;background:none;width:100%}
+.admonitionblock>table td.icon{text-align:center;width:80px}
+.admonitionblock>table td.icon img{max-width:none}
+.admonitionblock>table td.icon .title{font-weight:bold;font-family:"Open Sans","DejaVu Sans",sans-serif;text-transform:uppercase}
+.admonitionblock>table td.content{padding-left:1.125em;padding-right:1.25em;border-left:1px solid #dddddf;color:rgba(0,0,0,.6);word-wrap:anywhere}
+.admonitionblock>table td.content>:last-child>:last-child{margin-bottom:0}
+.exampleblock>.content{border:1px solid #e6e6e6;margin-bottom:1.25em;padding:1.25em;background:#fff;border-radius:4px}
+.sidebarblock{border:1px solid #dbdbd6;margin-bottom:1.25em;padding:1.25em;background:#f3f3f2;border-radius:4px}
+.sidebarblock>.content>.title{color:#7a2518;margin-top:0;text-align:center}
+.exampleblock>.content>:first-child,.sidebarblock>.content>:first-child{margin-top:0}
+.exampleblock>.content>:last-child,.exampleblock>.content>:last-child>:last-child,.exampleblock>.content .olist>ol>li:last-child>:last-child,.exampleblock>.content .ulist>ul>li:last-child>:last-child,.exampleblock>.content .qlist>ol>li:last-child>:last-child,.sidebarblock>.content>:last-child,.sidebarblock>.content>:last-child>:last-child,.sidebarblock>.content .olist>ol>li:last-child>:last-child,.sidebarblock>.content .ulist>ul>li:last-child>:last-child,.sidebarblock>.content .qlist>ol>li:last-child>:last-child{margin-bottom:0}
+.literalblock pre,.listingblock>.content>pre{border-radius:4px;overflow-x:auto;padding:1em;font-size:.8125em}
+@media screen and (min-width:768px){.literalblock pre,.listingblock>.content>pre{font-size:.90625em}}
+@media screen and (min-width:1280px){.literalblock pre,.listingblock>.content>pre{font-size:1em}}
+.literalblock pre,.listingblock>.content>pre:not(.highlight),.listingblock>.content>pre[class=highlight],.listingblock>.content>pre[class^="highlight "]{background:#f7f7f8}
+.literalblock.output pre{color:#f7f7f8;background:rgba(0,0,0,.9)}
+.listingblock>.content{position:relative}
+.listingblock code[data-lang]::before{display:none;content:attr(data-lang);position:absolute;font-size:.75em;top:.425rem;right:.5rem;line-height:1;text-transform:uppercase;color:inherit;opacity:.5}
+.listingblock:hover code[data-lang]::before{display:block}
+.listingblock.terminal pre .command::before{content:attr(data-prompt);padding-right:.5em;color:inherit;opacity:.5}
+.listingblock.terminal pre .command:not([data-prompt])::before{content:"$"}
+.listingblock pre.highlightjs{padding:0}
+.listingblock pre.highlightjs>code{padding:1em;border-radius:4px}
+.listingblock pre.prettyprint{border-width:0}
+.prettyprint{background:#f7f7f8}
+pre.prettyprint .linenums{line-height:1.45;margin-left:2em}
+pre.prettyprint li{background:none;list-style-type:inherit;padding-left:0}
+pre.prettyprint li code[data-lang]::before{opacity:1}
+pre.prettyprint li:not(:first-child) code[data-lang]::before{display:none}
+table.linenotable{border-collapse:separate;border:0;margin-bottom:0;background:none}
+table.linenotable td[class]{color:inherit;vertical-align:top;padding:0;line-height:inherit;white-space:normal}
+table.linenotable td.code{padding-left:.75em}
+table.linenotable td.linenos,pre.pygments .linenos{border-right:1px solid;opacity:.35;padding-right:.5em;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}
+pre.pygments span.linenos{display:inline-block;margin-right:.75em}
+.quoteblock{margin:0 1em 1.25em 1.5em;display:table}
+.quoteblock:not(.excerpt)>.title{margin-left:-1.5em;margin-bottom:.75em}
+.quoteblock blockquote,.quoteblock p{color:rgba(0,0,0,.85);font-size:1.15rem;line-height:1.75;word-spacing:.1em;letter-spacing:0;font-style:italic;text-align:justify}
+.quoteblock blockquote{margin:0;padding:0;border:0}
+.quoteblock blockquote::before{content:"\201c";float:left;font-size:2.75em;font-weight:bold;line-height:.6em;margin-left:-.6em;color:#7a2518;text-shadow:0 1px 2px rgba(0,0,0,.1)}
+.quoteblock blockquote>.paragraph:last-child p{margin-bottom:0}
+.quoteblock .attribution{margin-top:.75em;margin-right:.5ex;text-align:right}
+.verseblock{margin:0 1em 1.25em}
+.verseblock pre{font-family:"Open Sans","DejaVu Sans",sans-serif;font-size:1.15rem;color:rgba(0,0,0,.85);font-weight:300;text-rendering:optimizeLegibility}
+.verseblock pre strong{font-weight:400}
+.verseblock .attribution{margin-top:1.25rem;margin-left:.5ex}
+.quoteblock .attribution,.verseblock .attribution{font-size:.9375em;line-height:1.45;font-style:italic}
+.quoteblock .attribution br,.verseblock .attribution br{display:none}
+.quoteblock .attribution cite,.verseblock .attribution cite{display:block;letter-spacing:-.025em;color:rgba(0,0,0,.6)}
+.quoteblock.abstract blockquote::before,.quoteblock.excerpt blockquote::before,.quoteblock .quoteblock blockquote::before{display:none}
+.quoteblock.abstract blockquote,.quoteblock.abstract p,.quoteblock.excerpt blockquote,.quoteblock.excerpt p,.quoteblock .quoteblock blockquote,.quoteblock .quoteblock p{line-height:1.6;word-spacing:0}
+.quoteblock.abstract{margin:0 1em 1.25em;display:block}
+.quoteblock.abstract>.title{margin:0 0 .375em;font-size:1.15em;text-align:center}
+.quoteblock.excerpt>blockquote,.quoteblock .quoteblock{padding:0 0 .25em 1em;border-left:.25em solid #dddddf}
+.quoteblock.excerpt,.quoteblock .quoteblock{margin-left:0}
+.quoteblock.excerpt blockquote,.quoteblock.excerpt p,.quoteblock .quoteblock blockquote,.quoteblock .quoteblock p{color:inherit;font-size:1.0625rem}
+.quoteblock.excerpt .attribution,.quoteblock .quoteblock .attribution{color:inherit;font-size:.85rem;text-align:left;margin-right:0}
+p.tableblock:last-child{margin-bottom:0}
+td.tableblock>.content{margin-bottom:1.25em;word-wrap:anywhere}
+td.tableblock>.content>:last-child{margin-bottom:-1.25em}
+table.tableblock,th.tableblock,td.tableblock{border:0 solid #dedede}
+table.grid-all>*>tr>*{border-width:1px}
+table.grid-cols>*>tr>*{border-width:0 1px}
+table.grid-rows>*>tr>*{border-width:1px 0}
+table.frame-all{border-width:1px}
+table.frame-ends{border-width:1px 0}
+table.frame-sides{border-width:0 1px}
+table.frame-none>colgroup+*>:first-child>*,table.frame-sides>colgroup+*>:first-child>*{border-top-width:0}
+table.frame-none>:last-child>:last-child>*,table.frame-sides>:last-child>:last-child>*{border-bottom-width:0}
+table.frame-none>*>tr>:first-child,table.frame-ends>*>tr>:first-child{border-left-width:0}
+table.frame-none>*>tr>:last-child,table.frame-ends>*>tr>:last-child{border-right-width:0}
+table.stripes-all>*>tr,table.stripes-odd>*>tr:nth-of-type(odd),table.stripes-even>*>tr:nth-of-type(even),table.stripes-hover>*>tr:hover{background:#f8f8f7}
+th.halign-left,td.halign-left{text-align:left}
+th.halign-right,td.halign-right{text-align:right}
+th.halign-center,td.halign-center{text-align:center}
+th.valign-top,td.valign-top{vertical-align:top}
+th.valign-bottom,td.valign-bottom{vertical-align:bottom}
+th.valign-middle,td.valign-middle{vertical-align:middle}
+table thead th,table tfoot th{font-weight:bold}
+tbody tr th{background:#f7f8f7}
+tbody tr th,tbody tr th p,tfoot tr th,tfoot tr th p{color:rgba(0,0,0,.8);font-weight:bold}
+p.tableblock>code:only-child{background:none;padding:0}
+p.tableblock{font-size:1em}
+ol{margin-left:1.75em}
+ul li ol{margin-left:1.5em}
+dl dd{margin-left:1.125em}
+dl dd:last-child,dl dd:last-child>:last-child{margin-bottom:0}
+li p,ul dd,ol dd,.olist .olist,.ulist .ulist,.ulist .olist,.olist .ulist{margin-bottom:.625em}
+ul.checklist,ul.none,ol.none,ul.no-bullet,ol.no-bullet,ol.unnumbered,ul.unstyled,ol.unstyled{list-style-type:none}
+ul.no-bullet,ol.no-bullet,ol.unnumbered{margin-left:.625em}
+ul.unstyled,ol.unstyled{margin-left:0}
+li>p:empty:only-child::before{content:"";display:inline-block}
+ul.checklist>li>p:first-child{margin-left:-1em}
+ul.checklist>li>p:first-child>.fa-square-o:first-child,ul.checklist>li>p:first-child>.fa-check-square-o:first-child{width:1.25em;font-size:.8em;position:relative;bottom:.125em}
+ul.checklist>li>p:first-child>input[type=checkbox]:first-child{margin-right:.25em}
+ul.inline{display:flex;flex-flow:row wrap;list-style:none;margin:0 0 .625em -1.25em}
+ul.inline>li{margin-left:1.25em}
+.unstyled dl dt{font-weight:400;font-style:normal}
+ol.arabic{list-style-type:decimal}
+ol.decimal{list-style-type:decimal-leading-zero}
+ol.loweralpha{list-style-type:lower-alpha}
+ol.upperalpha{list-style-type:upper-alpha}
+ol.lowerroman{list-style-type:lower-roman}
+ol.upperroman{list-style-type:upper-roman}
+ol.lowergreek{list-style-type:lower-greek}
+.hdlist>table,.colist>table{border:0;background:none}
+.hdlist>table>tbody>tr,.colist>table>tbody>tr{background:none}
+td.hdlist1,td.hdlist2{vertical-align:top;padding:0 .625em}
+td.hdlist1{font-weight:bold;padding-bottom:1.25em}
+td.hdlist2{word-wrap:anywhere}
+.literalblock+.colist,.listingblock+.colist{margin-top:-.5em}
+.colist td:not([class]):first-child{padding:.4em .75em 0;line-height:1;vertical-align:top}
+.colist td:not([class]):first-child img{max-width:none}
+.colist td:not([class]):last-child{padding:.25em 0}
+.thumb,.th{line-height:0;display:inline-block;border:4px solid #fff;box-shadow:0 0 0 1px #ddd}
+.imageblock.left{margin:.25em .625em 1.25em 0}
+.imageblock.right{margin:.25em 0 1.25em .625em}
+.imageblock>.title{margin-bottom:0}
+.imageblock.thumb,.imageblock.th{border-width:6px}
+.imageblock.thumb>.title,.imageblock.th>.title{padding:0 .125em}
+.image.left,.image.right{margin-top:.25em;margin-bottom:.25em;display:inline-block;line-height:0}
+.image.left{margin-right:.625em}
+.image.right{margin-left:.625em}
+a.image{text-decoration:none;display:inline-block}
+a.image object{pointer-events:none}
+sup.footnote,sup.footnoteref{font-size:.875em;position:static;vertical-align:super}
+sup.footnote a,sup.footnoteref a{text-decoration:none}
+sup.footnote a:active,sup.footnoteref a:active,#footnotes .footnote a:first-of-type:active{text-decoration:underline}
+#footnotes{padding-top:.75em;padding-bottom:.75em;margin-bottom:.625em}
+#footnotes hr{width:20%;min-width:6.25em;margin:-.25em 0 .75em;border-width:1px 0 0}
+#footnotes .footnote{padding:0 .375em 0 .225em;line-height:1.3334;font-size:.875em;margin-left:1.2em;margin-bottom:.2em}
+#footnotes .footnote a:first-of-type{font-weight:bold;text-decoration:none;margin-left:-1.05em}
+#footnotes .footnote:last-of-type{margin-bottom:0}
+#content #footnotes{margin-top:-.625em;margin-bottom:0;padding:.75em 0}
+div.unbreakable{page-break-inside:avoid}
+.big{font-size:larger}
+.small{font-size:smaller}
+.underline{text-decoration:underline}
+.overline{text-decoration:overline}
+.line-through{text-decoration:line-through}
+.aqua{color:#00bfbf}
+.aqua-background{background:#00fafa}
+.black{color:#000}
+.black-background{background:#000}
+.blue{color:#0000bf}
+.blue-background{background:#0000fa}
+.fuchsia{color:#bf00bf}
+.fuchsia-background{background:#fa00fa}
+.gray{color:#606060}
+.gray-background{background:#7d7d7d}
+.green{color:#006000}
+.green-background{background:#007d00}
+.lime{color:#00bf00}
+.lime-background{background:#00fa00}
+.maroon{color:#600000}
+.maroon-background{background:#7d0000}
+.navy{color:#000060}
+.navy-background{background:#00007d}
+.olive{color:#606000}
+.olive-background{background:#7d7d00}
+.purple{color:#600060}
+.purple-background{background:#7d007d}
+.red{color:#bf0000}
+.red-background{background:#fa0000}
+.silver{color:#909090}
+.silver-background{background:#bcbcbc}
+.teal{color:#006060}
+.teal-background{background:#007d7d}
+.white{color:#bfbfbf}
+.white-background{background:#fafafa}
+.yellow{color:#bfbf00}
+.yellow-background{background:#fafa00}
+span.icon>.fa{cursor:default}
+a span.icon>.fa{cursor:inherit}
+.admonitionblock td.icon [class^="fa icon-"]{font-size:2.5em;text-shadow:1px 1px 2px rgba(0,0,0,.5);cursor:default}
+.admonitionblock td.icon .icon-note::before{content:"\f05a";color:#19407c}
+.admonitionblock td.icon .icon-tip::before{content:"\f0eb";text-shadow:1px 1px 2px rgba(155,155,0,.8);color:#111}
+.admonitionblock td.icon .icon-warning::before{content:"\f071";color:#bf6900}
+.admonitionblock td.icon .icon-caution::before{content:"\f06d";color:#bf3400}
+.admonitionblock td.icon .icon-important::before{content:"\f06a";color:#bf0000}
+.conum[data-value]{display:inline-block;color:#fff!important;background:rgba(0,0,0,.8);border-radius:50%;text-align:center;font-size:.75em;width:1.67em;height:1.67em;line-height:1.67em;font-family:"Open Sans","DejaVu Sans",sans-serif;font-style:normal;font-weight:bold}
+.conum[data-value] *{color:#fff!important}
+.conum[data-value]+b{display:none}
+.conum[data-value]::after{content:attr(data-value)}
+pre .conum[data-value]{position:relative;top:-.125em}
+b.conum *{color:inherit!important}
+.conum:not([data-value]):empty{display:none}
+dt,th.tableblock,td.content,div.footnote{text-rendering:optimizeLegibility}
+h1,h2,p,td.content,span.alt,summary{letter-spacing:-.01em}
+p strong,td.content strong,div.footnote strong{letter-spacing:-.005em}
+p,blockquote,dt,td.content,td.hdlist1,span.alt,summary{font-size:1.0625rem}
+p{margin-bottom:1.25rem}
+.sidebarblock p,.sidebarblock dt,.sidebarblock td.content,p.tableblock{font-size:1em}
+.exampleblock>.content{background:#fffef7;border-color:#e0e0dc;box-shadow:0 1px 4px #e0e0dc}
+.print-only{display:none!important}
+@page{margin:1.25cm .75cm}
+@media print{*{box-shadow:none!important;text-shadow:none!important}
+html{font-size:80%}
+a{color:inherit!important;text-decoration:underline!important}
+a.bare,a[href^="#"],a[href^="mailto:"]{text-decoration:none!important}
+a[href^="http:"]:not(.bare)::after,a[href^="https:"]:not(.bare)::after{content:"(" attr(href) ")";display:inline-block;font-size:.875em;padding-left:.25em}
+abbr[title]{border-bottom:1px dotted}
+abbr[title]::after{content:" (" attr(title) ")"}
+pre,blockquote,tr,img,object,svg{page-break-inside:avoid}
+thead{display:table-header-group}
+svg{max-width:100%}
+p,blockquote,dt,td.content{font-size:1em;orphans:3;widows:3}
+h2,h3,#toctitle,.sidebarblock>.content>.title{page-break-after:avoid}
+#header,#content,#footnotes,#footer{max-width:none}
+#toc,.sidebarblock,.exampleblock>.content{background:none!important}
+#toc{border-bottom:1px solid #dddddf!important;padding-bottom:0!important}
+body.book #header{text-align:center}
+body.book #header>h1:first-child{border:0!important;margin:2.5em 0 1em}
+body.book #header .details{border:0!important;display:block;padding:0!important}
+body.book #header .details span:first-child{margin-left:0!important}
+body.book #header .details br{display:block}
+body.book #header .details br+span::before{content:none!important}
+body.book #toc{border:0!important;text-align:left!important;padding:0!important;margin:0!important}
+body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-break-before:always}
+.listingblock code[data-lang]::before{display:block}
+#footer{padding:0 .9375em}
+.hide-on-print{display:none!important}
+.print-only{display:block!important}
+.hide-for-print{display:none!important}
+.show-for-print{display:inherit!important}}
+@media amzn-kf8,print{#header>h1:first-child{margin-top:1.25rem}
+.sect1{padding:0!important}
+.sect1+.sect1{border:0}
+#footer{background:none}
+#footer-text{color:rgba(0,0,0,.6);font-size:.9em}}
+@media amzn-kf8{#header,#content,#footnotes,#footer{padding:0}}
+</style>
+</head>
+<body class="article">
+<div id="header">
+</div>
+<div id="content">
+<div class="sect1">
+<h2 id="basisschema">Das konzeptuelle Modell des AAA-Basisschemas</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="basisschema_modellierung">Grundsätze der Modellierung</h3>
+<div class="sect3">
+<h4 id="basisschema_modellierung_normen">Normen und Standards</h4>
+<div class="paragraph">
+<p>Internationale Normungs- bzw. Standardisierungsaktivitäten im Bereich von Geoinformationen erfolgen zurzeit in folgenden Gremien:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>ISO/TC 211 Geographic Information/Geomatics</p>
+</li>
+<li>
+<p>Open Geospatial Consortium (OGC)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Ziel ist die Schaffung von Grundlagen für die gemeinsame, ganzheitliche und fachübergreifende Nutzung von Geodaten an verschiedenen Orten durch Personen, Anwendungen und Systeme auf der Grundlage einer einheitlichen Beschreibung der Inhalte vorhandener oder geplanter Datenbestände, der Funktionalitäten der Datenbearbeitung und der Kommunikation. Der Modellierung liegen die Ergebnisse des ISO/TC 211 in Form der Normfamilie 19100 im aktuellen Bearbeitungsstand zu Grunde. Im Bereich der Datenaustauschschnittstelle werden darüber hinaus auch Teile der Spezifikationen des OGC verwendet. Für die Integration von 3D-Informationen bildet CityGML (OGC Best Practices Document in der Version 0.4.0) die Grundlage.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="basisschema_modellierung_sprache">Modellierungs- und Beschreibungssprache</h4>
+<div class="paragraph">
+<p>Zur Beschreibung des Anwendungsschemas und der Objektartenkataloge hat sich die AdV entschieden, die Datenmodellierungssprache <em>Unified Modeling Language (UML)</em> zu verwenden. Sie wird auch von ISO/TC 211 im Bereich der Normung von Geoinformationen eingesetzt.</p>
+</div>
+<div class="paragraph">
+<p>UML wurde von der <em>Object Management Group</em> (OMG) zur Beschreibung von Anwendungsschemata entwickelt. Semantik und Notation von UML sind im <em>UML Notation Guide</em> beschrieben. Um eine einheitliche Nutzung von UML im Bereich der Normfamilie 19100 zu gewährleisten, ist deren Anwendung in der ISO-Spezifikation 19103 <em>Conceptual schema language</em> festgelegt. Der Zweck liegt in der vollständigen und unzweifelhaft interpretierbaren, formalen Beschreibung von Inhalt und Struktur von Datenbeständen. Die Beschreibung ist unabhängig von der Art der Implementierung und der verwendeten Programmiersprache. Mit formalen Sprachen ist eine einheitliche Beschreibung aller Geodaten erreichbar. Die so beschriebenen Anwendungsschemata können von geeigneten Programmen automatisch interpretiert und in interne Datenstrukturen bzw. Datenbankstrukturen übersetzt werden.</p>
+</div>
+<div class="paragraph">
+<p>Ein universelles und systemunabhängiges Datenaustausch- bzw. Dateiformat ergibt sich daraus automatisch in Verbindung mit sogenannten Kodierungsregeln. Diese Kodierungsregeln werden entsprechend der ISO-Normen 19118 <em>Encoding</em> und 19136 <em>Geography Markup Language (GML)</em> erstellt. Als Format wird die Auszeichnungssprache XML (Extensible Markup Language) des World-Wide-Web Consortiums (W3C) verwendet.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="basisschema_aufgabeundstruktur">Aufgabe und Struktur</h3>
+<div class="paragraph">
+<p>Ein Anwendungsschema liefert die formale Beschreibung für Datenstrukturen und Dateninhalte in einer oder mehreren Anwendungen. Es enthält die vollständige Beschreibung eines Datenbestandes und kann neben den geographischen auch weitere dazugehörige Daten enthalten. Ein grundsätzliches Konzept, die reale Welt zu abstrahieren, ist die Einführung des Fachobjekts und von Regeln, wie es erfasst und fortgeführt wird. Die Klassifizierung der Fachobjekte erfolgt nach Typen. Auf der Typenebene beschreibt das Anwendungsschema die Objektarten der realen Welt. Daten selbst existieren auf der Instanzenebene. Sie stellen einzelne Exemplare einer Objektart in der realen Welt dar und können durch das Anwendungsschema interpretiert werden, siehe hierzu auch ISO 19101 <em>Reference model</em> und 19109 <em>Rules for application schema</em>.</p>
+</div>
+<div class="paragraph">
+<p>Der Zweck eines Anwendungsschemas ist es, ein gemeinsames und einheitliches Verständnis der Daten zu erreichen und die Dateninhalte für eine bestimmte Anwendungsumgebung so zu dokumentieren, dass eindeutige Informationen über die Daten erhalten werden.</p>
+</div>
+<div id="img_Rolle_des_Anwendungsschemas" class="imageblock">
+<div class="content">
+<img src="media/image9.png" alt="media/image9" width="378" height="233">
+</div>
+<div class="title">Figure 1. Die Rolle des Anwendungsschemas</div>
+</div>
+<div class="paragraph">
+<p>Das gemeinsame AFIS-ALKIS-ATKIS-Anwendungsschema bietet einen einheitlichen und objektorientierten Modellansatz für AFIS, ALKIS und ATKIS, der möglichst mit den marktüblichen und dem Stand der Technik entsprechenden GIS-Programmen abgebildet und geführt werden soll.</p>
+</div>
+<div class="paragraph">
+<p>Ein Anwendungsschema kann Festlegungen aus verschiedenen Subschemata verwenden. Im Fall des AFIS-ALKIS-ATKIS-Anwendungsschemas werden hauptsächlich Subschemata aus der Normfamilie ISO 19100 verwendet. In Bereichen, in denen ISO bisher keine Festlegungen getroffen hat, werden zusätzlich Schemata des Open Geospatial Consortiums verwendet.</p>
+</div>
+<div id="img_10" class="imageblock">
+<div class="content">
+<img src="media/image10.png" alt="media/image10" width="330" height="279">
+</div>
+<div class="title">Figure 2. Abhängigkeit des AFIS-ALKIS-ATKIS-Anwendungsschemas von den genormten Strukturen aus OGC</div>
+</div>
+<div id="img_11" class="imageblock">
+<div class="content">
+<img src="media/image11.jpeg" alt="ISO" width="369" height="201">
+</div>
+<div class="title">Figure 3. Verwendete Teile aus der Normfamilie ISO 19100 (Auszug aus dem UML-Datenmodell)</div>
+</div>
+<div class="paragraph">
+<p>Das AFIS-ALKIS-ATKIS-Anwendungsschema gliedert sich in das</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>AAA-Basisschema,</p>
+</li>
+<li>
+<p>ALKIS-ATKIS-AFIS-Fachschema,</p>
+</li>
+<li>
+<p>AAA-Versionierungsschema sowie</p>
+</li>
+<li>
+<p>NAS-Operationen.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Das Basisschema ist die Grundlage für die Modellierung der Fachobjekte in den Fachschemata. Das Versionierungsschema zeigt das Konzept zur Historisierung von Fachobjekten auf. Ein internes Schema (Implementierungsmodell) ist nicht Bestandteil der gemeinsamen Modellierung; es entsteht durch Abbildung des konzeptuellen Anwendungsschemas in spezifische GIS-Systeme im Zuge der Implementierung. Auf Basis des Anwendungsschemas sind schließlich Operationen für den Datenaustausch und fachliche Festlegungen für Datenausgaben definiert.</p>
+</div>
+<div id="img_12" class="imageblock">
+<div class="content">
+<img src="media/image12.png" alt="media/image12" width="680" height="373">
+</div>
+<div class="title">Figure 4. Die Bestandteile des AFIS-ALKIS-ATKIS-Anwendungsschemas</div>
+</div>
+<div class="paragraph">
+<p>Externe Anwendungsschemata (z.B. GV_Geometrische Verbesserungen) können unabhängig vom AAA-Anwendungsschema fortgeführt, bzw. versioniert werden. Daher wurden dies Anwendungsschemata auch außerhalb des AAA-Anwendungschemas modelliert. Es ist jedoch stets eine Referenz auf die Version des AAA-Anwendungsschemas anzugeben, auf die sich das jeweilige Applikationsschema bezieht (Tagged Value AAA:AAAVersion). Die Metamodelle zum Objektartenkatalog (AAA_Objektartenkatalog) und Signaturenkatalog (AAA_Signaturenkatalog) werden ebenfalls unabhängig vom AAA_Anwendungsschema modelliert und fortgeführt, da sie keinerlei Beziehung zum Basischema haben. Hier ist selbst die Referenz zum dazugehörigen AAA-Anwendungsschema nicht erfoderlich und kann unabhängig davon versioniert und fortgeführt werden.</p>
+</div>
+<div class="paragraph">
+<p>Das Datum einer Version (Releasedatum) ist für eine eindeutige Referenz zwischen den Anwendungsschemata nicht erforderlich und in diesem Zusammenhang eine zur Versionsnummer redundante Information. Das Datum erscheint jedoch als zeitlicher Anhaltspunkt der Veröffentlichung in den Anwendungsschemata und den daraus abgeleiteten Dokumenten.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="basisschema_aaa">Das AFIS-ALKIS-ATKIS-Basisschema</h3>
+<div class="paragraph">
+<p>Das AFIS-ALKIS-ATKIS-Basisschema (AAA-Basisschema) bildet die Grundlage der fachlichen Modellierung der AFIS-, ALKIS- und ATKIS-Objekte und für den Datenaustausch. Auf seiner Basis werden die Fachschemata erstellt. Seine Anwendung ist nicht auf AFIS, ALKIS und ATKIS beschränkt. Andere Fachinformationssysteme können die im Basisschema definierten Klassen zur Modellierung ihres Fachschemas ebenfalls nutzen.</p>
+</div>
+<div class="paragraph">
+<p>Da bislang im Basisschema keine Geometrietypen zur Beschreibung von volumenförmigen Objekten enthalten waren, wurde die Ergänzung der AAA-Basisschemaklassen zur Aufstellung eines 3D-Fachschemas erforderlich.</p>
+</div>
+<div id="img_13" class="imageblock">
+<div class="content">
+<img src="media/image13.png" alt="media/image13" width="768" height="246">
+</div>
+<div class="title">Figure 5. Das Basisschema als Grundlage für anwendungsspezifische Fachschemata (z.B. AFIS, ALKIS und ATKIS)</div>
+</div>
+<div class="paragraph">
+<p>Das Basisschema gliedert sich in die Pakete "AAA_Basisklassen", "AAA_SpatialSchema", "AAA_GemeinsameGeometrie", "AAA_UnabhaengigeGeometrie", "Codelisten", "AAA_Praesentationsobjekte", AAA_Punktmengenobjekte, AAA_Projektsteuerung, AAA_Nutzerprofile, AAA_Operationen, AAA_Praesentationsobjekte_3D, und AAA_Unabhaengige Geometrie_3D.</p>
+</div>
+<div class="paragraph">
+<p>Die Pakete AAA_Nutzerprofile und AAA_Operationen dienen lediglich der Verankerung einer Nutzerverwaltung bzw. einer Operationsmodellierung im Basisschema. Sie enthalten nur leere, abstrakte Klassen, die von den jeweiligen Fachschemata weiter ausgefüllt werden müssen. Sie werden im Folgenden deshalb nicht weiter erläutert.</p>
+</div>
+<div class="paragraph">
+<p>Zur eindeutigen Benennung der definierten Klassen wird von folgender Systematik ausgegangen:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Genormte Klassen behalten das jeweilige genormte Präfix im Klassennamen (z.B. FC für "Feature Catalogue", MD für "Metadata")</p>
+</li>
+<li>
+<p>Klassen als AFIS-ALKIS-ATKIS-spezifische Ergänzungen am genormten <em>Feature Catalogue</em> erhalten das Präfix AC</p>
+</li>
+<li>
+<p>Klassen mit grundsätzlicher Bedeutung für AFIS, ALKIS und ATKIS erhalten das Präfix AA</p>
+</li>
+<li>
+<p>Klassen, die aus den ISO TS_*Component-Klassen ("simple topology") abgeleitet wurden, erhalten das Präfix TA; ebenso die sinngemäß gebildete Klasse für topologische Flächen mit multipler räumlich getrennter Geometrie (TA_MultiSurfaceComponent)</p>
+</li>
+<li>
+<p>Klassen mit gemeinsam genutzter Geometrie erhalten das Präfix AG</p>
+</li>
+<li>
+<p>Klassen der unabhängigen Geometrie erhalten das Präfix AU</p>
+</li>
+<li>
+<p>Klassen der Präsentationsobjekte erhalten das Präfix AP</p>
+</li>
+<li>
+<p>Klassen für die Modellierung von Punktmengenobjekten erhalten das Präfix AD</p>
+</li>
+</ol>
+</div>
+<div id="img_14" class="imageblock">
+<div class="content">
+<img src="media/image14.png" alt="media/image14" width="650" height="689">
+</div>
+<div class="title">Figure 6. Bestandteile des AAA-Basisschemas</div>
+</div>
+<div class="sect3">
+<h4 id="basisschema_aaa_objektbildungsgrundsaetze">Objektbildungsgrundsätze</h4>
+<div class="paragraph">
+<p>Die Regeln zur Erstellung von Anwendungsschemata werden durch die Norm 19109 <em>"Rules for Application Schema"</em> des ISO/TC 211 vorgegeben. In dieser Norm ist auch das allgemeine Modell zu Beschreibung und Bildung von Fachobjekten <em>(General Feature Model)</em> enthalten. Das gemeinsame Basisschema wird an das <em>General Feature Model</em> von ISO 19100 angeschlossen und dieses um die Metaklasse "AA_ObjektOhneRaumbezug" erweitert, um Objektklassen bilden zu können, für die kein Raumbezug zulässig ist.</p>
+</div>
+<div class="paragraph">
+<p>Die Bildung eigenständiger Objekte ergibt sich aus der fachlichen Objektsicht. <strong>Objekte</strong> <strong>mit geometrischer Ausprägung</strong> können punkt-, linien-, flächen- und volumenförmige Beschreibungen führen oder vom Typ Punktmengenobjekt sein. <strong>Objekte ohne Raumbezug</strong> (z. B. Personen) tragen keine Geometrie und lassen sich nicht auf einen bestimmten Ort festlegen. Sie können aber mit anderen raumbezogenen und nicht-raumbezogenen Objekten in Beziehung stehen, z. B. mit Flurstücken, Gebäuden oder Adressen.</p>
+</div>
+<div class="paragraph">
+<p>Zur Systematisierung und zur Unterstützung bei der Erstellung der Fachschemata werden im gemeinsamen AAA-Basisschema folgende Arten von Objektausprägungen vordefiniert:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Raumbezogene Elementarobjekte (AA_REO)</p>
+<div class="paragraph">
+<p>Raumbezogene Elementarobjekte sind zu bilden, wenn zusätzlich zu fachlichen Eigenschaften auch geometrische oder topologische Eigenschaften nachgewiesen werden sollen.</p>
+</div>
+</li>
+<li>
+<p>Nicht raumbezogene Elementarobjekte (AA_NREO)</p>
+<div class="paragraph">
+<p>Nicht raumbezogene Elementarobjekte sind zu bilden, wenn nur fachliche, aber keine geometrischen oder topologischen Eigenschaften nachgewiesen werden sollen.</p>
+</div>
+</li>
+<li>
+<p>Zusammengesetzte Objekte (AA_ZUSO)</p>
+<div class="paragraph">
+<p>Zusammengesetzte Objekte werden gebildet, um den Zusammenhang einer beliebigen Zahl und Mischung semantisch zusammengehörender raumbezogener Elementarobjekte, nicht raumbezogener Elementarobjekte oder zusammengesetzter Objekte herzustellen. Ein zusammengesetztes Objekt muss aber mindestens ein Objekt als Bestandteil besitzen.</p>
+</div>
+</li>
+<li>
+<p>Punktmengenobjekte (AA_PMO)</p>
+<div class="paragraph">
+<p>Für bestimmte Fachobjekttypen, die aus einer großen Anzahl geometrischer Orte mit jeweils gleichen Attributarten bestehen (z.B. Digitale Geländemodelle, Temperatur- und Luftdruckverteilungen), ist es günstiger, statt einzelner REOs ein alle Angaben klammerndes Objekt -ein sogenanntes Punktmengenobjekt- zu nutzen. Ein Punktmengenobjekt ist eine Abbildung einer Menge von Geometrien auf die zugehörigen Attributwerte.</p>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Elementarobjekte sind die kleinste mögliche fachliche Einheit. Die Bildung von Objektteilen oder von Linien als Objektbestandteile mit fachlicher Information wie in den bisherigen Systemen ALK und ATKIS entfällt.</p>
+</div>
+<div class="paragraph">
+<p>Die Führung der <strong>Historie von Objekten</strong> wird unterstützt. Ebenso werden <strong>Integrations- und Verknüpfungsmöglichkeiten der Fachobjekte mit den Fachdaten</strong> anderer Fachbereiche unterstützt.</p>
+</div>
+<div class="paragraph">
+<p>Alle instanziierbaren fachlichen Objektklassen sind in den anwendungsbezogenen Subschemata aus den folgenden Objektklassen des Basisschemas durch Vererbung abzuleiten:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>AA_ZUSO</p>
+</li>
+<li>
+<p>AA_NREO</p>
+</li>
+<li>
+<p>AA_PMO</p>
+</li>
+<li>
+<p>TA_PointComponent</p>
+</li>
+<li>
+<p>TA_CurveComponent</p>
+</li>
+<li>
+<p>TA_SurfaceComponent</p>
+</li>
+<li>
+<p>TA_MultiSurfaceComponent</p>
+</li>
+<li>
+<p>AG_Objekt</p>
+</li>
+<li>
+<p>AG_Punktobjekt</p>
+</li>
+<li>
+<p>AG_Linienobjekt</p>
+</li>
+<li>
+<p>AG_Flaechenobjekt</p>
+</li>
+<li>
+<p>AU_Objekt</p>
+</li>
+<li>
+<p>AU_Punktobjekt</p>
+</li>
+<li>
+<p>AU_Punkthaufenobjekt</p>
+</li>
+<li>
+<p>AU_Linienobjekt</p>
+</li>
+<li>
+<p>AU_KontinuierlichesLinienobjekt</p>
+</li>
+<li>
+<p>AU_Flaechenobjekt</p>
+</li>
+<li>
+<p>AU_Punktobjekt_3D</p>
+</li>
+<li>
+<p>AU_Umringobjekt_3D</p>
+</li>
+<li>
+<p>AU_Punkthaufenobjekt_3D</p>
+</li>
+<li>
+<p>AU_Mehrfachflaechenobjekt_3D</p>
+</li>
+<li>
+<p>AU_MehrfachlinienObjekt_3D</p>
+</li>
+<li>
+<p>AU_Geometrieobjekt_3D</p>
+</li>
+<li>
+<p>AU_KoerperObjekt_3D</p>
+</li>
+<li>
+<p>AU_TrianguliertesOberflaechenObjekt_3D</p>
+</li>
+<li>
+<p>AD_PunktCoverage</p>
+</li>
+<li>
+<p>AD_GitterCoverage</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Für Präsentationsobjekte können folgende Objektklassen des Basisschemas direkt verwendet bzw. instanziiert werden:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>AP_PPO</p>
+</li>
+<li>
+<p>AP_PTO</p>
+</li>
+<li>
+<p>AP_LTO</p>
+</li>
+<li>
+<p>AP_LPO</p>
+</li>
+<li>
+<p>AP_FPO</p>
+</li>
+<li>
+<p>AP_Darstellung</p>
+</li>
+<li>
+<p>AP_KPO_3D</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Alternativ ist zugelassen, dass aus diesen Objektklassen des Basisschemas durch Vererbung weitere instanziierbare fachliche Objektklassen abgeleitet werden.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="basisschema_aaa_attribute">Attribute</h4>
+<div class="paragraph">
+<p>Die in den Fachschemata zu beschreibenden Objekte können selbstbezogene Eigenschaften (Attribute) besitzen. Attribute sind die Träger der statischen Informationen der Objekte. Attribute werden immer über einen Namen und eine Werteart definiert. Wertearten können sowohl Basisdatentypen (Zahlen, Zeichenketten, Datums- und Zeitangaben) als auch komplexe Datentypen wie Geometrien oder Qualitätsmerkmale sein. <strong>Attribute</strong> können grundsätzlich multipel und Zeichenketten beliebig lang sein.</p>
+</div>
+<div class="paragraph">
+<p>Attribute vom Typ Datums- und/oder Zeitangabe ("DateTime") werden entsprechend den Festlegungen von ISO 8601, Kapitel 5.4.1 in Verbindung mit 5.3.3 modelliert. Hierbei wird die Variante mit Trennzeichen gewählt. Zeitgenauigkeit ist die volle Sekunde, Zeitzone ist immer UTC (Universal Time Coordinated, Greenwich Mean Time, Abkürzung: Z). Beispiel: 2004-02-29T10:15:30Z</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="basisschema_aaa_beziehungen">Beziehungen</h4>
+<div class="paragraph">
+<p>Die in den Fachschemata zu beschreibenden Objekte können fremdbezogene Eigenschaften (Beziehungen bzw. Relationen) besitzen. In den Fachschemata können verschiedene Arten von Beziehungen verwendet werden:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Nach dem <em>General Feature Model</em> von ISO können Fachobjekte beliebige Beziehungen zueinander eingehen. Diese werden in den fachspezifischen Subschemata definiert.</p>
+</li>
+<li>
+<p>Daneben sind im gemeinsamen Basisschema bereits einige Beziehungen zwischen Objekten fest vorgegeben:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Relation zur Bildung von Zusammengesetzten Objekten (ZUSO)<br>
+Ein ZUSO setzt sich aus mindestens einem Objekt zusammen. Die Klammer um diese Objekte bildet die Assoziation <em>Zusammensetzung</em> zwischen "AA_ZUSO" und "AA_Objekt".</p>
+</li>
+<li>
+<p>Unterführungsrelation<br>
+Unterführungsrelationen (<em>hatDirektUnten</em> ) werden verwendet, um eine relative vertikale Lage einzelner Objekte im Verhältnis zu anderen Objekten abzubilden. Die Angabe einer absoluten "Höhenstufe" ist durch Verwendung von Überführungs- bzw. Unterführungsrelationen nicht möglich, da derartige Relationen immer nur die Zweierbeziehung zwischen den beteiligten Objekten beinhalten.</p>
+</li>
+<li>
+<p>Kartengeometrie<br>
+Die Relation von Kartengeometrieobjekten (=generalisierte Geometrie, zu den zugehörigen Basisobjekten (<em>istAbgeleitetAus</em>) gibt an, aus welchen Objekten die Kartengeometrieobjekte abgeleitet sind.</p>
+</li>
+<li>
+<p>Fachdatenverbindung<br>
+Soll ein AFIS-, ALKIS- oder ATKIS-Objekt auf ein Fachdatenobjekt zeigen, das in einem fremden Fachdatensystem geführt wird, so kann dies optional durch das Attribut <em>zeigtAufExternes</em> beschrieben werden. Fachdatenverbindungen werden gemäß <a href="#basisschema_aaa_fdvregelung">Regelung von länderübergreifend redundanzfreier Vergabe länderspezifischer Fachdatenverbindungen</a> strukturiert.</p>
+<div class="paragraph">
+<p>Der Aufbau der Fachdatenverbindung ist sinnvoll, um bei der Benutzung und Fortführung von ALKIS die Existenz von Fachdatenbeständen zu berücksichtigen.</p>
+</div>
+</li>
+<li>
+<p>Darstellungsrelation<br>
+Präsentationsobjekte dienen der Darstellung von Objekten der Bestandsdaten. Dieser Zusammenhang wird durch den Verweis <em>dientZurDarstellungVon</em> zwischen dem Präsentationsobjekt und anderen Objekten nachgewiesen.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div id="img_15" class="imageblock">
+<div class="content">
+<img src="media/image15.png" alt="media/image15" width="585" height="518">
+</div>
+<div class="title">Figure 7. Modellierung der AAA-Basisklassen</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="basisschema_aaa_raumbezug">Raumbezug, Geometrie</h4>
+<div class="sect4">
+<h5 id="_grundsätze">Grundsätze</h5>
+<div class="paragraph">
+<p>Die ISO-Norm 19107 <em>Spatial schema</em> stellt Raumbezugsgrundformen für die Verwendung in Anwendungsschemata zur Verfügung; für AFIS, ALKIS und ATKIS werden davon zur Verringerung der Komplexität ausschließlich folgende verwendet:</p>
+</div>
+<table class="tableblock frame-all grid-all" style="width: 99%;">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top" colspan="3"><strong>Geometrische Objekte (GM_Object)</strong></th>
+<th class="tableblock halign-left valign-top" colspan="2"><strong>Topologische Objekte (TP_Object)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Geometrische Primitive</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Geometrische Komplexe</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Geometrische Aggregate</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Topologische Primitive</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Topologische Komplexe</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">GM_Point<br>
+GM_Curve<br>
+GM_PolyhedralSurface</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">GM_CompositeCurve<br>
+GM_CompositeSurface</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">GM_MultiPoint<br>
+GM_MultiCurve<br>
+GM_MultiSurface</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TS_PointComponent<br>
+TS_CurveComponent<br>
+TS_SurfaceComponent<br>
+TS_Face</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TP_Complex</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Auch die Repräsentation der 3D-Geometrien basiert auf der ISO 19107. Die bereits im AAA-Basisschema vorhandenen Raumbezugsgrundformen werden um die in der folgenden Tabelle dargestellten erweitert:</p>
+</div>
+<table class="tableblock frame-all grid-all" style="width: 99%;">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" colspan="3"><p class="tableblock"><strong>Geometrische Objekte (GM_Object)</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Geometrische Primitive</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Geometrische Komplexe</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Geometrische Aggregate</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">GM_Solid<br>
+GM_SurfaceBoundary<br>
+GM_TriangulatedSurface<br>
+GM_OrientableSurface</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">GM_CompositeSolid</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Die geometrischen und topologischen Objekte sind als UML-Klassen beschrieben. Die Norm enthält auch räumliche Operationen, die die geometrischen und topologischen Objekte <em>(GM_Object</em> bzw. <em>TP_Object)</em> als Parameter benutzen (Erstellen, Löschen, Ändern, räumliche Auswertungen &#8230;&#8203;). Die definierten Klassen finden keine direkte Verwendung, d.h. sie sind nicht instanziierbar. Ihre Nutzung in speziellen Anwendungsschemata wird mittels Vererbung erreicht; soweit die Klassen des <em>Spatial Schema</em> für AFIS, ALKIS und ATKIS nicht um spezielle Eigenschaften ergänzt werden, werden sie jedoch in diesem Anwendungsbereich zur Vereinfachung unmittelbar verwendet.</p>
+</div>
+<div class="paragraph">
+<p>Die Raumbezugsgrundformen werden in der Regel als selbstbezogene Eigenschaften (Attribute) der Objekte geführt; dies bedeutet jedoch nicht, dass der Nachweis der Geometrie grundsätzlich redundant erfolgt. Das gemeinsame AFIS-ALKIS-ATKIS-Anwendungsschema verfügt hinsichtlich der Anbindung des Raumbezuges über folgende Möglichkeiten:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Bildung knotenförmiger, kantenförmiger und maschenförmiger Objekte mit "einfacher Topologie". Zusätzlich maschenförmige Objekte mit "einfacher Topologie", die aus zwei oder mehr räumlich getrennt liegenden Maschen bestehen (wird zur Modellierung von Überhakenflurstücken benötigt).<br>
+Es wird das ISO-Schema "Simple Topology" verwendet, das topologische Eigenschaften durch geometrische Eigenschaften ausdrückt, aber topologische Funktionalität bietet.</p>
+</li>
+<li>
+<p>Bildung punktförmiger, linienförmiger und flächenförmiger Objekte, die sich gegenseitig Linien und Punkte teilen.</p>
+</li>
+<li>
+<p>Bildung punktförmiger, linienförmiger, flächenförmiger und volumenförmiger Objekte mit voneinander "unabhängiger" Geometrie.</p>
+</li>
+<li>
+<p>Bildung von topologischen und geometrischen "Themen", die es erlauben, selektiv Objektarten zu sogenannten Komplexen zusammenzufassen, um geometrische Identitäten und/oder topologische Zusammenhänge auszudrücken.</p>
+</li>
+<li>
+<p>TriangulatedSurface (Grundlage für 3D-DGM)</p>
+</li>
+<li>
+<p>Eine triangulierte Oberfläche ergibt sich durch die Oberflächenaufteilung in Dreiecke, durch Triangulation mittels bestimmter Algorithmen z.B. durch Delaunay-Triangulation.</p>
+</li>
+<li>
+<p>Beispielsweise ist die Geometrie eines Tin-Reliefs durch den GML-Geometrietyp gml:TriangulatedSurface definiert. In Fachschemata kann entweder der Geometrietyp gml:TriangulatedSurface verwendet werden oder seine Unterklasse gml:tin.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Jedes raumbezogene AFIS-ALKIS-ATKIS-Fachobjekt (AA_REO) verweist auf maximal eine Geometrie. Besteht die Notwendigkeit, zu einem Realwelt-Objekt mehrere Geometrien vorzuhalten (z.B. Generalisierung, unterschiedliche Koordinatenreferenzsysteme, Punkt- und Flächengeometrie), so ist jeweils ein eigenständiges Fachobjekt (ggf. als Kartengeometrieobjekt) zu bilden.</p>
+</div>
+<div class="paragraph">
+<p>Die erforderlichen Erweiterungen und Einschränkungen des <em>Spatial Schema</em> von ISO sind in den folgenden Abbildungen zusammenfassend dargestellt:</p>
+</div>
+<div id="img_16" class="imageblock">
+<div class="content">
+<img src="media/image16.png" alt="media/image16" width="734" height="496">
+</div>
+<div class="title">Figure 8. Zusammenfassende Darstellung der für AFIS-ALKIS-ATKIS erforderlichen Ergänzungen am genormten Spatial Schema</div>
+</div>
+<div id="img_17" class="imageblock">
+<div class="content">
+<img src="media/image17.png" alt="media/image17" width="576" height="243">
+</div>
+<div class="title">Figure 9. Auswahldatentypen zur Bildung unterschiedlicher geometrischer Objektinstanzen</div>
+</div>
+<div class="paragraph">
+<p>Bezüglich der Verwendung von Geometrien bei raumbezogenen Objekten werden folgende Einschränkungen in der Beschreibung der Klassen angegeben:</p>
+</div>
+<div class="paragraph">
+<p>Der Auswahldatentyp AA_Flaechengeometrie erlaubt die alternative Modellierung flächenförmiger Objekte durch eine Fläche oder eine Menge von Flächen.</p>
+</div>
+<div class="paragraph">
+<p>GM_MultiSurface ist nur zulässig, wenn die Anzahl der enthaltenen GM_PolyhedralSurface &gt;=2 ist und räumlich getrennte Flächen nachgewiesen werden müssen. Räumlich nicht getrennt liegende Flächen sind immer durch 1 Fläche (GM_PolyhedralSurface) abzubilden, es sei denn, die Erfassung sehr großer Flächen erfordert eine GM_CompositeSurface.</p>
+</div>
+<div class="paragraph">
+<p>Der Auswahldatentyp AA_Liniengeometrie erlaubt es, linienförmige Objekte wahlweise durch eine einzelne Linie oder durch mehrere aufeinander folgende Linien geometrisch zu modellieren. GM_CompositeCurve ist nur zulässig, wenn die Anzahl der enthaltenen GM_Curve &gt;=2 ist.</p>
+</div>
+<div class="paragraph">
+<p>Die instanziierbaren Klassen für die raumbezogenen Fachobjekte sind ausschließlich aus den folgenden, im gemeinsamen Basisschema definierten abstrakten Supertypen abzuleiten:</p>
+</div>
+<div class="paragraph">
+<p><strong>Objekte mit einfacher Topologie</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>TA_PointComponent,</p>
+</li>
+<li>
+<p>TA_CurveComponent</p>
+</li>
+<li>
+<p>TA_SurfaceComponent,</p>
+</li>
+<li>
+<p>TA_MultiSurfaceComponent</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Objekte mit gemeinsamer Punkt- und/oder Liniengeometrie</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>AG_Objekt</p>
+</li>
+<li>
+<p>AG_Punktobjekt</p>
+</li>
+<li>
+<p>AG_Linienobjekt</p>
+</li>
+<li>
+<p>AG_Flaechenobjekt</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Objekte mit unabhängiger Geometrie</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>AU_Objekt,</p>
+</li>
+<li>
+<p>AU_Punktobjekt</p>
+</li>
+<li>
+<p>AU_PunkthaufenObjekt</p>
+</li>
+<li>
+<p>AU_Linienobjekt</p>
+</li>
+<li>
+<p>AU_KontinuierlichesLinienobjekt</p>
+</li>
+<li>
+<p>AU_Flaechenobjekt</p>
+</li>
+<li>
+<p>AU_TrianguliertesOberflaechenObjekt_3D</p>
+</li>
+<li>
+<p>AU_MehrfachLinienObjekt_3D</p>
+</li>
+<li>
+<p>AU_MehrfachFlaechenObjekt_3D</p>
+</li>
+<li>
+<p>AU_UmringObjekt_3D</p>
+</li>
+<li>
+<p>AU_Punktobjekt3D</p>
+</li>
+<li>
+<p>AU_PunkthaufenObjekt_3D</p>
+</li>
+<li>
+<p>AU_KoerperObjekt_3D</p>
+</li>
+<li>
+<p>AU_GeometrieObjekt_3D</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Für Präsentationsobjekte sind folgende Typen zu verwenden. Diese Klassen können auch direkt instanziiert werden:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>AP_PPO</p>
+</li>
+<li>
+<p>AP_PTO</p>
+</li>
+<li>
+<p>AP_KPO_3D</p>
+</li>
+<li>
+<p>AP_LTO</p>
+</li>
+<li>
+<p>AP_LPO</p>
+</li>
+<li>
+<p>AP_FPO</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Als Geometrie für Linien bzw. Flächenumringe sind lediglich folgende Arten von Curve-Segmenten (Interpolationsarten) zulässig:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>GM_LineSegment</p>
+</li>
+<li>
+<p>GM_LineString</p>
+</li>
+<li>
+<p>GM_Arc</p>
+</li>
+<li>
+<p>GM_Circle</p>
+</li>
+<li>
+<p>GM_CubicSpline.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Bei GM_Arc muss der 2. ControlPoint im mittleren Drittel des Kreisbogens liegen; falls möglich, soll der Scheitelpunkt des Kreisbogens genommen werden. Bei GM_Circle dürfen die jeweiligen Abstände der ControlPoints (1=4,2,3) nicht weniger als ein Sechstel des Kreisumfangs betragen.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_objekte_mit_einfacher_topologie">Objekte mit einfacher Topologie</h5>
+<div class="paragraph">
+<p>ISO 19107 <em>Spatial schema</em> bietet als Modul für ein Anwendungsschema unmittelbar das Schema <em>Simple topology</em> an. Auf dieser Basis werden Objekte bereitgestellt, die topologische Eigenschaften durch geometrische Eigenschaften ausdrücken. Als Anwendung dieses Moduls stellt das Basisschema die Klassen TA_*Component zur Verfügung. Diese Klassen bieten zusätzlich zu den entsprechenden Klassen des <em>Spatial Schema</em> die allgemeinen Eigenschaften aller AFIS-ALKIS-ATKIS-Objekte (Identifikator, Lebenszeitintervall, Anlass) sowie die Möglichkeit, verschiedene Objektarten über das Konstrukt des "PunktLinienThemas" topologisch und geometrisch zu verknüpfen. Die TA-Klassen können gleichzeitig einem topologischen Thema und einem oder mehreren PunktLinienThemen angehören. Die Klasse TA_MultiSurfaceComponent wurde abweichend zur Klasse TA_SurfaceComponent definiert, um zu erreichen, dass die referenzierten Maschen <em>(TS_Face)</em> auch Realisierungen getrennt liegender Flächen <em>(GM_OrientableSurface)</em> sein können. Damit ist auch die topologische Modellierung von Exklaven möglich. Exklaven sollen deshalb nicht über Relationen von Fachobjekt zu Fachobjekt (Relation <em>Composite</em> [<em>composite &gt; component</em>] zwischen TS_Feature und TS_Feature) modelliert werden.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_objekte_mit_gemeinsam_genutzter_geometrie">Objekte mit gemeinsam genutzter Geometrie</h5>
+<div class="paragraph">
+<p>Das Paket "AAA_GemeinsameGeometrie" stellt Basisklassen für Fachobjekte (Features) zur Verfügung, deren Geometrie aus Punkten, Linien und Flächen bestehen, die sich jeweils ihre Geometrie teilen.</p>
+</div>
+<div id="img_18" class="imageblock">
+<div class="content">
+<img src="media/image18.png" alt="media/image18" width="584" height="364">
+</div>
+<div class="title">Figure 10. Objekte mit gemeinsamer Geometrie</div>
+</div>
+<div class="paragraph">
+<p>Dazu werden die Eigenschaften des erweiterten "AAA-SpatialSchema" genutzt, das zusätzlich das Konstrukt des "PunktLinienThemas" zur Verfügung stellt. Außerdem wird die Geometrie durch die gemäß ISO 19107 und 19109 für die gemeinsame Nutzung von Geometrie vorgesehenen Raumbezugsgrundformen (GM_PointRef und GM_CompositeCurve) ausgedrückt. Damit sind die geometrietragenden Primitive (GM_Point und GM_Curve) relational mit den Fachobjekten verbunden und können so von mehreren Fachobjekten gemeinsam genutzt werden. Die gemeinsame Nutzung von Geometrie bezieht sich nur auf Punkte und Linien, nicht auf Flächengeometrien. Linien werden vereinigt und einer gemeinsamen Nutzung zugeführt, wenn sie exakt in allen Stützpunkten gleich sind und gleiche Linieninterpolationen aufweisen; Linien, die sich kreuzen, zerschlagen sich nicht. Die Basisklassen "AG_Objekt", "AG_Punktobjekt", "AG_Linienobjekt" und "AG_Flaechenobjekt" sollen für die Definition von raumbezogenen Objektarten mit gemeinsamer Geometrie verwendet werden.</p>
+</div>
+<div id="img_19" class="imageblock">
+<div class="content">
+<img src="media/image19.png" alt="media/image19" width="563" height="362">
+</div>
+<div class="title">Figure 11. Gemeinsam genutzte Grenzfläche bei 3D-Objekten</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_objekte_mit_unabhängiger_geometrie">Objekte mit unabhängiger Geometrie</h5>
+<div class="paragraph">
+<p>Zwei Pakete beschreiben Objekte mit unabhängiger Geometrie:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Das Paket "AAA_UnabhaengigeGeometrie" stellt sechs Basisklassen für Fachobjekte zur Verfügung, deren Geometrie aus voneinander unabhängigen Punkten, Linien und Flächen bestehen.</p>
+</li>
+<li>
+<p>Das Paket AAA_Unabhängige Geometrie 3D stellt Basisklassen für 3D-Fachobjekte (Features) zur Verfügung, deren Geometrien voneinander unabhängig sind.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Diese Basisklassen sollen als Basis raumbezogener Objektarten mit unabhängiger Geometrie verwendet werden (z.B. Präsentationsobjekte).</p>
+</div>
+<div id="img_20" class="imageblock">
+<div class="content">
+<img src="media/image20.png" alt="media/image20" width="620" height="268">
+</div>
+<div class="title">Figure 12. 2D-Objekte mit unabhängiger Geometrie</div>
+</div>
+<div class="paragraph">
+<p>AU_Flaechenobjekt wird für Fachobjekte verwendet, die geometrisch durch Flächen beschrieben werden.</p>
+</div>
+<div class="paragraph">
+<p>Ein AU_Linienobjekt wird geometrisch durch einen Set von Linien beschrieben (Anwendungsfall: z.B. Felssignatur).</p>
+</div>
+<div class="paragraph">
+<p>AU_Punktobjekt beinhaltet ein Fachobjekt, das geometrisch durch einen einzelnen Punkt repräsentiert wird.</p>
+</div>
+<div class="paragraph">
+<p>Der Auswahldatentyp "AU_Objekt" erlaubt es, Subklassen zu bilden, bei denen die konkrete Art des Geometrietyps erst auf Instanzenebene festgelegt wird. Zur Auswahl stehen verschiedendimensionale Geometrien: Punkt, Linie, Fläche und zusammengesetzte Linie. Damit ist es z.B. möglich, eine Objektart "Turm" zu bilden, die in Abhängigkeit von der Ausdehnung in der Realwelt punktförmige oder flächenförmige Geometrie hat.</p>
+</div>
+<div class="paragraph">
+<p>Fachobjekte, die geometrisch durch zusammenhängende Linien beschrieben werden, erben von "AU_KontinuierlichesLinienobjekt". Die Geometrie eines solchen Objekts darf sich nicht kreuzen und nicht überlagern. Anwendungsfall: z.B. Leitung.</p>
+</div>
+<div class="paragraph">
+<p>"AU_Punkthaufenobjekt" wird für ein Objekt verwendet, das geometrisch durch einen Punkt oder einen Punkthaufen repräsentiert wird. Ein Auswahldatentyp "AA_Punktgeometrie" erlaubt es, punktförmige Objekte alternativ mit einer oder mehreren Punktgeometrien zu bilden. Die Anwendung ist nur bei Objekten mit unabhängiger Geometrie sinnvoll. (z.B. Präsentationsobjekte mit Signaturhaufen mit individueller Geometrie).</p>
+</div>
+<div class="paragraph">
+<p>Bei 3D-Objekten mit unabhängiger Geometrie sind Verschneidungen möglich. Die Modellierung ist erheblich einfacher, da keine Einschränkungen bei der gemeinsamen Nutzung unterschiedlicher Raumbezugsgrundformen bestehen. Für Visualisierungszwecke ist diese Art der Geometrie ausreichend.</p>
+</div>
+<div class="paragraph">
+<p>Bei dem Nachweis von 3D-Geobasisdaten (Block-/ Klötzchenmodell) wird jedoch die redundanzfreie Geometrie empfohlen, bzw. sollte auf die Verschneidung von Geometrien verzichtet werden.</p>
+</div>
+<div class="paragraph">
+<p>Das Paket "AAA_Unabhaengige Geometrie 3D" stellt Basisklassen für 3D Fachobjekte (Features) zur Verfügung, deren Geometrie aus voneinander unabhängigen 3D Punkten, 3D Linien, 3D Flächen und 3D Körpern besteht. Diese Basisklassen sollen als Basis raumbezogener Objektarten für 3D Fachanwendungen mit unabhängiger Geometrie verwendet werden (z.B. Präsentationsobjekte).</p>
+</div>
+<div class="paragraph">
+<p>"AU_ObjektMitUnabhaengigerGeometrie_3D" ist die Oberklasse zu den acht Klassen mit unabhängiger 3D Geometrie. Ein "AU_ObjektMitUnabhaengigerGeometrie_3D" ist ein Raumbezogenes Elementarobjekt für 3D Fachanwendungen (AA_REO_3D), dessen Subklassen sich auf der Ebene der Instanzen keine Geometrie teilen. Die Klasse ist nicht direkt instanziierbar.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>AU_Punktobjekt_3D ist ein 3D Fachobjekt, das geometrisch durch einen einzelnen 3D Punkt repräsentiert wird.</p>
+</li>
+<li>
+<p>AU_PunkthaufenObjekt_3D ist ein 3D Fachobjekt, das geometrisch durch einen 3D Punkthaufen repräsentiert wird.</p>
+</li>
+<li>
+<p>AU_MehrfachLinienObjekt_3D ist ein 3D Fachobjekt, das geometrisch durch 3D Linien beschrieben wird. Es sind mehrere getrennt liegende 3D Linien zulässig.</p>
+</li>
+<li>
+<p>AU_MehrfachFlaechenObjekt_3D ist ein 3D Fachobjekt, das geometrisch durch 3D Flächen beschrieben wird. Es sind mehrere getrennt liegende 3D Flächen zulässig.</p>
+</li>
+<li>
+<p>AU_TrianguliertesOberflaechenObjekt_3D ist ein 3D Fachobjekt, das geometrisch durch räumlich zusammenhängende 3D Flächen beschrieben wird, die eine triangulierte Oberfläche (TIN) definieren (z.B. eine Geländeoberfläche).</p>
+</li>
+<li>
+<p>AU_KoerperObjekt_3D ist ein 3D Fachobjekt, das geometrisch durch 3D Körper beschrieben wird.</p>
+</li>
+<li>
+<p>AU_UmringObjekt_3D ist ein 3D Fachobjekt, das geometrisch durch ein 3D Umringspolygon beschrieben wird, und weitere 3D Umringspolygone für Enklaven aufweisen kann. Jeder Teil der Geometrie muss ein geschlossener Umring sein.</p>
+</li>
+<li>
+<p>AU_GeometrieObjekt_3D ist ein 3D Fachobjekt, das es erlaubt, Subklassen zu bilden, bei denen die konkrete Art des 3D Geometrietyps erst auf Instanzenebene z.B. in Abhängigkeit von der Detaillierungsstufe (Level of Detail) festgelegt wird (z.B. Mauern die durch 3D Flächen oder detaillierter durch 3D Körper repräsentiert werden können).</p>
+</li>
+</ol>
+</div>
+<div id="img_21" class="imageblock">
+<div class="content">
+<img src="media/image21.png" alt="media/image21" width="537" height="408">
+</div>
+<div class="title">Figure 13. Objekte mit unabhängiger Geometrie 3D</div>
+</div>
+<div id="img_22" class="imageblock">
+<div class="content">
+<img src="media/image22.png" alt="media/image22" width="942" height="457">
+</div>
+<div class="title">Figure 14. 3D-Objekte mit unabhängiger Geometrie</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_raumbezugssystem_koordinaten">Raumbezugssystem, Koordinaten</h5>
+<div class="paragraph">
+<p>In AFIS-ALKIS-ATKIS kann für jede Geometrie das zugehörige <strong>Koordinatenreferenzsystem (CRS)</strong> angegeben bzw. gespeichert werden.</p>
+</div>
+<div class="paragraph">
+<p>Nach der Norm ISO 19111 <em>(Spatial Referencing by Coordinates)</em> besteht ein Koordinatenreferenzsystem aus zwei Komponenten, dem "Datum" und dem "Koordinatensystem" (siehe folgende Skizze).</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="media/image23.png" alt="media/image23" width="334" height="132">
+</div>
+</div>
+<div class="paragraph">
+<p>Das <strong>Datum</strong> ist der physikalische Teil eines CRS, das per Definition des Nullpunkts, der Orientierung der Koordinatenachsen und des Maßstabs den Bezug zur Erde festlegt. Ein Datum kann ein geodätisches Datum, ein vertikales Datum oder ein ingenieurtechnisches bzw. lokales Datum sein. Beispiele für ein geodätisches Datum sind das Deutsche Hauptdreiecksnetz (DHDN), auch "Potsdam-Datum" genannt, oder das Europäische Terrestrische Referenzsystem 1989 (ETRS89).</p>
+</div>
+<div class="paragraph">
+<p>Das <strong>Koordinatensystem</strong> ist der mathematische Teil eines CRS, der durch Regeln festlegt, wie einer Geometrie, z. B. einem Festpunkt, Koordinaten zugewiesen werden. Die Koordinaten einer Geometrie können z. B. als kartesische Koordinaten (X, Y, Z), ellipsoidische Koordinaten (Breite, Länge und ggf. ellipsoidische Höhe) oder projizierte Koordinaten (Gauß-Krüger-Abbildung, UTM-Abbildung) angegeben werden.</p>
+</div>
+<div class="paragraph">
+<p>Neben den CRS für 2-D-Lageangaben und 3-D-Positionsangaben sind für die Führung von Höhenangaben bzw. -koordinaten (z.B. NN-Höhen) eigene Koordinatenreferenzsysteme definiert. Die in Deutschland gebräuchlichen Koordinatenreferenzsysteme für Lage, Position und Höhe sind in <a href="#crsuom_crs_aaa">[crsuom_crs_aaa]</a> mit ihren Bezeichnungen und Kurznamen aufgelistet.</p>
+</div>
+<div class="paragraph">
+<p>Die Art des Koordinatenreferenzsystems bestimmt die Anzahl der vorhandenen Koordinatenwerte (z.B. Rechtswert, Hochwert oder Rechtswert, Hochwert, Höhe). Grundsätzlich können nach ISO 19111 auch zusammengesetzte CRS eingeführt werden. Bei Objekten der Objektart "Punktort" sind in AFIS-ALKIS-ATKIS gemäß der Definition der Objektart Punktort zusammengesetzte Koordinatenreferenzsysteme jedoch <strong>nicht</strong> zugelassen.</p>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="basisschema_aaa_signatur">Signaturierung, Präsentationsobjekte</h4>
+<div class="paragraph">
+<p>Die Präsentationsobjekte sind wegen den allgemeingültigen Eigenschaften im AAA Basisschema beschrieben.</p>
+</div>
+<div id="img_24" class="imageblock">
+<div class="content">
+<img src="media/image24.png" alt="media/image24" width="597" height="446">
+</div>
+<div class="title">Figure 15. Präsentationsobjekte</div>
+</div>
+<div class="paragraph">
+<p>Die Präsentationsobjekte enthalten eine Signaturnummer und weitere Eigenschaften zur Steuerung der Präsentation, wie z. B. Darstellungspriorität und Art. Präsentationsobjekte müssen in ALKIS mit den entsprechenden Fachobjekten durch eine Relation "dientZurDarstellungVon" verbunden sein. In ATKIS gibt es keine derartige Regel, d.h. es dürfen "freie Präsentationsobjekte" existieren. Die Präsentation von Objekten in graphischen sowie nicht graphischen Ausgaben erfolgt gemäß nachstehender Abbildung in folgender Weise:</p>
+</div>
+<div class="paragraph">
+<p><strong>Präsentation in der Karte</strong></p>
+</div>
+<div id="img_25" class="imageblock">
+<div class="content">
+<img src="media/image25.png" alt="media/image25" width="585" height="202">
+</div>
+<div class="title">Figure 16. Präsentationsablauf für die Karte</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><span class="underline">Präsentationsobjekte im Bestand</span><br>
+Präsentationsobjekte werden für alle Signaturen in Form von Schrift, Symbol, Linie, Fläche angelegt, die nicht vollautomatisch für einen bestimmten Zielmaßstab erzeugt und platziert werden können. Die konkrete Signaturnummer, die eine Ableitungsregel repräsentiert, sowie die Positionierungsnummer, die für eine bestimmte Positionierungsregel steht, kann optional im Präsentationsobjekt gespeichert werden. Präsentationsobjekte sind auch dann zu bilden, wenn bei der Ausgabe von der im Signaturenkatalog festgelegten Standarddarstellung abgewichen werden soll (z.B. abweichende Schrifthöhe der Flurstücksnummer).</p>
+</li>
+<li>
+<p><span class="underline">Präsentation mittels Ableitungs- und Positionierungsregel</span><br>
+Signaturen eines Fachobjektes in Form von Schrift, Symbol, Linie, Fläche werden an einer definierten Stelle (Standardposition) unter Anwendung des Filter Encodings und einer konkreten Ableitungsregel, die zu einer bestimmten Signaturnummer führt und den Positionierungsregeln, die eine bestimmte Positionierungsnummer aktiviert, platziert. In diesem Falle wird ein Präsentationsobjekt in den Bestandsdaten nicht angelegt. Die darzustellende fachliche Information wird aus der angegebenen Attributart der Fachobjektart ermittelt. Dieser Weg wird als die Standardvariante betrachtet, der aber durchaus aus Gründen der Performance nicht immer effizient ist.</p>
+</li>
+<li>
+<p><span class="underline">Präsentation mittels gespeicherter Ableitungs- und Positionierungsregel</span><br>
+Um die Performance der Präsentation für die Standardvariante zu erhöhen, wird zu einem bestimmten Zeitpunkt (Ersteinrichtung, Fortführung) die konkrete Signaturnummer sowie die Positionierungsnummer mit der ein Fachobjekt zur Darstellung gebracht werden soll, unter dem zugeordneten Präsentationsobjekt AP-Darstellung als NREO gespeichert. Der Vorteil gegenüber der Bildung von Präsentationsobjekten (Variante 1) ist die Vermeidung von Redundanzen der Geometrie, da bei AP-Darstellung die Darstellungsgeometrie aus dem jeweiligen Fachobjekt abgeleitet wird. Zum Zeitpunkt der Präsentation wird durch Anwendung des Filter Encodings in Verbindung mit der Ableitung der Darstellungsgeometrie aus dem Fachobjekt und den gespeicherten Regeln, sprich Signaturnummer, Positionierungsnummer, die Darstellung schnellstmöglich herbeigeführt. Die Objektart AP_Darstellung wird in ALKIS dazu verwendet, um folgende Veränderungen in einer Liegenschaftskarte herbeizuführen:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Unterdrückung einer Darstellung in der Liegenschaftskarte,</p>
+</li>
+<li>
+<p>Herbeiführung einer bestimmten Bemusterung in der Liegenschaftskarte, wie z. B. flächenhafte Bemusterung.</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><strong>Präsentation der Liegenschaftsbeschreibung</strong></p>
+</div>
+<div class="paragraph">
+<p>Die Präsentation der Angaben für eine Liegenschaftsbeschreibung, wie z. B. Flurstücks- und Eigentümernachweis, erfolgt ausschließlich zur Laufzeit über die Anwendung des Filter Encodings und der Regeln, die im AAA-Ausgabekatalog hinterlegt sind. Diese Ausgabedaten werden in Verbindung mit einer konkreten Ableitungsregel aus dem nicht formalisierten Signaturenkatalog präsentiert. Die jeweiligen Textpositionen können dem entsprechenden Standbogen entnommen werden. Muster für die Produktausgabe sind ein zusätzlicher Anhalt.</p>
+</div>
+<div id="img_26" class="imageblock">
+<div class="content">
+<img src="media/image26.png" alt="media/image26" width="585" height="260">
+</div>
+<div class="title">Figure 17. Präsentationsablauf für die Liegenschaftsbeschreibung</div>
+</div>
+<div class="paragraph">
+<p><strong>Erzeugung der Präsentationsobjekte und AP_Darstellung für den Bestand</strong></p>
+</div>
+<div class="paragraph">
+<p>Um eine effiziente Präsentation der Fachobjekte in einer Ausgabe zu gewährleisten, müssen bereits zum Zeitpunkt der Erhebung / Fortführung geeignete Präsentationsvorgaben festgelegt werden. Es werden dabei, gemäß <a href="#img_27">Figure 18</a> drei Fälle unterschieden:</p>
+</div>
+<div id="img_27" class="imageblock">
+<div class="content">
+<img src="media/image27.png" alt="media/image27" width="579" height="390">
+</div>
+<div class="title">Figure 18. Präsentationsablauf in der Erhebung / Fortführung</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><span class="underline">Keine Festlegung von Präsentationsvorgaben</span><br>
+Die in der Erhebung / Fortführung erzeugten ALKIS- strukturierten Erhebungsdaten brauchen für eine schnelle Präsentation in einer Ausgabe keine vordefinierten Festlegungen in Form der Zuweisung einer konkreten Signatur- bzw. Positionierungsnummer. Die für eine Präsentation benötigten Angaben können direkt während der Laufzeit für eine Darstellung aus dem 3A- Datenmodell generiert werden.</p>
+</li>
+<li>
+<p><span class="underline">Speicherung von Präsentationsobjekten im Bestand</span><br>
+In der Erhebung / Fortführung wird zur Darstellung von konkreten Signaturen eines Fachobjektes ein Präsentationsobjekt angelegt, da die Signaturen z. B. nicht vollautomatisch für einen bestimmten Zielmaßstab erzeugt und platziert werden können. Hierbei werden die Angaben über die Geometrie, optional eine Signaturnummer und / oder optional eine Positionierungsnummer im Objekt gespeichert.</p>
+</li>
+<li>
+<p><span class="underline">Festlegung von Präsentationsvorgaben</span><br>
+Zur Minimierung der Laufzeit einer Präsentation kann in der Erhebung / Fortführung für ein Fachobjekt die Objektart AP_Darstellung als NREO angelegt werden, in der eine konkrete Positionierungsnummer gespeichert wird, so z. B. die Bemusterung einer Fläche. Die Geometrie für die Präsentation wird zur Laufzeit aus dem Fachobjekt mit geeigneten Methoden abgeleitet.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><strong>Präsentationsobjekte 3D</strong></p>
+</div>
+<div class="paragraph">
+<p>Das Paket AAA_Praesentationsobjekte_3D konkretisiert die Fachobjekte von AAA_Unabhaengige Geometrie 3D für die Zwecke der Präsentation. Die entsprechenden Fachobjekte können unmittelbar instanziiert werden.</p>
+</div>
+<div class="paragraph">
+<p>Das 3D Präsentationsobjekt AP_KPO_3D wird für 3D Symbole verwendet, deren 3D Geometrie in einem externen Datenformat gespeichert wird und über eine URI referenziert wird. AP_KPO_3D leitet sich aus AU_Punktobjekt_3D ab und seine 3D Punktgeometrie positioniert das Symbol. Über eine Transformationsmatrix wird die lageunabhängige 3D Geometrie in dem externen Datenformat in den Raumbezug des Präsentationsobjektes AP_KPO_3D transformiert. Die Präsentationsobjekte sind wie andere Objekte im Objektartenkatalog in Verbindung mit dem jeweiligen Signaturenkatalog bzw. 3D Symbolbibliotheken zu definieren.</p>
+</div>
+<div id="img_28" class="imageblock">
+<div class="content">
+<img src="media/image28.png" alt="media/image28" width="584" height="419">
+</div>
+<div class="title">Figure 19. Präsentationsobjekte_3D</div>
+</div>
+<div class="paragraph">
+<p><strong>Regelung von länderübergreifend redundanzfreier Vergabe länderspezifischer Signaturnummern</strong></p>
+</div>
+<div class="paragraph">
+<p>Das AFIS-ALKIS-ATKIS-Datenmodell bringt den Anwendern neben vielen anderen Vorteilen eine länderübergreifende Vereinheitlichung der Datenbestände sowie deren Präsentation.</p>
+</div>
+<div class="paragraph">
+<p>Der Bedarf an frei gestaltbaren Ausgaben seitens der Länder besteht. Dies belegen mehrere landespezifische Signaturenkataloge. Bei deren Schaffung wurden unterschiedliche Wege beschritten, exemplarisch hier anhand zweier Bundesländer aufgezeigt:</p>
+</div>
+<div class="paragraph">
+<p>Baden-Württemberg hat als einziges Bundesland im ALKIS-Signaturenkatalog der AdV länderspezifische Anteile mit eigenen Signaturnummern unterbringen können. Eine Erweiterung um länderspezifische Anteile weiterer Länder ist von der AdV nicht beabsichtigt, da sie für die Pflege länderspezifischer Vorgaben nicht zuständig ist.</p>
+</div>
+<div class="paragraph">
+<p>Nordrhein-Westfalen hat einen eigenen ALKIS-Signaturenkatalog geschaffen, dessen Inhalte unabhängig neben dem der AdV veröffentlicht werden.</p>
+</div>
+<div class="paragraph">
+<p>Folgende Regelung gewährleistet die Redundanzfreiheit der Signaturnummern bei länderspezifischen Erweiterungen des ALKIS-Signaturenkataloges. Damit wird vermieden, dass länderübergreifende Datennutzer zukünftig möglicherweise mit identischen Signaturnummern verschiedener Länder konfrontiert werden, die inhaltlich unterschiedliche Präsentationen bewirken sollen. Es gelten folgende Vorgaben:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Bei allen länderspezifischen Präsentationsobjekten ist das Attribut 'signaturnummer' Pflichtattribut.</p>
+</li>
+<li>
+<p>Mit länderspezifischen Signaturnummern einhergehende Präsentationsregeln sind länderspezifisch auszuprägen.</p>
+</li>
+<li>
+<p>Länderspezifische Signaturnummern bestehen aus dem Länderkürzel (bzw. "BU" oder "BKG") gemäß <a href="#basisschema_aaa_oids">Identifikatoren, Verknüpfungen</a>, unmittelbar gefolgt von der vierstelligen Ziffernfolge der Signaturnummer. Sie werden in dem Attribut AP_GPO.signaturnummer (bzw. entsprechenden Erben) geführt. Beispiele: RP4141, NW0311.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="basisschema_aaa_kartengeometrieobjekte">Kartengeometrieobjekte</h4>
+<div class="paragraph">
+<p>Als Kartengeometrieobjekte werden diejenigen Fachobjekte definiert, die bei der Ableitung für einen bestimmten Kartenmaßstab aus Gründen der kartographischen Generalisierung ihre geometrische Form und / oder Lage verändert haben. Ein Kartengeometrieobjekt muss folgende eigenständige Informationen enthalten: Den Identifikator, die Angabe des Kartenmodells, z. B. DTK10, zu dem es gehört, die einseitige Relation <em>ist_abgeleitet_aus</em> auf das zugrundeliegende AFIS-ALKIS-ATKIS-Objekt sowie die eigentliche Geometrie. Darüber hinaus muss es die Attribute des zugrundeliegenden AFIS-ALKIS-ATKIS-Objekts enthalten, um in den Ableitungsregeln des Signaturenkatalogs für die Präsentation ausgewertet werden zu können.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="basisschema_aaa_punktmengenobjekte">Punktmengenobjekte</h4>
+<div class="paragraph">
+<p>Als Punktmengenobjekte (PMO) werden Fachobjekte dann definiert, wenn einer großen Anzahl geometrischer Orte Attributwerte jeweils gleicher Attributarten zugeordnet werden soll. Dies ist im AAA-Anwendungskontext insbesondere bei Digitalen Geländemodellen, die i.d.R. Höheninformationen in einer Gitterstruktur vorhalten, der Fall. Da aber auch häufig unregelmäßig verteilte, gleichartige Informationen vorgehalten werden sollen, z.B. Höhenmesspunkte, wurde außer der Gittervariante der PMO (AD_GitterCoverage) auch eine Variante für eine beliebige Punktverteilung zugelassen (AD_PunktCoverage). Die Modellierung realisiert die Klassen aus ISO 19123 Coverages. Sie wird in der Weise eingeschränkt, dass für die Sequenz der Attributwerte (CV_SequenceType) nur "linear" zulässig ist.</p>
+</div>
+<div id="img_29" class="imageblock">
+<div class="content">
+<img src="media/image29.png" alt="media/image29" width="585" height="433">
+</div>
+<div class="title">Figure 20. Modellierung der Punktmengenobjekte</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="basisschema_aaa_fdvregelung">Regelung von länderübergreifend redundanzfreier Vergabe länderspezifischer Fachdatenverbindungen</h4>
+<div class="paragraph">
+<p>In allen AAA-Objekten kann im Attribut 'zeigtAufExternes' eine Fachdatenverbindung untergebracht werden. Die Modellierung lässt dies auf zwei Arten zu, nämlich in Form der URN- oder der URL-Variante. Im Modell steht hierzu beim Attribut AA_Fachdatenverbindung.art folgendes:</p>
+</div>
+<div class="quoteblock">
+<blockquote>
+<div class="paragraph">
+<p>Diese Attributart definiert den Namensraum zur Spezifikation der Art der Fachdatenverbindung.<br>
+Es sind URN zu verwenden, wenn es sich um einen nicht allgemein auflösbaren Namensraum handelt. Wenn URLs verwendet werden, muss die verwiesene Ressource eine Beschreibung dieser Fachdatenanbindung zurückliefern. URLs müssen das HTTP-Protokoll verwenden.</p>
+</div>
+</blockquote>
+<div class="attribution">
+&#8212; Dokumentation Attribut AA_Fachdatenverbindung.art
+</div>
+</div>
+<div class="paragraph">
+<p>Fachdatenverbindungen, die sich der URL-Variante bedienen, sind aufgrund der Eindeutigkeit der URNs unproblematisch.</p>
+</div>
+<div class="paragraph">
+<p>Folgende Regelung gewährleistet die Redundanzfreiheit der Fachdatenverbindungen bei länderspezifischen Erweiterungen mit der URN-Variante. Dadurch wird vermieden, dass länderübergreifende Datennutzer zukünftig möglicherweise mit identischen Nummern von Fachdatenverbindungen verschiedener Länder konfrontiert werden, denen inhaltlich unterschiedliche Sachverhalte in Hintergrund stehen.</p>
+</div>
+<div class="paragraph">
+<p>In Anlehnung an die in der GeoInfoDok übliche URN-Logik:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>urn:adv:uom für Maßeinheiten,</p>
+</li>
+<li>
+<p>urn:adv:crs für Koordinatenreferenzsysteme,</p>
+</li>
+<li>
+<p>urn:adv:oid für Objektidentifikatoren</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>ist für Fachdatenverbindungen folgende URN zu verwenden:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>urn:&lt;Länderkürzel&gt;:fdv:&lt;vierstelliger Zifferncode&gt;</p>
+<div class="paragraph">
+<p>wobei &lt;Länderkürzel&gt; gemäß <a href="#basisschema_aaa_oids">Identifikatoren, Verknüpfungen</a> - jedoch in Kleinbuchstaben - ausgeprägt sein sollen und &lt;vierstelliger Zifferncode&gt; sich stets vierstellig aus den Ziffern 0-9 (ggf. mit führenden Nullen) zusammensetzt.</p>
+</div>
+<div class="paragraph">
+<p>Beispiele: urn:rp:fdv:4711 bzw. urn:by:fdv:0203.</p>
+</div>
+<div class="paragraph">
+<p>Somit wird auch in der URN-Variante der Fachdatenverbindungen die Eindeutigkeit sichergestellt. Die Zifferncodes sowie die ihnen zugeordneten Inhalte sind in jeweiliger Länderzuständigkeit auszuprägen.</p>
+</div>
+</li>
+<li>
+<p>urn:adv:fdv:&lt;vierstelliger Zifferncode&gt;</p>
+<div class="paragraph">
+<p>wobei der vierstellige Zifferncode von der AdV festgelegt und in geeigneter Weise veröffentlicht wird (z.B. AdV-online).</p>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="basisschema_aaa_oids">Identifikatoren, Verknüpfungen</h4>
+<div class="paragraph">
+<p><strong>Identifikatoren</strong> stehen stellvertretend für das Objekt, das sie repräsentieren. Daher bezeichnet man sie auch als <strong>Objektidentifikatoren</strong> oder kurz <strong>OID</strong>. Die wesentlichen Eigenschaften eines Identifikators sind:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Er ist systemweit eineindeutig, wobei durch die entsprechende Definition von "systemweit" die Forderung nach bundesweiter und fachübergreifender Eindeutigkeit erfüllt werden kann.</p>
+</li>
+<li>
+<p>Sein Entstehen zeigt an, dass ein Objekt entstanden ist.</p>
+</li>
+<li>
+<p>Er bleibt während der Lebensdauer eines Objekts unverändert. Das gilt auch bei der Migration von Daten in eine neue Version der GeoInfoDok, mit Ausnahme der untergegangenen Elemente, welche lediglich aus Gründen der Abwärtskompatibilität noch im Modell belassen wurden, siehe entsprechendes Kapitel in den <a href="#releasenotes">Release Notes</a> <mark><strong>TBD</strong>: Worauf genau in den Release Notes soll verwiesen werden?</mark>.</p>
+</li>
+<li>
+<p>Sein Untergehen zeigt an, dass ein Objekt nicht mehr existiert.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Damit ist der Lebenszyklus von Identifikatoren identisch mit dem Lebenszyklus der Objekte, deren Repräsentanten sie sind. Die Frage, wann Identifikatoren geändert werden dürfen und wann nicht, darf somit nicht aus dv-technischer Sicht beantwortet werden, sondern es müssen fachliche Kriterien benannt werden,</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>wann ein Objekt entsteht,</p>
+</li>
+<li>
+<p>welche Änderungen es ohne Identitätsverlust verkraftet und</p>
+</li>
+<li>
+<p>wann es untergeht.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>So werden auch Objektidentifikatoren von Objekten, die von anderen Fachstellen im Rahmen ihrer Aufgaben erzeugt wurden, bei der Übernahme in die AAA-Datenhaltung unverändert übernommen. Auch bei Migration von Bestandsdaten in eine neue Version der GeoInfoDok beibt das ursprüngliche Lebenszeitintervall unverändert erhalten, mit Ausnahme der untergegangenen Elemente, welche lediglich aus Gründen der Abwärtskompatibilität noch im Modell belassen wurden, siehe entsprechendes Kapitel in den <a href="#releasenotes">Release Notes</a> <mark><strong>TBD</strong>: Worauf genau in den Release Notes soll verwiesen werden?</mark>.</p>
+</div>
+<div class="paragraph">
+<p>Für alle Fachobjekte wird eine eindeutige Bezeichnung als Objektidentifikator verwendet. Der Identifikator hat folgenden Aufbau:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 5%;">
+<col style="width: 30%;">
+<col style="width: 20%;">
+<col style="width: 45%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top"></th>
+<th class="tableblock halign-left valign-top">Anteile</th>
+<th class="tableblock halign-left valign-top">Bedeutung</th>
+<th class="tableblock halign-left valign-top">Festlegung</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Weltweit eindeutige Kennung</p>
+</div>
+<div class="paragraph">
+<p>(2 Zeichen)</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Nationalität</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>"DE" für Deutschland</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Präfix</p>
+</div>
+<div class="paragraph">
+<p>(6 Zeichen)</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Kennung für die den Identifikator erzeugende Implementierung oder Datenbank sowie für vorläufige Identifikatoren.</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Die Zeichen beginnen linksbündig mit den in der Norm ISO 3166-2 "Country Subdivision Code" (ISO, 15. Dezember 1998) genormten Abkürzungen der Bundesländer. Für Bundesdienststellen ist die Abkürzung "BU" vorgesehen bzw. im Falle des Bundesamtes für Kartographie und Geodäsie "BKG"; die weiteren Stellen werden durch das jeweilige Bundesland bzw. die Bundesdienststelle oder das BKG festgelegt. Soweit im Verarbeitungsprozess über die Verwendung von vollständigen Identifikatoren hinaus vorläufige Identifikatoren benötigt werden, beginnen diese linksbündig mit "_". Damit ergibt sich folgende Tabelle:</p>
+</div>
+<div class="paragraph">
+<p>Baden-Württemberg: "BW"<br>
+Bayern: "BY"<br>
+Berlin: "BE"<br>
+Brandenburg: "BB"<br>
+Bremen: "HB"<br>
+Hamburg: "HH"<br>
+Hessen: "HE"<br>
+Mecklenburg-Vorpommern: "MV"<br>
+Niedersachsen: "NI"<br>
+Nordrhein-Westfalen: "NW"<br>
+Rheinland-Pfalz: "RP"<br>
+Sachsen: "SN"<br>
+Sachsen-Anhalt: "ST"<br>
+Saarland: "SL"<br>
+Schleswig-Holstein: "SH"<br>
+Thüringen: "TH"<br>
+<br>
+Bundesdienststellen: "BU"<br>
+Bundesamt für Kartographie und Geodäsie: "BKG"<br>
+<br>
+Vorläufiger Identifikator: "_"</p>
+</div>
+<div class="paragraph">
+<p>Zulässige Zeichen sind:<br>
+A-Z, a-z, 0-9, _ ohne Umlaute und ohne ß</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Suffix</p>
+</div>
+<div class="paragraph">
+<p>(8 Zeichen)</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Laufende Nummer</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Zulässige Zeichen sind:<br>
+A-Z, a-z, 0-9 ohne Umlaute und ohne ß</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Beispiele für Identifikatoren sind:<br>
+<code>"DENW123412345678"</code> (endgültiger Identifikator)<br>
+<code>"DE_0000000000001"</code> (vorläufiger Identifikator)</p>
+</div>
+<div class="paragraph">
+<p>Zur Realisierung einer Geodateninfrastruktur im Sinne und unter Nutzung der Schnittstellendefinitionen des Open Geospatial Consortiums (OGC) müssen alle beteiligten Stellen eine Systematik für die Vergabe der Identifikatoren und ein Service-Interface definieren, sodass sichergestellt ist, dass Objekte über ihren Identifikator ohne weiteres Wissen gefunden werden können. Hier bietet sich im Sinne einer bundesweiten Lösung ein gemeinsamer Service und auch die Publikation von AAA-Bestandsdaten als Linked Open Data an; die Systematik der Vergabe und Verteilung kann unberührt davon länderspezifisch festgelegt werden.</p>
+</div>
+<div class="paragraph">
+<p>Um Relationen zwischen den Fachobjekten im Datenaustausch aufzubauen, werden Identifikatoren auch als Referenzen auf Fachobjekte geführt.</p>
+</div>
+<div class="paragraph">
+<p>Identifikatoren sind unter anderem auch erforderlich, um bei der Formulierung von Fortführungen angeben zu können, welche Objekte gelöscht und welche Objekte überschrieben werden sollen. Da die Objekte dabei in ihrer konkret vorliegenden Version angesprochen werden müssen, wird der o.a. Identifikator in diesen Fällen um die Angabe von Entstehungsdatum/-zeit der angesprochenen Objektversion ergänzt.</p>
+</div>
+<div class="paragraph">
+<p>Eine wichtige Voraussetzung für die gemeinsame Führung von Datenbeständen unterschiedlicher Herkunft ist, dass die Integrationssituation in Form von Referenzen zwischen den Daten der Vermessungsverwaltung und den Fachdaten abgebildet ist (<strong>Verknüpfung</strong>). Diese Verknüpfung kann einseitig in den raumbezogenen Basisinformationssystemen der Vermessungsverwaltung oder im Fachinformationssystem (einseitige Verknüpfung) oder gegenseitig in beiden Informationssystemen (gegenseitige Verknüpfung) erfolgen. Als Verknüpfungsmerkmale sind eindeutige Bezeichnungen zu definieren und zu führen. Diese können aus den o.a. Identifikatoren und / oder aus Fachkennzeichen der jeweiligen Datenbestände bestehen.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="basisschema_aaa_modellart">Modellart</h4>
+<div class="paragraph">
+<p>Das AA_Objekt besitzt das Attribut <em>modellart,</em> welches eine Zuordnung zu einer oder mehreren Modellarten darstellt. Die erweiterbare Codelist "AA_WeitereModellart" erlaubt die Erfassung beliebiger, z.B. länderspezifischer Modellarten. Die Eintragung und Pflege solcher Wertearten und Bezeichner wird im Rahmen der AdV-Registry für Codelisten geregelt.</p>
+</div>
+<div id="img_30" class="imageblock">
+<div class="content">
+<img src="media/image30.png" alt="media/image30" width="304" height="492">
+</div>
+<div class="title">Figure 21. Modellarten im Basisschema</div>
+</div>
+<div class="paragraph">
+<p>Die Enumeration AA_AdvStandardModell ist hingegen nicht erweiterbar und enthält die zulässigen Modellarten für die Anwendungsschemata der AdV. Durch die Angabe der Modellarten ist es möglich, sämtliche Elemente des Datenmodells (z.B. Objektarten, Attributarten etc.) einem oder mehreren Modellen zuzuordnen. Somit können trotz der einheitlichen und integrierten Modellierung unterschiedliche Fachsichten auf die Objekte der realen Welt abgebildet und in Form von fachspezifischen Objektartenkatalogen ausgegeben werden. Auswirkungen auf die NAS hat die Modellart jedoch nicht: Die NAS wird inhaltlich definiert durch das gesamte AAA-Anwendungsschema, wodurch auf der Ebene der Schnittstelle keine unterschiedlichen Fachsichten abgebildet werden können. Das bedeutet, es gibt nicht eine ATKIS- oder ALKIS-NAS, sondern nur <strong>die</strong> NAS.</p>
+</div>
+<div class="paragraph">
+<p>Wird bei Objekt-, Attribut-, oder Wertearten keine Modellart angegeben, gibt es keine Einschränkungen bei der Verwendung von Modellarten, d.h. diese Elemente können für beliebige Modellarten verwendet werden. Umgekehrt bedeutet dies, dass bei der Angabe von Modellarten alle nicht erwähnten Modellarten asugeschlossen werden.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="basisschema_aaa_loddef">LoD-Definition</h4>
+<div class="paragraph">
+<p>Der Level of Detail beschreibt die Detaillierungsstufe der 3D Geometrie eines raumbezogenen Elementarobjekts. Diese wird meistens durch die Erfassungs- bzw. Ableitungsmethode für die 3D Geometrie bestimmt. Es sollen nur die Level of Detail 1 bis 3 für ALKIS 3D verwendet werden. Die inverse Relationsrolle "detailliert" verweist auf das zugehörige raumbezogene Elementarobjekt mit einer 3D Geometrie in einer geringeren Detaillierungsstufe. Die Relationsrolle "generalisiert" verweist auf das zugehörige raumbezogene Elementarobjekt mit einer 3D Geometrie in einer höheren Detaillierungsstufe.</p>
+</div>
+<div class="paragraph">
+<p>Die 3D-Ergänzung unterstützt verschiedene Levels of Detail (LoD). LoDs werden benötigt, um Gebäude und andere 3D-Objekte einem bestimmten Detailierungsgrad zuzuordnen. Ebenso dienen sie der effizienten Visualisierung und Datenanalyse.</p>
+</div>
+<div class="paragraph">
+<p>Zur Definition der einzelnen LoD wurden folgende Dokumente herangezogen:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>07-062_Candidate_OpenGIS_CityGML_Implementation_Specification.pdf</p>
+</li>
+<li>
+<p>3D_Stadtmodelle, Eine Orientierungshilfe der AG Stadtmodelle des AK Kommunales Vermessungs- und Liegenschaftswesens des Städtetages NRW</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Der unterste Level LoD1 ist das Blockmodell, dort werden die Gebäude als einfacher Block mit Flachdach dargestellt. Der LoD2 stellt die unterschiedlichen Dachtypen dar, die Darstellung von Vegetation ist möglich. LoD3 ist der Level mit dem höchsten Detailierungsgrad. Dort werden detaillierte Wand- und Dachstrukturen, Vegetation und Straßenmöblierung abgebildet. Neben den visuellen Kriterien liegen den LoDs geometrische Mindestanforderungen zugrunde (siehe <a href="#tab_lod_1to3_mit_geometrischen_genauigkeiten">Table 1</a>):</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>die absolute Lage- und Höhengenauigkeit sowie</p>
+</li>
+<li>
+<p>die Grundfläche der darzustellenden Objekte.</p>
+</li>
+</ul>
+</div>
+<table id="tab_lod_1to3_mit_geometrischen_genauigkeiten" class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 1. LoD 1-3 mit geometrischen Genauigkeiten</caption>
+<colgroup>
+<col style="width: 31%;">
+<col style="width: 23%;">
+<col style="width: 23%;">
+<col style="width: 23%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top"></th>
+<th class="tableblock halign-left valign-top">LoD1</th>
+<th class="tableblock halign-left valign-top">LoD2</th>
+<th class="tableblock halign-left valign-top">LoD3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Absolute Lage-/ Höhengenauigkeit (besser als&#8230;&#8203;)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">5/5m</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2/1m</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0.5/0.5m</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Darstellung</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Objektblöcke als generalisierte Form; &gt;6*6m/3m</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Objekte als generalisierte Form; &gt;4*4m/2m</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Objekte als reale Form; &gt;2*2m/1m</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Dachform</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Flachdach</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Dachtyp und -ausrichtung</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Reale Form</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Fremdobjekte (Straßenmöbel)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Wichtige Objekte</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Prototypen</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Reale Form</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>In der Praxis wird es, in naher Zukunft, kein komplett texturiertes LoD geben. Aus diesem Grund bilden Texturierungen kein Kriterium für eine Einstufung in ein bestimmtes LoD und sind in allen LoD zugelassen.</p>
+</div>
+<div id="img_31" class="imageblock">
+<div class="content">
+<img src="media/image31.jpeg" alt="ALKIS3D_LOD1_Klein" width="418" height="418">
+</div>
+<div class="title">Figure 22. LoD 1</div>
+</div>
+<div id="img_32" class="imageblock">
+<div class="content">
+<img src="media/image32.jpeg" alt="ALKIS3D_LOD2_Klein" width="392" height="392">
+</div>
+<div class="title">Figure 23. LoD 2</div>
+</div>
+<div id="img_33" class="imageblock">
+<div class="content">
+<img src="media/image33.jpeg" alt="ALKIS3D_LOD3_2" width="397" height="397">
+</div>
+<div class="title">Figure 24. LoD 3</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="basisschema_aaa_geometriebibs">Nutzung von Geometriebibliotheken</h4>
+<div class="paragraph">
+<p>Die Nutzung von Geometriebibliotheken ist eine Erweiterung der Möglichkeiten der Geometrieabbildung im 3D-Bereich. Geometriebibliotheken können zur Einbindung von Prototypen verwendet werden. Beispiele hierfür sind im 3D-Bereich Bäume, Ampeln, Laternen usw. Jede prototypische Geometrie existiert nur einmal in einem lokalen, kartesischen Koordinatensystem. Diese kann im Datenbestand mehrfach, mittels URI eines speziellen Präsentationsobjektes, referenziert werden. Die prototypische Geometrie kann ein lokaler File, ein remote-File sein oder durch einen Webservice geliefert werden. Die Art der referenzierten Geometrie wird attributiv beschrieben. Die korrekte Darstellung dieser Mimetypes muss von der Visualisierungssoftware sichergestellt werden. Zur Festlegung der Positionierung der prototypischen Geometrie im Datenbestand dient eine 3D-Transformationsmatrix. Sie beinhaltet die 16 Parameter für Rotation, Translation und Skalierung der lokalen Geometrie. Die Geometrie ist ein <em>GM_MultiPoint</em>, da so Objekte mit gleichen Eigenschaften mehrfach im Datenbestand gesetzt werden können.</p>
+</div>
+<div class="paragraph">
+<p>Die Nutzung von Geometriebibliotheken hat einige Vorteile gegenüber der expliziten Repräsentation von Objekten mittels absoluten Koordinaten:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Speicher-effizienter als die explizite Geometrie,</p>
+</li>
+<li>
+<p>Umfangreiche Szenen können verarbeitet werden,</p>
+</li>
+<li>
+<p>Flexible Veränderung der Ausprägung von referenzierten Objekten (Austausch von Bibliotheksobjekten).</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>3D-Transformationsmatrix</strong></p>
+</div>
+<div id="img_34" class="imageblock">
+<div class="content">
+<img src="media/image34.png" alt="Matrix4x4" width="584" height="211">
+</div>
+<div class="title">Figure 25. 3D-Transformationsmatrix</div>
+</div>
+<div class="paragraph">
+<p>Der Datentyp <em>AP_TransformationsMatrix_3D</em> repräsentiert eine allgemeine Transformationsmatrix in der Speicherform eines Vektors. Das Prinzip ist an Szenengraphenkonzepte angelehnt, wie sie im Bereich der Computergraphik gebräuchlich sind. Die Matrix enthält alle erforderlichen Parameter für die Transformation von homogenen Koordinaten aus beliebigen rechtwinkligen Koordinatensystemen der Prototypen in das Koordinatensystem des 3D-Modells.</p>
+</div>
+<table id="tab_beispiel_nutzung_geometriebibliotheken" class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 2. Beispiel für die Nutzung von Geometriebibliotheken</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="imageblock">
+<div class="content">
+<img src="media/image35.png" alt="media/image35" width="275" height="261">
+</div>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Realwelt-Szene</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="imageblock">
+<div class="content">
+<img src="media/image36.png" alt="media/image36" width="261" height="259">
+</div>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>3D-Abbildung unter Nutzung von Geometriebibliotheken</p>
+</div>
+<div class="paragraph">
+<p>(Begrenzungspfähle, Laterne)</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="basisschema_historie">Historie, Versionskonzept</h3>
+<div class="paragraph">
+<p>Bei den AFIS-ALKIS-ATKIS-Daten besteht die Anforderung, Versionen und historische Daten zu führen. Der Umfang der Nutzung hängt vom Informationssystem und seiner Anwendung in den Ländern ab. Eine wesentliche Anwendung des Versionskonzeptes stellt das Verfahren zur Nutzerbezogenen Bestandsdatenaktualisierung (NBA) dar.</p>
+</div>
+<div class="paragraph">
+<p>Das Versionskonzept wurde unter Berücksichtigung folgender Modellierungsgrundsätze erarbeitet:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Im Anwendungsschema wird nicht zwischen aktuellen und historischen Versionen unterschieden. Werden historische Versionen dauerhaft gespeichert, spricht man von Vollhistorie. Bei der Vollhistorie müssen grundsätzlich keine eigenen historischen Objektarten gebildet werden, da sämtliche Änderungen nachvollziehbar sind. Zusätzlich kann jedoch optional die Objektart "Historisches Flurstück" geführt werden, wenn historische Daten flurstücksbezogen vorgehalten werden sollen.</p>
+</li>
+<li>
+<p>Historische Objekte und Objektversionen werden in der Migration genauso behandelt, wie aktuelle Objektversionen.</p>
+</li>
+<li>
+<p>Zu jedem Objekt sind ggf. neben den aktuellen auch die historischen Informationen gespeichert (Versionen).</p>
+</li>
+<li>
+<p>Die zum Teil redundante Speicherung von Attributen eines Objekts in mehreren Versionen wird zugunsten eines schnelleren Datenzugriffs auf die entsprechende Version in Kauf genommen.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Das Versionskonzept geht davon aus, dass jedes Fachobjekt einen Identifikator, Attribute und Relationen sowie ein Lebenszeitintervall führt (Entstehungs- und Untergangsdatum). Entstehungs- und Untergangsdatum beinhalten das Datum und die Zeitangabe bis zur Sekunde. Mit dem Eintrag eines Objekts in die Bestandsdaten wird die erste Version des Objekts erzeugt und in einen Objektbehälter eingetragen. Ändert sich aufgrund einer Fortführung eine nicht objektbildende Eigenschaft, so wird eine neue Version des Objekts erzeugt, die historisch gewordene erste Version bleibt jedoch innerhalb des Objektbehälters bestehen, d.h. der Identifikator wird nicht geändert. Die neue Version erhält ein Entstehungsdatum, das gleichzeitig das Untergangsdatum der vorhergehenden Version ist. Die einzelnen Versionen eines Objekts können anhand des Lebenszeitintervalls eindeutig unterschieden werden. Durch Auswertungen der verschiedenen Versionen eines Objekts lassen sich alle Veränderungen bezogen auf einen beliebigen Zeitraum ermitteln.</p>
+</div>
+<div class="paragraph">
+<p>Werden bei einer Fortführung objektbildende Eigenschaften geändert, führt dies aus fachlicher Sicht zum Untergang eines Objekts. Das Objekt wird historisiert, indem der letzten Version ein Untergangsdatum zugewiesen wird. Das Objekt bleibt weiterhin im Datenbestand erhalten. Zu einem beliebigen Zeitpunkt hat eine Version alle zu diesem Zeitpunkt gültigen Attribute und Relationen. Durch "Klammerung" der Versionen innerhalb eines Objektbehälters bleibt die fachliche Objektsicht stets erhalten. Durch Einführung neuer Referenzversionen des AAA-Modells können Modellelemente wegfallen. Aus Gründen der Abwärtskompatibilität können im Zuge der Migration von der bisherigen auf die neue Referenzversion u.a. neue Objekte entstehen. Dies stellt bzgl. der Historienkontinuität bei Vollhistorie eine Besonderheit dar.</p>
+</div>
+<div class="paragraph">
+<p><strong>Festlegung objektbildender Eigenschaften im AAA-Modell in UML</strong></p>
+</div>
+<div class="paragraph">
+<p>Im AAA-Modell in UML sind bei Attributen und Relationen Aussagen untergebracht, die festlegen, wie sich darauf bezogene Fortführungen auswirken. Diese finden sich im jeweils zum/zur Attribut/Relation gehörigen Reiter "Tagged Values" im Feld "AAA objektbildend" in Form der Belegung mit dem Wert True oder False. Alle Eintragungen im offiziell veröffentlichten AAA-Modell wurden durch die AdV vorgenommen. Im Folgenden Erläuterungen zu den getroffenen Festlegungen:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><strong>Festlegung im<br>
+UML-Modell</strong></p>
+</div>
+<div class="paragraph">
+<p><strong>(Reiter AAA / <em>objektbildend</em> zum/zur jew. Attribut/Relation)</strong></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Status der Festlegung im Reiter AAA / objektbildend</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">True</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Unabänderliche AdV-Festlegung</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">False</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">AdV-seitig vorgegebener Rahmen, d.h. es kann länderspezifisch True oder False gesetzt werden*.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>(*Diese Möglichkeit der Unterbringung länderspezifischer Festsetzungen ist im AAA-Modell die absolute Ausnahme).</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><strong>Festlegung im UML-Modell</strong></p>
+</div>
+<div class="paragraph">
+<p><strong>(Reiter AAA / <em>objektbildend</em> zum/zur jew. Attribut/Relation)</strong></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Auswirkungen der Festlegung von Spalte 1 bei Veränderung betroffener Attribute/Relationen in einer Erhebungs-komponente</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">True</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Neues Objekt entsteht</p>
+</div>
+<div class="paragraph">
+<p>(Delete &#43; Insert)</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">False</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Neue Objektversion entsteht</p>
+</div>
+<div class="paragraph">
+<p>(Replace)</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<div id="img_37" class="imageblock">
+<div class="content">
+<img src="media/image37.png" alt="media/image37" width="951" height="515">
+</div>
+<div class="title">Figure 26. Versionierungsschema</div>
+</div>
+<div class="paragraph">
+<p><strong>Beispiel zum Versionskonzept</strong></p>
+</div>
+<div class="paragraph">
+<p><strong>Änderung von Attributen</strong></p>
+</div>
+<div class="paragraph">
+<p>Frau Hilde Huber wird zum Zeitpunkt t<sub>1</sub> in ALKIS eingetragen, d.h. es wird ein neues Objekt der Objektart <em>Person</em> gebildet:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 12%;">
+<col style="width: 22%;">
+<col style="width: 12%;">
+<col style="width: 11%;">
+<col style="width: 11%;">
+<col style="width: 11%;">
+<col style="width: 21%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock"><strong>Version</strong></p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock"><strong>Identifikator</strong></p></td>
+<td class="tableblock halign-left valign-top" colspan="2"><p class="tableblock"><strong>Zeitintervall</strong></p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock"><strong>Name</strong></p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock"><strong>Vorname</strong></p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock"><strong>hat_Anschrift</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Beginn</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Ende</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Version 1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DEBU5t44dFzb70Lg</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">t<sub>1</sub></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">t<sub>∞</sub></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Huber</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Hilde</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DEBUf88FFgVc761s</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Die Zeitangabe 't<sub>∞</sub> ' bedeutet, dass der fachliche Untergang des Objekts bzw. der Version in der Zukunft liegt. Zum Zeitpunkt t<sub>2</sub> ändert Frau Huber ihren Namen und heißt nun Meier, d.h. vom Objekt "DEBU5t44dFzb70Lg" der Objektart <em>Person</em> wird aufgrund der Änderung des Attributs <em>Name</em> eine neue Version angelegt:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 12%;">
+<col style="width: 22%;">
+<col style="width: 12%;">
+<col style="width: 11%;">
+<col style="width: 11%;">
+<col style="width: 11%;">
+<col style="width: 21%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock"><strong>Version</strong></p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock"><strong>Identifikator</strong></p></td>
+<td class="tableblock halign-left valign-top" colspan="2"><p class="tableblock"><strong>Zeitintervall</strong></p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock"><strong>Name</strong></p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock"><strong>Vorname</strong></p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock"><strong>hat_Anschrift</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Beginn</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Ende</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Version 1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DEBU5t44dFzb70Lg</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">t<sub>1</sub></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">t<sub>2</sub></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Huber</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Hilde</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DEBUf88FFgVc761s</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Version 2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DEBU5t44dFzb70Lg</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">t<sub>2</sub></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">t<sub>∞</sub></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Meier</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Hilde</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DEBUf88FFgVc761s</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Der Zeitpunkt des Untergangs der Version 1 ist identisch mit dem Entstehungsdatum der Version 2 des Objekts. Zum Zeitpunkt t<sub>3</sub> verkauft Frau Meier ihr einziges Grundstück. Da sie sonst keine weitere Rolle in ALKIS innehat, geht das Objekt aus fachlicher Sicht unter:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 12%;">
+<col style="width: 22%;">
+<col style="width: 12%;">
+<col style="width: 11%;">
+<col style="width: 11%;">
+<col style="width: 11%;">
+<col style="width: 21%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock"><strong>Version</strong></p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock"><strong>Identifikator</strong></p></td>
+<td class="tableblock halign-left valign-top" colspan="2"><p class="tableblock"><strong>Zeitintervall</strong></p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock"><strong>Name</strong></p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock"><strong>Vorname</strong></p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock"><strong>hat_Anschrift</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Beginn</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Ende</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Version 1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DEBU5t44dFzb70Lg</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">t<sub>1</sub></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">t<sub>2</sub></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Huber</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Hilde</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DEBUf88FFgVc761s</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Version 2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DEBU5t44dFzb70Lg</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">t<sub>2</sub></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">t<sub>3</sub></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Meier</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Hilde</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DEBUf88FFgVc761s</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Die Version 2 und damit das gesamte Objekt werden historisiert, nicht gelöscht.</p>
+</div>
+<div class="paragraph">
+<p>Jede neue Version eines Objektes erhält eigene Relationen, die von ihr ausgehen. Relationen gehen stets von einer bestimmten Version des Objektes aus, d.h. eine Relation von einer Version zu einem anderen Objekt ist nur für diese eine Version gültig. Auf diese Weise werden sämtliche im Objektartenkatalog spezifizierten Kardinalitäten eingehalten.</p>
+</div>
+<div class="paragraph">
+<p>Dies wird anhand des oben beschriebenen Beispiels erläutert: Frau Hilde Huber, Anschrift Ottostraße 17 in München, wird zum Zeitpunkt t<sub>1</sub> in ALKIS eingetragen, d.h. es werden ein Objekt der Objektart <em>Person</em> und ein Objekt der Objektart <em>Anschrift</em> gebildet. Zum Zeitpunkt t<sub>2</sub> ändert Frau Huber ihren Namen und heißt fortan Meier. Es wird eine neue Version des Objektes <em>Person</em> angelegt.</p>
+</div>
+<div class="paragraph">
+<p>In <a href="#img_38">Figure 27</a> repräsentieren die Pfeile eine Relation. Die Richtung des Pfeils gibt gleichzeitig die Richtung der Relation an. Die neue Version des Objektes <em>Person</em> erhält wiederum eine Relation zum entsprechenden Objekt <em>Anschrift</em>. Das Objekt <em>Anschrift</em> selbst wird allerdings nicht versioniert, da die Relation zum Objekt <em>Person</em> unverändert bleibt. Ebenso würde eine neue Version des Objektes <em>Anschrift</em>, z. B. durch Berichtigung nach einem Schreibfehler, keine Änderung des Objektes <em>Person</em> bewirken.</p>
+</div>
+<div class="paragraph">
+<p>An diesem Beispiel ist auch erkennbar, dass eine Relation stets von der Version über den Identifikator auf den Objektbehälter zeigt und nicht auf eine Version. Der Objektbehälter bildet somit eine Art Klammer um seine verschiedenen Versionen.</p>
+</div>
+<div id="img_38" class="imageblock">
+<div class="content">
+<img src="media/image38.png" alt="media/image38" width="563" height="414">
+</div>
+<div class="title">Figure 27. Beispiel zur Versionierung nach Änderung von Attributen</div>
+</div>
+<div class="paragraph">
+<p>Mit dieser Technik können nur Relationen abgebildet werden, die sich auf die jeweils aktuelle Version der beteiligten Objekte beziehen.</p>
+</div>
+<div class="paragraph">
+<p><strong>Änderung von Relationen</strong></p>
+</div>
+<div class="paragraph">
+<p>Änderungen bei Relationen führen ebenso zur Versionierung von Objekten wie Attributänderungen. Relationen ändern sich immer dann, wenn das Objekt, auf das die Relation zeigt, neu entsteht, ausgetauscht wird oder wegfällt.</p>
+</div>
+<div class="paragraph">
+<p>In einem modifizierten Beispiel zur <a href="#img_38">Figure 27</a> wird dies in <a href="#img_39">Figure 28</a> erläutert. Frau Hilde Huber zieht zum Zeitpunkt t<sub>3</sub> um, von der Ottostraße 17 in München, zur Platanenallee 34a in Berlin. Das Objekt <em>Anschrift</em> mit der OID "DEBUf88FFgVc761s", auf welches die Relation <em>hat_Anschrift</em> vom Objekt <em>Person</em> ausgehend zeigt, wird ausgetauscht (neue OID "DEBUk41233THjbkO"). Damit ändert sich die betreffende Relation beim Objekt <em>Person</em> und das Objekt <em>Person</em> muss versioniert werden.</p>
+</div>
+<div id="img_39" class="imageblock">
+<div class="content">
+<img src="media/image39.png" alt="media/image39" width="578" height="309">
+</div>
+<div class="title">Figure 28. Beispiel zur Versionierung nach Änderung von Relationen</div>
+</div>
+<div class="paragraph">
+<p>Tabellarisch ergibt sich folgendes Bild:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 12%;">
+<col style="width: 22%;">
+<col style="width: 12%;">
+<col style="width: 11%;">
+<col style="width: 11%;">
+<col style="width: 11%;">
+<col style="width: 21%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock"><strong>Version</strong></p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock"><strong>Identifikator</strong></p></td>
+<td class="tableblock halign-left valign-top" colspan="2"><p class="tableblock"><strong>Zeitintervall</strong></p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock"><strong>Name</strong></p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock"><strong>Vorname</strong></p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock"><strong>hat_Anschrift</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Beginn</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Ende</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Version 1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DEBU5t44dFzb70Lg</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">t<sub>1</sub></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">t<sub>2</sub></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Huber</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Hilde</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DEBUf88FFgVc761s</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Version 2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DEBU5t44dFzb70Lg</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">t<sub>2</sub></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">t<sub>3</sub></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Meier</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Hilde</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DEBUf88FFgVc761s</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Version 3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DEBU5t44dFzb70Lg</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">t<sub>3</sub></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">t<sub>∞</sub></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Meier</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Hilde</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DEBUk41233THjbkO</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="basisschema_abwaertskompatibilitaet">Abwärtskompatibilität</h3>
+<div class="paragraph">
+<p>Um die Versionierung der GeoInfoDok durch die AdV und die Einführung neuer Referenzversionen bei den AdV-Mitgliedsverwaltungen zu erleichtern, können aus dem Datenmodell entfernte Elemente in den Bestandsdaten bei der Einführung einer neuen Referenzversion weiterverwendet werden. Grundsätzliche modellierungstechnische Voraussetzung ist allerdings, dass auf Änderungen verzichtet wird, die eine Abwärtskompatibilität verhindern, was nicht in allen Fällen möglich ist.</p>
+</div>
+<div class="paragraph">
+<p>Zur Realisierung einer weitgehenden Abwärtskompatibilität zur Vorgängerversion wurden in der GeoInfoDok-Version (7.0.3) einige der Änderungen der Version 7.0 wieder rückgängig gemacht, um die grundsätzliche Möglichkeit zu schaffen, die in der Version 6.0.1 untergegangenen Elemente weiter zu verwenden.</p>
+</div>
+<div class="paragraph">
+<p>Um klarzustellen, dass bestimmte Informationen nur noch wegen der Abwärtskompatibilität im Anwendungsschema geführt werden, werden die betroffenen Objekt-, Attribut-, Relations- und Wertearten durch Tagged Value im UML-Datenmodell gekennzeichnet.</p>
+</div>
+<div class="paragraph">
+<p>Zur Kennzeichnung von Informationen, die nur noch wegen der Abwärtskompatibilität im Anwendungsschema enthalten sind, werden daher die betroffenen Objekt-, Attribut-, Relations- und Wertearten in Anlehnung an ISO 19135-1 durch ein Stereotype "retired" [stillgelegt] im UML-Modell gekennzeichnet. Eine Ausgabe der mit "stillgelegt" gekennzeichneten Elemente in den abgeleiteten Objektartenkatalogen ist mit den AdV-Tools möglich. Zusätzlich wird in einem Tagged Value die Version der GeoInfoDok angegeben, bis zu der das stillgelegte Element gültig war ("gültig bis").</p>
+</div>
+<div id="img_40" class="imageblock">
+<div class="content">
+<img src="media/image40.png" alt="media/image40" width="190" height="131">
+</div>
+<div class="title">Figure 29. Beispiel für eine zurückgezogene Objektart (AX_Grenzuebergang)</div>
+</div>
+<div id="img_41" class="imageblock">
+<div class="content">
+<img src="media/image41.png" alt="media/image41" width="448" height="174">
+</div>
+<div class="title">Figure 30. Beispiel für eine zurückgezogene Attributart ('bezeichnung' in AX_Schleuse)</div>
+</div>
+<div class="paragraph">
+<p>Bei der Migration werden alle Objekte/Objektversionen, auch die bereits historisierten, in das Modell der neuen Version migriert. Sofern ein Objekt noch aktuell ist, aber nur noch wegen der Abwärtskompatibilität geführte Modellelemente verwendet, ist die Objektversion - und das gesamte Objekt - mit der Migration zu beenden und ein neues Objekt (oder mehrere) gemäß dem Anwendungsschema der neuen GeoInfoDok-Version zum selben Zeitpunkt neu zu erzeugen.</p>
+</div>
+<div class="paragraph">
+<p>Beispiel: Ein noch aktuelles Objekt, das derzeit eine "wegfallende" Werteart verwendet. In diesen Fällen werden mit der Migration die aktuellen Objektversionen beendet und neue Objektversionen aktuell, die nicht mehr die "zurückgezogenen" Eigenschaften (Attributarten und Relationsarten) oder Wertearten verwenden.</p>
+</div>
+<div class="paragraph">
+<p>Die bessere Abwärtskompatibilität bietet auch Möglichkeiten zur Rückmigration von Daten, was auch der föderalen Führung der AAA-Geobasisdaten entgegenkommt und mehr Flexibilität beim Einführungsdatum einer neuen Version ermöglicht. Zu beachten ist, dass eine Rückmigration in Vorgängerversionen der GeoInfoDok mit vertretbarem Aufwand in der Regel nie vollständig erfolgen kann.</p>
+</div>
+<div class="paragraph">
+<p><strong>Lückenlose historische Recherchen und Datenabgaben</strong></p>
+</div>
+<div class="paragraph">
+<p>Bei den Daten haltenden Stellen besteht neben einer verbesserten Abwärtskompatibiliät zudem der Bedarf, dass historische Objekte (d.h. historische Objektversionen und geschlossene Objektbehälter) auch in Nachfolgeversionen der GeoInfoDok enthalten bleiben. Dabei wurden folgende Anforderungen berücksichtigt:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Historische Abfragen für die Erzeugung von Bestandsdatenauszügen und NBA sind möglich und liefern dieselben fachlichen Ergebnisse wie vor der Migration.</p>
+</li>
+<li>
+<p>Bestehende NBA-Verfahren werden ohne erneute Grundausstattung weiter unterstützt.</p>
+</li>
+<li>
+<p>Eine Abgabe an Nutzer, die ggf. noch in der alten GeoInfoDok-Version (FinV, Grundbuch, Statistik, Bundesnetzagentur, etc.) arbeiten, ist in der alten Struktur möglich.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Auswirkungen der Abwärtskompatibilität auf die NAS</strong></p>
+</div>
+<div class="paragraph">
+<p>Die Festlegungen zur besseren Abwärtskompatibilität wirken sich auf die NAS folgendermaßen aus:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>In den neuen XML-Schemadateien tauchen die alten (gelöschten) Elemente in unveränderter Form noch auf, d.h. die Schemadateien werden lediglich durch die neu hinzugekommenen Elemente ergänzt</p>
+</li>
+<li>
+<p>Die XML-Validierung mittels Schemadatei unterscheidet nicht zwischen "retired" und aktuellen Elementen<em>.</em>Gleichwohl gelten hier die Regeln der GeoInfoDok (Modell und Hauptdokument). Beispiel: in der 7.0.3 darf bei der OA_Schleuse das Attribut "Bezeichnung" nicht mehr erscheinen.</p>
+</li>
+<li>
+<p>Annahme: Nur die jeweils aktuelle Referenzversion ist implementiert. Daraus werden abgelöste Referenzversionen bedient. Bei der Einführung weiterer Versionen muss noch geklärt werden, wie weit zurück die Abwärtskompatibilität mit vertretbarem Aufwand realisiert werden kann.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Auswirkungen der Abwärtskompatibilität auf die Datenführung</strong></p>
+</div>
+<div class="paragraph">
+<p>Die Festlegungen zur besseren Abwärtskompatibilität wirken sich auf die Datenführung folgendermaßen aus:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>In der Implementierung der GeoInfoDok-Referenzversion dürfen Elemente, die mit "retired" gekennzeichnet sind, nicht mehr in Ausgaben (Bestandsdatenauszüge, NAS, Ausgabeprodukte) dieser Referenzversion vorkommen, ausgenommen entsprechende Rückmigrationsausgaben.</p>
+</li>
+<li>
+<p>Solange Datenbestände geführt werden, die auf zurückgezogenen (retired) Elementen basieren, können historisierte Daten aus der Datenbank nicht gelöscht werden.</p>
+</li>
+<li>
+<p>Ein Benutzungsauftrag bzw. eine NBA lässt anhand seines Namensraumes erkennen, ob er, bzw. sie eine rückmigrierte Benutzung oder eine aktuelle ist.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Änderungen bei Benutzungsaufträgen, wie z.B. der Nutzerbezogenen Bestandsdatenaktualisierung</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Die Einführung von "retired"-Elementen wird nur bei den AAA-Bestandsdaten berücksichtigt, nicht aber bei Elementen zur Datenführung, wie z.B. dem NBA-Verfahren. Gleichwohl werden die Änderungen im Folgenden beschrieben, die für das NBA-Verfahren notwendig sind, um die Abwärtskompatibilität zu realisieren:Die AX_BenutzergruppeNBA wurde um ein Attribut &lt;abgabeversion&gt; mit einer Enumerationsliste der zulässigen Versionen als Pflichtattribut erweitert.</p>
+<div id="img_42" class="imageblock">
+<div class="content">
+<img src="media/image42.png" alt="media/image42" width="371" height="170">
+</div>
+<div class="title">Figure 31. Neue Attributart 'abgabeversion' zur Selektion von Objekten verschiedener GeoInfoDok-Versionen</div>
+</div>
+</li>
+<li>
+<p>Die Enumerationsliste besteht aus den Informationen der alten und aktuellen Referenzversion, hier "6.0.1" und "7.1.2". Es ist die volle Versionsnummer anzugeben und nicht nur der Namespace.</p>
+</li>
+<li>
+<p>Für Bestandsdatenauszüge reicht der Benutzungsauftrag im jeweiligen Namespace, um Daten im alten Format abgeben zu können.</p>
+</li>
+<li>
+<p>Objektarten, die mit Einführung einer neuen Version "retired" werden, sind nur bis zur Vorgängerversion gültige Objektarten. Beispiel: OA_Grenzuebergang wird mit der Version 7.1.2 "retired", dann ist diese OA nur bis zur letzten Version, 6.0.1, gültig. In der OA wird ein entsprechendes "Tagged Value" gesetzt.</p>
+</li>
+<li>
+<p>In der NAS-XSD sind alle Objektarten enthalten, unabhängig davon, ob "retired" oder nicht. Eine Unterscheidung ist nicht möglich. Mit der Benutzung in einer Vorgängerversion der GeoInfoDok werden</p>
+<div class="ulist">
+<ul>
+<li>
+<p>auch sämtliche OA selektiert, die mit der Selektionsversion retired wurden oder schon waren</p>
+</li>
+<li>
+<p>alle optionalen Elemente der neuen Version rückmigriert oder weggelassen; Rückmigrationsregeln sind zu erstellen und zu beachten.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Rückmigration ist nur möglich, solange Abwärtskompatibilität gewährleistet ist. Bei neuen Vollversionen (Änderung der ersten Stelle) ist die Abgabe in die Vorgängerversion nur eingeschränkt möglich. Die rückmigrierbaren und nicht-rückmigrierbaren Elemente sind anzugeben (z.B. in einer Migrationstabelle).</p>
+</li>
+<li>
+<p>Bei der Einführung neuer Vollversionen mit ggf. vielen nicht-abwärtskompatiblen Änderungen ist aus fachlicher Sicht zu prüfen, ab wann die Abgabe in das alte System nicht mehr sinnvoll möglich ist (z.B. neue Werteart bei Pflichtattribut ist nicht rückmigrierbar, da es keine 9998 mehr gibt).</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="basisschema_qaundmetadaten">Qualitäts- und Metadaten</h3>
+<div class="paragraph">
+<p>Das gemeinsame AFIS-ALKIS-ATKIS-Datenmodell sieht die Erfassung und Führung von Qualitäts- und Metadaten auf der Grundlage der ISO-Normen:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>ISO 19109 Geographic Information - Rules for Application Schema,</p>
+</li>
+<li>
+<p>ISO 19113 Geographic Information - Quality Principles,</p>
+</li>
+<li>
+<p>ISO 19114 Geographic Information - Quality Evaluation Procedures und</p>
+</li>
+<li>
+<p>ISO 19115-1 Geographic Information - Metadata</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>vor.</p>
+</div>
+<div class="paragraph">
+<p>Die <strong>Qualitätsdaten</strong> werden dabei nach nicht quantifizierbaren Überblicksinformationen (Zweck, Verwendung und Historie) und quantifizierbaren Informationen (den Datenqualitäts-Elementen <em>Vollständigkeit</em>, <em>logische Konsistenz</em>, <em>geometrische</em>, <em>inhaltliche und zeitliche Genauigkeit</em>) unterschieden.</p>
+</div>
+<div class="paragraph">
+<p>Die Angabe der Qualitätsinformationen erfolgt als Metadaten gemäß der Norm ISO 19115 und darüber hinaus für quantitative, aggregierte Qualitätsangaben bei Bedarf in Form von detaillierten Qualitäts-Bewertungsprotokollen gemäß Norm ISO 19114, was jedoch nicht Bestandteil der GeoInfoDok ist und daher hier nicht weiter spezifiziert wird.</p>
+</div>
+<div class="paragraph">
+<p>Beispiel für eine Qualitätsangabe zu einem Punktort mit den folgenden Eigenschaften:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><em>Datenerhebung 'Aus Katastervermessung ermittelt (1000)'</em></p>
+</li>
+<li>
+<p><em>Erhebungsdatum '01.04.1990'</em></p>
+</li>
+<li>
+<p><em>Erhebungsstelle Katasteramt X</em></p>
+</li>
+<li>
+<p><em>Berechnungsdatum '01.01.1994'</em></p>
+</li>
+<li>
+<p><em>keine Angabe zur berechnenden Stelle</em></p>
+</li>
+<li>
+<p><em>Genauigkeitswert 0,022 m</em></p>
+</li>
+<li>
+<p><em>Genauigkeitsstufe 2000</em></p>
+</li>
+<li>
+<p><em>Vertrauenswürdigkeit 1200</em></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Diese Qualitätsangaben werden in der NAS wie folgt kodiert:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;AX_DQPunktort xmlns="http://www.adv-online.de/namespaces/adv/gid/7.1" xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:gml="http://www.opengis.net/gml/3.2"
+  xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xsi:schemaLocation="http://www.adv-online.de/namespaces/adv/gid/7.1 http://repository.gdi-de.org/schemas/adv/nas/7.1/aaa.xsd"&gt;
+  &lt;herkunft&gt;
+    &lt;gmd:LI_Lineage&gt;
+      &lt;gmd:processStep&gt;
+        &lt;gmd:LI_ProcessStep&gt;
+          &lt;gmd:description&gt;
+            &lt;AX_LI_ProcessStep_Punktort_Description&gt;Erhebung&lt;/AX_LI_ProcessStep_Punktort_Description&gt;
+          &lt;/gmd:description&gt;
+          &lt;gmd:dateTime&gt;
+            &lt;gco:DateTime&gt;1990-04-01T00:00:00Z&lt;/gco:DateTime&gt;
+          &lt;/gmd:dateTime&gt;
+          &lt;gmd:processor&gt;
+            &lt;gmd:CI_ResponsibleParty&gt;
+              &lt;gmd:organisationName&gt;
+                &lt;gco:CharacterString&gt;Katasteramt X&lt;/gco:CharacterString&gt;
+              &lt;/gmd:organisationName&gt;
+              &lt;gmd:role&gt;
+                &lt;gmd:CI_RoleCode codeList="http://schemas.opengis.net/iso/19139/20070417/resources/Codelist/gmxCod
+
+elists.xml#CI_RoleCode" codeListValue="processor"&gt;processor&lt;/gmd:CI_RoleCode&gt;
+              &lt;/gmd:role&gt;
+            &lt;/gmd:CI_ResponsibleParty&gt;
+          &lt;/gmd:processor&gt;
+          &lt;gmd:source&gt;
+            &lt;gmd:LI_Source&gt;
+              &lt;gmd:description&gt;
+                &lt;AX_Datenerhebung_Punktort&gt;1000&lt;/AX_Datenerhebung_Punktort&gt;
+              &lt;/gmd:description&gt;
+            &lt;/gmd:LI_Source&gt;
+          &lt;/gmd:source&gt;
+        &lt;/gmd:LI_ProcessStep&gt;
+      &lt;/gmd:processStep&gt;
+      &lt;gmd:processStep&gt;
+        &lt;gmd:LI_ProcessStep&gt;
+          &lt;gmd:description&gt;
+            &lt;AX_LI_ProcessStep_Punktort_Description&gt;Berechnung&lt;/AX_LI_ProcessStep_Punktort_Description&gt;
+          &lt;/gmd:description&gt;
+          &lt;gmd:dateTime&gt;
+            &lt;gco:DateTime&gt;1994-01-01T00:00:00Z&lt;/gco:DateTime&gt;
+          &lt;/gmd:dateTime&gt;
+        &lt;/gmd:LI_ProcessStep&gt;
+      &lt;/gmd:processStep&gt;
+    &lt;/gmd:LI_Lineage&gt;
+  &lt;/herkunft&gt;
+  &lt;genauigkeitswert&gt;
+    &lt;gmd:DQ_RelativeInternalPositionalAccuracy&gt;
+      &lt;gmd:result&gt;
+        &lt;gmd:DQ_QuantitativeResult&gt;
+          &lt;gmd:valueUnit xlink:href="urn:adv:uom:m"/&gt;
+          &lt;gmd:value&gt;
+            &lt;gco:Record xsi:type="gml:doubleList"&gt;0.022&lt;/gco:Record&gt;
+          &lt;/gmd:value&gt;
+        &lt;/gmd:DQ_QuantitativeResult&gt;
+      &lt;/gmd:result&gt;
+    &lt;/gmd:DQ_RelativeInternalPositionalAccuracy&gt;
+  &lt;/genauigkeitswert&gt;
+  &lt;genauigkeitsstufe&gt;2000&lt;/genauigkeitsstufe&gt;
+  &lt;vertrauenswuerdigkeit&gt;1200&lt;/vertrauenswuerdigkeit&gt;
+&lt;/AX_DQPunktort&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Vorgaben:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Gemäß <a href="#nasschema_encrules_input">[nasschema_encrules_input]</a> (letzter Spiegelstrich) sowie <a href="#nasschema_encrules_schemaabbildungsregeln">[nasschema_encrules_schemaabbildungsregeln]</a> (erster Absatz) <mark><strong>TBD:</strong> Sind das immer noch die passenden Referenzen?</mark> und dem darin referenzierten ISO/TS 19139 8.5.4 ist für Enumerationen das spezifische Element aus dem AAA-Fachschema, welches gco:CharacterString substituiert, zu verwenden.</p>
+</li>
+<li>
+<p>Wird eine Quelle zu einem Prozesschritt angegeben, so wird diese in den LI_ProcessStep eingebettet, um eine Zuordnung zu ermöglichen. Die Elemente des UML-Modells werden somit bei der Ableitung der XML-Schemadateien in eine ISO-konforme Struktur überführt (das UML-Modell enthält Vereinfachungen, die im Shape-Change-Prozess ISO-konform abgebildet werden).</p>
+</li>
+<li>
+<p>Sofern eine Stelle zu einer Erhebung oder Berechnung angegeben wird, ist als Rolle "processor" anzugeben.</p>
+</li>
+<li>
+<p>In der Rollenangabe ist ein Codelistenverweis erforderlich, der gemäß ISO/TS 19139 8.5.5 eine URL sein muss. Im Beispiel ist eine URL auf ein Code-List-Dictionary im OGC-Schemarepository angegeben. Dies kann alternativ - wie bei Schemaverweisen - auch ein anderer gültiger Verweis auf ein Code-List-Dictionary sein.</p>
+</li>
+<li>
+<p>Der Name der verantwortlichen Stelle wird im Klartext angegeben.</p>
+</li>
+<li>
+<p>Bei den Einheiten des Genauigkeitswerts sind nur die in der GeoInfoDok 8.2.2 angegebenen Einheiten erlaubt.</p>
+</li>
+<li>
+<p>Gemäß Beispiel in ISO/TS 19139 9.7.4.1.4 d) soll bei gco:Record der Datentyp in xsi:type angegeben werden. Im Fall von Koordinatengenauigkeiten soll dies "doubleList" aus dem GML-Schema sein, da Genauigkeitsangaben ein oder mehrere Werte enthalten können. Es wird die Einheit "m" verwendet, gemäß <a href="#crsuom_uom_aaa_angabe">[crsuom_uom_aaa_angabe]</a> "urn:adv:uom:m".</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Metadaten</strong> sind "Daten über Daten" und dienen der Beschreibung der Geodaten hinsichtlich nutzerrelevanter Aspekte zur Bewertung der Eignung der Daten und des Zugriffs auf dieselben. ISO unterscheidet etwa 400 optionale, obligatorische und bedingt obligatorische Metadatenelemente, gegliedert in inhaltliche Einheiten (entities) sowie in die folgenden Abschnitte (sections):</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Identifikation,</p>
+</li>
+<li>
+<p>Datenqualität,</p>
+</li>
+<li>
+<p>Fortführung,</p>
+</li>
+<li>
+<p>Raumbezogene Eigenschaften,</p>
+</li>
+<li>
+<p>Referenzsystem,</p>
+</li>
+<li>
+<p>Ausdehnung,</p>
+</li>
+<li>
+<p>Inhalt,</p>
+</li>
+<li>
+<p>Anwendungsschema,</p>
+</li>
+<li>
+<p>Signaturenkatalog,</p>
+</li>
+<li>
+<p>Vertrieb,</p>
+</li>
+<li>
+<p>Nutzungsbedingungen.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Qualitäts- und Metadaten können gemäß ISO für einen Datenbestand (Sammlung von logisch zusammengehörigen Objekten), für Berichtsgruppen (Teilmengen eines Datenbestandes) und für einzelne Objekte angegeben werden.</p>
+</div>
+<div class="paragraph">
+<p>Der gemeinsame AFIS-ALKIS-ATKIS-Metadatenkatalog wird weiter unten näher beschrieben.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="basisschema_oks">Objektartenkataloge</h3>
+<div class="paragraph">
+<p>Die Struktur der Objektartenkataloge ist durch die ISO-Norm 19110 <em>Feature Cataloguing Methodology</em> vorgegeben. Aufgrund der Objektorientierung ist es auch möglich, die Methoden im Objektartenkatalog zu beschreiben, wovon im AAA-Datenmodell bislang allerdings nur selten Gebrauch gemacht wurde. Die Vorgaben zur Struktur eines Objektartenkatalogs sind logisch getrennt zu sehen von der Beschreibung dieser Objektarten in einem Datenmodell. Daher ist das Schema "AAA-Objektartenkatalog" außerhalb des AAA-Anwendungsschemas eigenständig modelliert. Das gleiche gilt für die Vorgaben zur Beschreibung der Ausgaben, Signaturen und Präsentationsvorschriften. Das gemeinsame Anwendungsschema erweitert diese Strukturen im Paket <em>AAA-Katalog</em> um einige Inhalte, die für die Anwendungen AFIS, ALKIS und ATKIS zusätzlich benötigt werden.</p>
+</div>
+<div class="paragraph">
+<p>Kataloge werden zur einfacheren Implementierung ausschließlich vollständig versioniert und ausgetauscht.</p>
+</div>
+<div id="img_43" class="imageblock">
+<div class="content">
+<img src="media/image43.png" alt="media/image43" width="586" height="366">
+</div>
+<div class="title">Figure 32. Erweiterungen der genormten Struktur der Objektartenkataloge</div>
+</div>
+<div class="paragraph">
+<p>Die Objektartenkataloge werden mit Hilfe eines Skripts direkt aus dem UML-Datenmodell abgeleitet und als editier- und lesbare Formate PDF und HTML veröffentlicht.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="basisschema_ausgabekatalog">Ausgabekatalog</h3>
+<div class="paragraph">
+<p>Die GeoInfoDok wird in der Modellierungssprache UML originär in Enterprise Architect (EA) modelliert. Im Rahmen der Modularisierung wurde auch der AFIS-ALKIS-ATKIS-Ausgabekatalog (AAA_AK) aus dem AFIS-ALKIS-ATKIS-Anwendungschema (Paket NAS-Operationen) exportiert und kann damit auch eine eigenständige Versionierung erfahren. Neben den Schemadateien des AAA-Anwendungsschemas (NAS-Operationen.xsd, aaa.xsd, AAA-Fachschema.xsd, AAA-Basisschema.xsd) gibt es auch die des Ausgabekataloges (AAA-Ausgabekatalog.xsd).</p>
+</div>
+<div class="paragraph">
+<p>Der AFIS-ALKIS-ATKIS-Ausgabekatalog (AAA_AK) beschreibt die Inhalte der Standardausgaben der AdV. Insbesondere sind dies die AFIS-Einzelpunktnachweise, die AFIS-Punktlisten und die beschreibenden ALKIS-Standardausgaben und ALKIS-Ausgaben.</p>
+</div>
+<div class="paragraph">
+<p>Im AAA_AK sind die Regeln zur Auswertung der Bestandsdaten in verbaler Form hinterlegt, damit in den Ergebnissen immer 'menschen&#8217;lesbare Informationen entstehen. Die weitere Verwendung dieser Daten in den zugehörigen Standardprodukten wird dann in den nicht formalisierten Signaturenkatalogen für AFIS und ALKIS beschrieben.</p>
+</div>
+<div class="paragraph">
+<p>Der AAA_AK ist auch in der Form eines Objektartenkatalogs veröffentlicht.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="basisschema_sks">Signaturenkataloge</h3>
+<div class="paragraph">
+<p>Bei den Signaturenkatalogen wird zwischen den 'formalisierten' und 'nicht formaltisierten' Signaturenkatalogen unterschieden.</p>
+</div>
+<div class="paragraph">
+<p>Die nicht formalisierten Signaturenkataloge beinhalten die Darstellungsregeln für die beschreibenden Ausgaben aus dem AFIS-ALKIS-ATKIS-Ausgabekatalog (AAA_AK).</p>
+</div>
+<div class="paragraph">
+<p>Mit den formalisierten Signaturenkataloge wurden die Signaturierungsregeln für graphische Ausgaben in ein Objektmodell gefasst. Die Grundlagen für die Modellierung befinden sich im Anwendungsschema AFIS-ALKIS-ATKIS-Signaturenkatalog (AAA_SK). Der Signaturenkatalog kann aufgrund der Modularisierung ebenfalls eigenständig versioniert werden.</p>
+</div>
+<div class="sect3">
+<h4 id="basisschema_sks_nichtformalisiert">Nicht formalisierte Signaturenkataloge (nFSK)</h4>
+<div class="paragraph">
+<p>Die nicht formalisierten Signaturenkataloge sind für die AdV-Produkte, die i.d.R. in der Ausgabe keinen Raumbezug nutzen, notwendig.</p>
+</div>
+<div class="paragraph">
+<p>Hierzu zählen:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>ALKIS</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Flurstücksnachweis (ggf. mit Bodenschätzung)</p>
+</li>
+<li>
+<p>Flurstücks- und Eigentümernachweis (ggf. mit Bodenschätzung)</p>
+</li>
+<li>
+<p>Grundstücksnachweis</p>
+</li>
+<li>
+<p>Bestandsnachweis</p>
+</li>
+<li>
+<p>Amtliche Flächenstatistik</p>
+</li>
+<li>
+<p>Fortführungsnachweis und Fortführungsmitteilungen</p>
+</li>
+<li>
+<p>Gebäudenachweis</p>
+</li>
+<li>
+<p>Liegenschaftskarte (Rahmen)</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>AFIS</p>
+<div class="ulist">
+<ul>
+<li>
+<p>AFIS-Punktlisten</p>
+</li>
+<li>
+<p>AFIS-Einzelpunktnachweise</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Die bisher verwendeten Teile A bis G sind in den jeweiligen Signaturenkatalog zusammengefasst. Ergänzt werden diese durch Standbögen (für die Darstellungen der Positionen auf dem jeweiligen Ausgabemedium) und Muster der Präsentationsausgaben für die AdV-Standardprodukte. Im Falle der Liegenschaftskarte werden die Karteninhalte mit Hilfe des formalisierten Signaturenkatalaog erzeugt.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="basisschema_sks_formalisiert">Formalisierter Signaturenkatalog (fSK)</h4>
+<div class="paragraph">
+<p>Die Vorgaben zur Struktur eines Signaturenkatalogs (SK) haben übergeordneten Charakter und sind deshalb logisch getrennt zu sehen von der Beschreibung von fachlichen Objektarten in einem Datenmodell. Daher ist das Schema "AAA-Signaturenkatalog" außerhalb des AAA-Anwendungsschemas eigenständig modelliert.</p>
+</div>
+<div id="img_44" class="imageblock">
+<div class="content">
+<img src="media/image44.png" alt="media/image44" width="585" height="732">
+</div>
+<div class="title">Figure 33. Schema SK-Objektmodell</div>
+</div>
+<div class="paragraph">
+<p>Kern der Modellierung ist eine SK-Definitionssprache, <em>Map-Definition-Language</em> ("MDL", ursprünglich "SDL" genannt), welche alle SK-Definitionen in einer lesbaren, aber dennoch automatisiert verarbeitbaren Form darstellen kann. Ein zentrales MDL-Repository speichert den Stand des SKs in MDL und definiert damit die Referenzversion des SK.</p>
+</div>
+<div class="paragraph">
+<p>Ein MDL-Compiler leitet aus dem in MDL definierten SK automatisch SK-Dokumente in HTML und PDF ab. Ein weiterer Output des MDL-Compilers ist eine Repräsentierung des SK in "SK-XML", einer XML-Sprache, die im Wesentlichen denselben Inhalt wie MDL bedient. Die Repräsentierung in SK-XML soll es ermöglichen, daraus einfach externe Repräsentierungen des SK zu generieren, um handelsübliche GIS-Software zu unterstützen. Die Umsetzungen aus SK-XML sollen durch externe Akteure erfolgen.</p>
+</div>
+<div class="paragraph">
+<p>Da MDL und SK-XML naturgemäß strukturell verwandt sind, liegt es nahe, beide auf der Basis eines gemeinsamen, in UML definierten, Objektmodells zu entwickeln.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="basisschema_prozesse">Prozesse, Vorgänge und Aktivitäten</h3>
+<div class="sect3">
+<h4 id="basisschema_prozesse_grundsaetze">Grundsätze</h4>
+<div class="paragraph">
+<p>Im Rahmen der Zuständigkeit des amtlichen Vermessungswesens sind die Aufgaben Erhebung, Qualifizierung, Führung (Ersteinrichtung, Fortführung), Benutzung und Übertragung von Daten auszuführen. Jede dieser Aufgaben äußert sich in einem oder mehreren Prozessen. Es gibt Erhebungs-, Qualifizierungs-, Führungs-, Benutzungs- und Transferprozesse.</p>
+</div>
+<div class="paragraph">
+<p>Die Geoinformationen des amtlichen Vermessungswesens bestehen aus den originären Bestandsdaten und den temporären Datenbeständen der Erhebungsdaten, Fortführungsdaten, Ausgabedaten und Transferdaten.</p>
+</div>
+<div class="paragraph">
+<p>Die Projektsteuerung im AAA-Basisschema steuert den Ablauf aller Prozesse in Form von Vorgängen und Aktivitäten, womit vollständige Geschäftsprozesse beschrieben werden können. Sie stellt lediglich eine optionale Rahmenvorgabe dar, die inhaltlich durch die länderspezifischen Geschäftsprozesse zu untersetzen ist. In der <a href="#img_45">Figure 34</a> werden die Prozesse und Daten der Geoinformationen des amtlichen Vermessungswesens dargestellt. Die im Rahmen des AdV-Projektes "Modellierung der Geoinformationen des amtlichen Vermessungswesens" fachlich zu modellierenden Bestandteile werden von einer gestrichelten Linie umrahmt.</p>
+</div>
+<div id="img_45" class="imageblock">
+<div class="content">
+<img src="media/image45.png" alt="media/image45" width="520" height="324">
+</div>
+<div class="title">Figure 34. Prozesse und Daten der Geoinformationen des amtlichen Vermessungswesens</div>
+</div>
+<div class="paragraph">
+<p>Zu einem Prozess gehören mehrere aufeinander aufbauende Aktivitäten, die zu Vorgängen zusammengefasst und fachlich gegliedert werden können. Zur Beschreibung der Prozesse (Vorgänge und Aktivitäten) werden folgende Sprachmittel verwendet:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Aktivitäten als Bestandteil der UML-Klassen,</p>
+</li>
+<li>
+<p>Textliche Beschreibung der Bearbeitungsschritte,</p>
+</li>
+<li>
+<p>Die graphische Darstellung der Vorgänge erfolgt entsprechend der UML- Notation in Sequenzdiagrammen</p>
+</li>
+<li>
+<p>Auswerteregeln des AAA-Ausgabekataloges zur Beschreibung der Selektions- und Auswertefunktionalität bei der Erstellung von Standardausgaben</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="basisschema_prozesse_vorgang">Vorgang und Aktivität</h4>
+<div class="paragraph">
+<p>Für eine vollständige Anwendungsbeschreibung sind Vorgänge und Aktivitäten zu definieren, die Daten in funktionelle Abhängigkeiten setzen und das dynamische Verhalten der Anwendung definieren. Vorgänge sind den einzelnen Prozessen im AAA-Anwendungsschema zugeordnet. Dies kann aus der <a href="#img_46">Figure 35</a> entnommen werden.</p>
+</div>
+<div id="img_46" class="imageblock">
+<div class="content">
+<img src="media/image46.png" alt="media/image46" width="528" height="394">
+</div>
+<div class="title">Figure 35. Vorgänge im AAA-Anwendungsschema</div>
+</div>
+<div class="paragraph">
+<p>Ein Vorgang beinhaltet die Darstellung von Bearbeitungsschritten der Prozesse Qualifizierung, Führung, Benutzung und Übertragung, in denen auf verschiedene Aktivitäten verwiesen wird.</p>
+</div>
+<div class="paragraph">
+<p>Eine Aktivität beschreibt das Verhalten eines Objekts und besteht aus einer Sequenz von Anweisungen. Den Anstoß dazu erhält ein Objekt durch eine Nachricht, die durch Eingaben des Nutzers oder durch Aktivitäten anderer Objekte ausgelöst werden (Eingabeparameter). Das Ergebnis der Aktivität wird in Form von Ausgabeparametern bereitgestellt. Aktivitäten werden objektbezogen definiert und sind im UML-Modell Bestandteil einer Klasse.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="basisschema_prozesse_aaa">Prozesse des AFIS-ALKIS-ATKIS-Anwendungsschemas</h4>
+<div class="paragraph">
+<p>Mit einem Prozess wird ein Quelldatenbestand in einen Zieldatenbestand überführt. Der Benutzungsprozess beispielsweise überführt die Bestandsdaten in temporäre Ausgabedaten.</p>
+</div>
+<div class="paragraph">
+<p>Zur Steuerung der verschiedenen Prozesse werden spezielle Klassen gebildet, die Steuerungsparameter für den Ablauf von Prozessen beinhalten, wie z. B. "AX_Benutzungsauftrag" im Benutzungsprozess des AAA-Anwendungsschemas.</p>
+</div>
+<div class="sect4">
+<h5 id="basisschema_prozesse_aaa_erhebung">Erhebungsprozess</h5>
+<div class="paragraph">
+<p>Quelldaten werden mit den bekannten geodätischen Mess- und Erkundungsmethoden in der realen Welt erhoben oder aus kartographischen Darstellungen und anderen Unterlagen erfasst. Die Zieldaten des Erhebungsprozesses sind die objektstrukturierten Erhebungsdaten, die eine Grundlage zur Fortführung der amtlichen Geoinformationen bilden.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="basisschema_prozesse_aaa_qualifizierung">Qualifizierungsprozess</h5>
+<div class="paragraph">
+<p>Im Qualifizierungsprozess werden die digitalen, objektstrukturierten Erhebungsdaten nach einer Qualifizierung in Fortführungsdaten überführt. Er dient der Qualitätssicherung und stellt sicher, dass die Fortführungsdaten den Qualitätsanforderungen entsprechen.</p>
+</div>
+<div class="paragraph">
+<p>Die Zieldaten des Qualifizierungsprozesses sind die Fortführungsdaten.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="basisschema_prozesse_aaa_fuehrung">Führungsprozess</h5>
+<div class="paragraph">
+<p>Im Führungsprozess sind Ersteinrichtung und Fortführung der Geoinformationen zusammengefasst, wobei die Ersteinrichtung als Sonderfall der Fortführung betrachtet werden kann. Beim Führungsprozess werden die Fortführungsdaten (Daten und Metadaten) durch Anwendung geeigneter Methoden in den Bestand überführt.</p>
+</div>
+<div class="paragraph">
+<p>Die Zieldaten des Führungsprozesses sind die Bestandsdaten.</p>
+</div>
+<div class="paragraph">
+<p>Die für die Einrichtung und Fortführung notwendigen Funktionalitäten sind im Rahmen der Austauschschnittstelle in <a href="#nasops_funktionsumfang_primaernachweise">[nasops_funktionsumfang_primaernachweise]</a>, darüber hinaus gehende implizite Funktionen eines Führungssystems in <a href="#nasops_implfunkt">[nasops_implfunkt]</a> beschrieben. Das konzeptuelle Fachmodell für die Fortführung von ALKIS sowie die exakten Abläufe bei der Fortführungsverarbeitung sind in der Dokumentation zur Objektart "AX_Fortfuehrungsauftrag" enthalten. Ferner zeigt ein Sequenzdiagramm eine beispielhafte Illustration der Beschreibung zum "AX_Fortfuehrungsauftrag".</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="basisschema_prozesse_aaa_benutzung">Benutzungsprozess</h5>
+<div class="paragraph">
+<p>Benutzungsprozesse überführen Bestandsdaten in Ausgabedaten entsprechend den fachlichen Vorgaben</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>in Form von Bestandsdatensätzen zur universellen Weiterverarbeitung beim Nutzer,</p>
+</li>
+<li>
+<p>als aufbereitete Bestandsdaten mit festgelegtem Inhalt in einem einheitlichen Erscheinungsbild des amtlichen Vermessungs- und Katasterwesens (Präsentationsausgaben, Auswertungen etc.) sowie</p>
+</li>
+<li>
+<p>als Änderungsdaten nach der Fortführung (Nutzerbezogene Bestandsdatenaktualisierung-NBA).</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Eine Ausgabe kann Bestandsobjekte, historisierte Objekte (aus Gründen der Abwärtskompatibilität) sowie temporär erzeugte Objekte beinhalten.</p>
+</div>
+<div class="paragraph">
+<p>Zur Strukturierung der Ausgabedaten und für Elementangaben, die nicht aus den Attributarten des Bestandes entnommen werden können, die aber für eine Ausgabe notwendig sind, werden temporäre Objektarten gebildet (z.B. AX_K_Fortfuehrungsfall_FM). Temporäre Objektarten sind keine AA_Objekte, sondern Datentypen, die im AAA-Ausgabekatalog beschrieben sind. Sie besitzen keinen Identifikator und kein Lebenszeitintervall. Sie werden auch nicht im Bestand geführt.</p>
+</div>
+<div class="paragraph">
+<p>Die temporäre Prozessobjektart "AX_Benutzungsauftrag" des Anwendungsschemas enthält wesentliche Angaben zur Steuerung des Benutzungsprozesses, wie Umfang der Ausgabe, Antragsnummer, Anlassart, Benutzungsparameter, Ausgabename usw. und wird zu Beginn des Benutzungsprozesses erzeugt. Durch die Attributart "Benutzungsparameter" werden die erforderlichen Parameter für die Kosten- und Gebührenberechnung, die außerhalb der Geoinformationen des amtlichen Vermessungswesens vorgenommen wird, bereitgestellt. Die übrigen für eine Ausgabe notwendigen temporären Objektarten entstehen durch Methoden innerhalb des Benutzungsprozesses aus den Bestandsobjektarten.</p>
+</div>
+<div class="paragraph">
+<p>Die temporären Objektarten, insbesondere die temporären Ausgabe- Objektarten, werden so modelliert, dass Relationen innerhalb einer Ausgabe vermieden werden.</p>
+</div>
+<div class="paragraph">
+<p>Ausgabeobjektarten können je nach Anforderung auch unter Beachtung des Signaturenkatalogs präsentiert werden. Die Verbindungen und der Informationsfluss zwischen dem Objektartenkatalog, dem Ausgabekatalog, dem Signaturenkatalog und den Ausgaben können aus der nachfolgenden Schemadarstellung entnommen werden.</p>
+</div>
+<div id="img_47" class="imageblock">
+<div class="content">
+<img src="media/image47.png" alt="media/image47" width="585" height="475">
+</div>
+<div class="title">Figure 36. Ausgabeschema von ALKIS</div>
+</div>
+<div class="paragraph">
+<p>Demnach werden z. B. für eine Präsentationsausgabe die Objektarten der Bestandsdaten an Hand einer definierten Abfrageabfolge aufbereitet zu einer temporären Ausgabeobjektart entwickelt. Anschließend erfolgt unter Berücksichtigung der erforderlichen Signaturierung und des Präsentationslayouts eine Ausgabe am Bildschirm bzw. als Druckausgabe. Möglich ist aber auch die Abgabe von nicht aufbereiteten Ausgabedatensätzen, die von Nutzern unter Verwendung eigener Layoutvorgaben aufbereitet werden können.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="basisschema_prozesse_aaa_transfer">Transferprozess</h5>
+<div class="paragraph">
+<p>Übertragungsprozesse treten bei der Übernahme von Daten Dritter in Form von Fortführungsdaten und bei der Abgabe von Ausgabedaten an Kunden auf. Übertragungsprozesse zur Datenübernahme empfangen Ausgaben der Systeme Dritter einschließlich Transferfunktionen in Form von Transferdaten. Übertragungsprozesse zur Datenabgabe ergänzen Ausgabedaten um Transferfunktionen und erzeugen aus ihnen Transferdaten für Systeme Dritter.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="basisschema_projektsteuerung">Projektsteuerung</h3>
+<div class="paragraph">
+<p>Die im Paket "AAA_Projektsteuerung" definierten Klassen beschreiben einen Strukturrahmen zur Beschreibung einer Projektsteuerung. Die Klassendiagramme "AA_Antrag", "AA_Projektsteuerungskatalog" und "AA_Meilenstein" zeigen das Konzept der modellierten Projektsteuerung.</p>
+</div>
+<div class="sect3">
+<h4 id="basisschema_projektsteuerung_antrag">Antrag</h4>
+<div class="paragraph">
+<p>Dreh- und Angelpunkt der Projektsteuerung ist die Objektart AA_Antrag. Diese Objektart realisiert eine "Mini-Antragsverwaltung", d.h. eine Schnittstelle zur externen Antragsverwaltung. Dadurch wird es möglich, bei einem Eintrag in der externen Antragsverwaltung (Geschäftsbuch) direkt einen Bezug zu diesem Antrag (mit Raumbezug) zu generieren.</p>
+</div>
+<div class="paragraph">
+<p>Das Antragsobjekt verwaltet außerdem die Wiedervorlage des Antrags und unterstützt die Überwachung der Projektsteuerungs-Objekte. Mit dem Raumbezug kann nach bestehenden Prozessen gesucht werden, um konkurrierende Anträge zu ermitteln oder um andere benachbarte Anträge bei der Bearbeitung zu berücksichtigen. Die fachliche Reihenfolge konkurrierender Anträge ist durch den Sachbearbeiter festzulegen. Das Antrags-Objekt wird mit dem Projektsteuerungs-Objekt (AA_Projektsteuerung) verbunden, um die Zuordnung des Antrags zu einem oder mehreren Projektsteuerungs-Objekten festzulegen und um die nicht zulässigen Kombinationen zu überwachen. Weiterhin steuert und überwacht das Projektsteuerungs-Objekt die korrekte Abwicklung der Vorgänge im Teilprozess "fachtechnische Qualifizierung". Die Fortführungsanlässe werden beim Projektsteuerungs-Objekt geführt.</p>
+</div>
+<div class="paragraph">
+<p>Der Vorgang ist Teil einer Projektsteuerung und setzt sich aus einzelnen Aktivitäten zusammen. Die Vorgänge stellen in sich abgeschlossene Arbeitsschritte dar. Ein vorzugebender Arbeitsablauf ("Workflow") legt die Reihenfolge und Abhängigkeiten der Vorgänge und deren Arbeitsschritte fest. Die Vorgänge werden in Gruppen zusammengefasst und in einer bestimmten Reihenfolge nacheinander bzw. nebeneinander bearbeitet. Die Entscheidung über den Abschluss des einzelnen Vorganges wird im Status (Meilenstein) dokumentiert.</p>
+</div>
+<div id="img_48" class="imageblock">
+<div class="content">
+<img src="media/image48.png" alt="media/image48" width="945" height="416">
+</div>
+<div class="title">Figure 37. Klassendiagramm "AA_Antrag"</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="basisschema_projektsteuerung_katalog">Projektsteuerungskatalog</h4>
+<div class="paragraph">
+<p>Der Projektsteuerungskatalog definiert die innerhalb eines Projektsteuerungs-Objektes dieser Art erlaubten Fortführungsanlässe. Er beinhaltet die Projektsteuerungs- und Vorgangsarten. Die Projektsteuerungsart bündelt Projektsteuerungs-Objekte, die eine gemeinsame Charakteristik aufweisen. Analoges gilt für die Vorgangsart.</p>
+</div>
+<div id="img_49" class="imageblock">
+<div class="content">
+<img src="media/image49.png" alt="media/image49" width="586" height="435">
+</div>
+<div class="title">Figure 38. Klassendiagramm "AA_Projektsteuerungskatalog"</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="basisschema_projektsteuerung_meilenstein">Meilenstein</h4>
+<div class="paragraph">
+<p>Hierbei handelt es sich um einen Datentyp, der zu einem Vorgang usw. den aktuellen Zustand und die Verantwortlichkeiten vermerkt.</p>
+</div>
+<div id="img_50" class="imageblock">
+<div class="content">
+<img src="media/image50.png" alt="media/image50" width="542" height="471">
+</div>
+<div class="title">Figure 39. Klassendiagramm "AA_Meilenstein"</div>
+</div>
+<div class="paragraph">
+<p>Eine anwendungsbezogene Erläuterung der Projektsteuerung des AAA-Basisschemas für das Fachschema ALKIS befindet sich in der GeoInfoDok in den "Erläuterungen zu ALKIS". Weitere Einzelheiten und Zusammenhänge können hieraus entnommen werden.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2025-05-20 09:39:07 UTC
+</div>
+</div>
+</body>
+</html>
